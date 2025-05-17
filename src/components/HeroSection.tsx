@@ -1,9 +1,6 @@
-
 import { Button } from '@/components/ui/button';
-
 const HeroSection = () => {
-  return (
-    <section className="pt-32 pb-20 bg-blush-gradient">
+  return <section className="pt-32 pb-20 bg-blush-gradient bg-white">
       <div className="container-narrow text-center">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in">
           Because they won't be this little forever.
@@ -15,8 +12,6 @@ const HeroSection = () => {
           Start Remembering More
         </Button>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default HeroSection;
