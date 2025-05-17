@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -18,6 +19,9 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				sans: ['Inter', 'Helvetica Neue', 'system-ui', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -61,7 +65,16 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				blush: {
+					50: '#FFF5F7',
+					100: '#FEEAEF',
+					200: '#FDD5DE',
+					300: '#FBB0C2',
+					400: '#F98CA7',
+					500: '#F7678C',
+					600: '#F54372',
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -84,11 +97,28 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'fade-in': {
+					'0%': { opacity: '0' },
+					'100%': { opacity: '1' }
+				},
+				'fade-up': {
+					'0%': { opacity: '0', transform: 'translateY(20px)' },
+					'100%': { opacity: '1', transform: 'translateY(0)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'fade-in': 'fade-in 0.7s ease-out',
+				'fade-up': 'fade-up 0.7s ease-out'
+			},
+			boxShadow: {
+				'soft': '0 10px 25px -3px rgba(0, 0, 0, 0.05)',
+			},
+			backgroundImage: {
+				'blush-gradient': 'linear-gradient(135deg, #FFF5F7 0%, #FEEAEF 100%)',
+				'blush-gradient-2': 'linear-gradient(90deg, #FEEAEF 0%, #FFF5F7 100%)',
 			}
 		}
 	},
