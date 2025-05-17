@@ -1,5 +1,5 @@
 
-import { Calendar, FileImage, Magic } from 'lucide-react';
+import { Calendar, FileImage, Sparkles } from 'lucide-react';
 
 const FeaturesSection = () => {
   const features = [
@@ -14,7 +14,7 @@ const FeaturesSection = () => {
       description: "Write, upload a photo or video with just a few taps.",
     },
     {
-      icon: Magic,
+      icon: Sparkles,
       title: "Relive the magic",
       description: "AI summaries and face evolution visuals help you see growth and change.",
     }
