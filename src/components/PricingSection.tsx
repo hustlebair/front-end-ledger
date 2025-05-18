@@ -18,7 +18,8 @@ const PricingSection = () => {
         "Basic search"
       ],
       cta: "Start Free",
-      highlight: false
+      highlight: false,
+      border: "grey"
     },
     {
       name: "Moments",
@@ -35,7 +36,8 @@ const PricingSection = () => {
       ],
       cta: "Get Moments",
       highlight: true,
-      recommended: true
+      recommended: true,
+      border: "gradient"
     },
     {
       name: "Legacy",
@@ -51,7 +53,8 @@ const PricingSection = () => {
         "Priority support"
       ],
       cta: "Choose Legacy",
-      highlight: false
+      highlight: false,
+      border: "glow"
     }
   ];
 
@@ -70,25 +73,29 @@ const PricingSection = () => {
             {plans.map((plan, index) => (
               <Card 
                 key={index} 
-                className={`relative border overflow-hidden ${
-                  plan.highlight 
-                    ? 'border-blush-200 shadow-md' 
-                    : ''
-                } ${plan.recommended ? 'ring-2 ring-blush-500' : ''} pricing-card`}
+                className={`relative border overflow-hidden pricing-card ${
+                  plan.border === "grey" 
+                    ? 'border-gray-300' 
+                    : 'border-transparent'
+                } ${plan.recommended ? 'ring-2 ring-blush-500' : ''}`}
                 style={{
                   backgroundClip: 'padding-box',
-                  border: '1px solid transparent',
+                  border: plan.border === "grey" ? '1px solid #C8C8C9' : '1px solid transparent',
                   position: 'relative',
+                  boxShadow: plan.border === "glow" ? '0 0 15px rgba(177, 135, 242, 0.5)' : 'none'
                 }}
               >
-                <div 
-                  className="absolute inset-0 -z-10" 
-                  style={{ 
-                    background: 'linear-gradient(to right, #F28CA5, #B187F2)', 
-                    margin: '-1px',
-                    borderRadius: 'inherit',
-                  }}
-                />
+                {(plan.border === "gradient" || plan.border === "glow") && (
+                  <div 
+                    className="absolute inset-0 -z-10" 
+                    style={{ 
+                      background: 'linear-gradient(to right, #F28CA5, #B187F2)', 
+                      margin: '-1px',
+                      borderRadius: 'inherit',
+                      opacity: plan.border === "glow" ? '1' : '1'
+                    }}
+                  />
+                )}
                 
                 {plan.recommended && (
                   <Badge 
@@ -131,6 +138,7 @@ const PricingSection = () => {
                       position: 'relative',
                       backgroundClip: plan.highlight ? 'border-box' : 'padding-box',
                       transition: 'all 0.3s ease',
+                      boxShadow: '0 0 0 1px rgba(0,0,0,0.1)'
                     }}
                   >
                     {!plan.highlight && (
