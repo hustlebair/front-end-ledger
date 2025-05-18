@@ -57,7 +57,7 @@ const PricingSection = () => {
 
   return (
     <section id="pricing" className="py-20 bg-white">
-      <div className="container-narrow">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl md:text-4xl font-bold mb-3 text-center">
           Free to start. Upgrade when you're ready.
         </h2>
@@ -65,57 +65,59 @@ const PricingSection = () => {
           Little Ledger grows with your family. Start free and add more storage as your memories multiply.
         </p>
         
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {plans.map((plan, index) => (
-            <Card 
-              key={index} 
-              className={`relative border ${
-                plan.highlight 
-                  ? 'border-blush-200 shadow-md' 
-                  : 'border-gray-100'
-              } ${plan.recommended ? 'ring-2 ring-blush-500' : ''}`}
-            >
-              {plan.recommended && (
-                <Badge 
-                  className="absolute -top-2 right-4 bg-blush-500"
-                >
-                  Recommended
-                </Badge>
-              )}
-              
-              <CardHeader>
-                <CardTitle className="text-2xl font-bold">{plan.name}</CardTitle>
-                <div className="mt-4 mb-2">
-                  <span className="text-3xl font-bold">{plan.price}</span>
-                  <span className="text-gray-500 ml-1">/{plan.period}</span>
-                </div>
-                <CardDescription className="text-gray-600">
-                  {plan.description}
-                </CardDescription>
-              </CardHeader>
-              
-              <CardContent>
-                <ul className="space-y-3 mb-6">
-                  {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-start">
-                      <Check className="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-              
-              <CardFooter>
-                <Button 
-                  variant={plan.highlight ? "default" : "outline"} 
-                  className="w-full"
-                  size="lg"
-                >
-                  {plan.cta}
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
+        <div className="max-w-[1400px] mx-auto">
+          <div className="grid md:grid-cols-3 gap-8">
+            {plans.map((plan, index) => (
+              <Card 
+                key={index} 
+                className={`relative border ${
+                  plan.highlight 
+                    ? 'border-blush-200 shadow-md' 
+                    : 'border-gray-100'
+                } ${plan.recommended ? 'ring-2 ring-blush-500' : ''}`}
+              >
+                {plan.recommended && (
+                  <Badge 
+                    className="absolute -top-2 right-4 bg-blush-500"
+                  >
+                    Recommended
+                  </Badge>
+                )}
+                
+                <CardHeader>
+                  <CardTitle className="text-2xl font-bold">{plan.name}</CardTitle>
+                  <div className="mt-4 mb-2">
+                    <span className="text-3xl font-bold">{plan.price}</span>
+                    <span className="text-gray-500 ml-1">/{plan.period}</span>
+                  </div>
+                  <CardDescription className="text-gray-600">
+                    {plan.description}
+                  </CardDescription>
+                </CardHeader>
+                
+                <CardContent>
+                  <ul className="space-y-3 mb-6">
+                    {plan.features.map((feature, i) => (
+                      <li key={i} className="flex items-start">
+                        <Check className="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+                
+                <CardFooter>
+                  <Button 
+                    variant={plan.highlight ? "default" : "outline"} 
+                    className="w-full"
+                    size="lg"
+                  >
+                    {plan.cta}
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
     </section>
