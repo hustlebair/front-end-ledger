@@ -123,14 +123,14 @@ const PricingSection = () => {
                 <CardFooter>
                   <Button 
                     variant={plan.highlight ? "default" : "outline"} 
-                    className={`w-full gradient-btn ${plan.highlight ? 'gradient-filled' : 'gradient-outline'}`}
+                    className={`w-full ${plan.highlight ? 'gradient-filled' : 'gradient-outline hover:bg-gradient-to-r hover:from-[#F28CA5] hover:to-[#B187F2] hover:text-white'}`}
                     size="lg"
                     style={{
                       background: plan.highlight ? 'linear-gradient(to right, #F28CA5, #B187F2)' : 'transparent',
                       border: '1px solid transparent',
                       position: 'relative',
                       backgroundClip: plan.highlight ? 'border-box' : 'padding-box',
-                      transition: 'background 0.3s ease',
+                      transition: 'all 0.3s ease',
                     }}
                   >
                     {!plan.highlight && (
@@ -151,14 +151,6 @@ const PricingSection = () => {
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        .gradient-outline:hover {
-          background: linear-gradient(to right, #F28CA5, #B187F2) !important;
-          color: white !important;
-          transition: all 0.3s ease;
-        }
-      `}</style>
     </section>
   );
 };
