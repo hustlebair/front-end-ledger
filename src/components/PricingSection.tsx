@@ -70,12 +70,26 @@ const PricingSection = () => {
             {plans.map((plan, index) => (
               <Card 
                 key={index} 
-                className={`relative border ${
+                className={`relative border overflow-hidden ${
                   plan.highlight 
                     ? 'border-blush-200 shadow-md' 
-                    : 'border-gray-100'
-                } ${plan.recommended ? 'ring-2 ring-blush-500' : ''}`}
+                    : ''
+                } ${plan.recommended ? 'ring-2 ring-blush-500' : ''} pricing-card`}
+                style={{
+                  backgroundClip: 'padding-box',
+                  border: '1px solid transparent',
+                  position: 'relative',
+                }}
               >
+                <div 
+                  className="absolute inset-0 -z-10" 
+                  style={{ 
+                    background: 'linear-gradient(to right, #F28CA5, #B187F2)', 
+                    margin: '-1px',
+                    borderRadius: 'inherit',
+                  }}
+                />
+                
                 {plan.recommended && (
                   <Badge 
                     className="absolute -top-2 right-4 bg-blush-500"
@@ -109,10 +123,27 @@ const PricingSection = () => {
                 <CardFooter>
                   <Button 
                     variant={plan.highlight ? "default" : "outline"} 
-                    className="w-full"
+                    className={`w-full gradient-btn ${plan.highlight ? 'gradient-filled' : 'gradient-outline'}`}
                     size="lg"
+                    style={{
+                      background: plan.highlight ? 'linear-gradient(to right, #F28CA5, #B187F2)' : 'transparent',
+                      border: '1px solid transparent',
+                      position: 'relative',
+                      backgroundClip: plan.highlight ? 'border-box' : 'padding-box',
+                      transition: 'background 0.3s ease',
+                    }}
                   >
-                    {plan.cta}
+                    {!plan.highlight && (
+                      <div 
+                        className="absolute inset-0 -z-10" 
+                        style={{ 
+                          background: 'linear-gradient(to right, #F28CA5, #B187F2)',
+                          margin: '-1px',
+                          borderRadius: 'inherit',
+                        }}
+                      />
+                    )}
+                    <span>{plan.cta}</span>
                   </Button>
                 </CardFooter>
               </Card>
@@ -120,6 +151,14 @@ const PricingSection = () => {
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        .gradient-outline:hover {
+          background: linear-gradient(to right, #F28CA5, #B187F2) !important;
+          color: white !important;
+          transition: all 0.3s ease;
+        }
+      `}</style>
     </section>
   );
 };
