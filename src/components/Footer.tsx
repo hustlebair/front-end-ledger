@@ -2,6 +2,10 @@
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
+  const handleLinkClick = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <footer className="py-12 bg-white border-t border-gray-100">
       <div className="container-narrow">
@@ -14,10 +18,34 @@ const Footer = () => {
           </div>
           
           <div className="flex flex-wrap justify-center space-x-6 mb-4 md:mb-0">
-            <Link to="/privacy-policy" className="text-sm text-gray-500 hover:text-gray-700 my-1">Privacy</Link>
-            <Link to="/terms" className="text-sm text-gray-500 hover:text-gray-700 my-1">Terms</Link>
-            <Link to="/contact" className="text-sm text-gray-500 hover:text-gray-700 my-1">Contact</Link>
-            <Link to="/refund" className="text-sm text-gray-500 hover:text-gray-700 my-1">Refund</Link>
+            <Link 
+              to="/privacy-policy" 
+              onClick={handleLinkClick}
+              className="text-sm text-gray-500 hover:text-gray-700 my-1"
+            >
+              Privacy
+            </Link>
+            <Link 
+              to="/terms" 
+              onClick={handleLinkClick}
+              className="text-sm text-gray-500 hover:text-gray-700 my-1"
+            >
+              Terms
+            </Link>
+            <Link 
+              to="/contact" 
+              onClick={handleLinkClick}
+              className="text-sm text-gray-500 hover:text-gray-700 my-1"
+            >
+              Contact
+            </Link>
+            <Link 
+              to="/refund" 
+              onClick={handleLinkClick}
+              className="text-sm text-gray-500 hover:text-gray-700 my-1"
+            >
+              Refund
+            </Link>
           </div>
           
           <div className="text-sm text-gray-400">
