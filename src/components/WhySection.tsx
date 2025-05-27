@@ -7,8 +7,8 @@ const WhySection = () => {
           <div className="order-2 md:order-1">
             <div className="rounded-xl overflow-hidden shadow-soft transform rotate-1 hover:rotate-0 transition-transform duration-300">
               <img 
-                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158" 
-                alt="Parent with child" 
+                src="/lovable-uploads/4c8e77cb-2cab-454d-80c5-0018ebfbdbea.png" 
+                alt="Happy children smiling" 
                 className="w-full h-auto object-cover"
               />
             </div>
