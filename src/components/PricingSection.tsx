@@ -1,4 +1,5 @@
 import { Check } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -134,40 +135,44 @@ const PricingSection = () => {
                 </CardContent>
 
                 <CardFooter className="mt-auto">
-                  <Button
-                    variant={plan.highlight ? 'default' : 'outline'}
-                    className={`w-full ${
-                      plan.highlight
-                        ? 'gradient-filled'
-                        : 'gradient-outline hover:bg-gradient-to-r hover:from-[#F28CA5] hover:to-[#B187F2] hover:text-white'
-                    }`}
-                    size="lg"
-                    style={{
-                      background: plan.highlight
-                        ? 'linear-gradient(to right, #F28CA5, #B187F2)'
-                        : 'transparent',
-                      border: '1px solid transparent',
-                      position: 'relative',
-                      backgroundClip: plan.highlight
-                        ? 'border-box'
-                        : 'padding-box',
-                      transition: 'all 0.3s ease',
-                      boxShadow: '0 0 0 1px rgba(0,0,0,0.1)',
-                    }}
-                  >
-                    {!plan.highlight && (
-                      <div
-                        className="absolute inset-0 -z-10"
+                  <div className="relative inline-block w-full group">
+                    {/* Glow effect - only show for Moments and Legacy plans */}
+                    {plan.name !== 'Free' && (
+                      <div 
+                        className="absolute -inset-0.5 rounded-lg blur-sm transition-all duration-300 group-hover:blur"
                         style={{
-                          background:
-                            'linear-gradient(to right, #F28CA5, #B187F2)',
-                          margin: '-1px',
-                          borderRadius: 'inherit',
+                          backgroundColor: plan.name === 'Moments' 
+                            ? 'rgba(242, 140, 165, 0.7)' 
+                            : 'rgba(177, 135, 242, 0.7)',
+                          boxShadow: `0 0 10px 5px ${
+                            plan.name === 'Moments' 
+                              ? 'rgba(242, 140, 165, 0.7)' 
+                              : 'rgba(177, 135, 242, 0.7)'
+                          }`
                         }}
                       />
                     )}
-                    {plan.cta}
-                  </Button>
+                    
+                    {/* Button */}
+                    <Button 
+                      size="lg" 
+                      className={`relative z-10 w-full ${
+                        plan.name === 'Free' 
+                          ? 'bg-gray-900 hover:bg-gray-800' 
+                          : 'bg-gray-900 hover:bg-gray-800'
+                      } text-white transition-all duration-300`}
+                    >
+                      <span className="relative z-10">
+                        {plan.cta}
+                      </span>
+                      <motion.span 
+                        className="absolute inset-0 bg-white/10"
+                        initial={{ x: '-100%' }}
+                        whileHover={{ x: '100%' }}
+                        transition={{ duration: 0.6, ease: 'easeInOut' }}
+                      />
+                    </Button>
+                  </div>
                 </CardFooter>
               </Card>
             ))}
