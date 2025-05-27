@@ -47,7 +47,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section ref={ref} className="relative pt-32 pb-40 overflow-hidden bg-white">
+    <section ref={ref} className="relative pt-36 pb-12 bg-white">
       <div className="container-narrow relative">
         <motion.div 
           className="text-center max-w-4xl mx-auto"
@@ -55,18 +55,18 @@ const HeroSection = () => {
           initial="hidden"
           animate={isInView ? 'show' : 'hidden'}
         >
-          <div className="overflow-hidden mb-6">
+          <div className="overflow-hidden mb-8">
             <motion.h1 
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight"
               variants={item}
             >
               Because they won't be this little forever.
             </motion.h1>
           </div>
           
-          <div className="overflow-hidden">
+          <div className="overflow-hidden mb-12">
             <motion.p 
-              className="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed"
+              className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed"
               variants={item}
             >
               Little Ledger helps parents capture the moments they'll wish they remembered.
@@ -87,31 +87,33 @@ const HeroSection = () => {
                 <div className="absolute -inset-0.5 rounded-lg bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 opacity-75 blur transition-all duration-300 group-hover:opacity-100 group-hover:blur-md" />
                 
                 {/* Button */}
-                <Button 
-                  size="lg" 
-                  className="relative z-10 bg-gray-900 text-white hover:bg-gray-800 transition-all duration-300"
-                >
-                  <span className="relative z-10 flex items-center">
-                    Start Remembering More
+                <a href="https://www.littleledger.co" target="_blank" rel="noopener noreferrer">
+                  <Button 
+                    size="lg" 
+                    className="relative z-10 bg-gray-900 text-white hover:bg-gray-800 transition-all duration-300"
+                  >
+                    <span className="relative z-10 flex items-center">
+                      Start Remembering More
+                      <motion.span 
+                        className="ml-2"
+                        animate={{ x: [0, 4, 0] }}
+                        transition={{ 
+                          duration: 2,
+                          repeat: Infinity,
+                          repeatType: 'loop'
+                        }}
+                      >
+                        →
+                      </motion.span>
+                    </span>
                     <motion.span 
-                      className="ml-2"
-                      animate={{ x: [0, 4, 0] }}
-                      transition={{ 
-                        duration: 2,
-                        repeat: Infinity,
-                        repeatType: 'loop'
-                      }}
-                    >
-                      →
-                    </motion.span>
-                  </span>
-                  <motion.span 
-                    className="absolute inset-0 bg-white/10"
-                    initial={{ x: '-100%' }}
-                    whileHover={{ x: '100%' }}
-                    transition={{ duration: 0.6, ease: 'easeInOut' }}
-                  />
-                </Button>
+                      className="absolute inset-0 bg-white/10"
+                      initial={{ x: '-100%' }}
+                      whileHover={{ x: '100%' }}
+                      transition={{ duration: 0.6, ease: 'easeInOut' }}
+                    />
+                  </Button>
+                </a>
               </div>
             </motion.div>
           </motion.div>
@@ -122,13 +124,12 @@ const HeroSection = () => {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.6, duration: 0.8, ease: 'easeOut' }}
           >
-            <div className="relative inline-block">
-              <div className="absolute -inset-4 bg-gray-100 rounded-2xl opacity-50"></div>
-              <div className="relative bg-white p-1 rounded-xl shadow-lg overflow-hidden border border-gray-100">
-                <div className="w-full h-64 md:h-80 bg-gray-50 rounded-lg flex items-center justify-center">
-                  <span className="text-gray-300 text-lg">App Preview</span>
-                </div>
-              </div>
+            <div className="relative">
+              <img 
+                src="/images/iphonecalendar.png" 
+                alt="Little Ledger App Preview" 
+                className="mx-auto h-80 md:h-[32rem] object-contain drop-shadow-2xl"
+              />
             </div>
           </motion.div>
         </motion.div>

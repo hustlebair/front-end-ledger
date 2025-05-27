@@ -6,7 +6,7 @@ const RefundPolicy = () => {
   return (
     <div className="min-h-screen bg-white">
       <NavBar />
-      <div className="py-20">
+      <div className="pt-36 pb-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
           <h1 className="text-4xl font-bold mb-8">Refund Policy</h1>
           <div className="prose prose-lg max-w-none">
