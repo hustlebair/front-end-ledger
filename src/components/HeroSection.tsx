@@ -82,26 +82,14 @@ const HeroSection = () => {
               whileTap={{ scale: 0.98 }}
               transition={{ type: 'spring', stiffness: 400, damping: 10 }}
             >
-              <div className="relative inline-block">
-                {/* Animated gradient background */}
-                <div className="absolute -inset-1 rounded-lg overflow-hidden">
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 opacity-75"
-                    initial={{ x: '-100%' }}
-                    animate={{ x: '100%' }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      repeatType: 'reverse',
-                      ease: 'easeInOut',
-                    }}
-                  />
-                </div>
+              <div className="relative inline-block group">
+                {/* Glow effect */}
+                <div className="absolute -inset-0.5 rounded-lg bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 opacity-75 blur transition-all duration-300 group-hover:opacity-100 group-hover:blur-md" />
                 
                 {/* Button */}
                 <Button 
                   size="lg" 
-                  className="relative z-10 bg-gray-900 text-white hover:bg-gray-800 transition-all duration-300 group"
+                  className="relative z-10 bg-gray-900 text-white hover:bg-gray-800 transition-all duration-300"
                 >
                   <span className="relative z-10 flex items-center">
                     Start Remembering More
@@ -127,28 +115,6 @@ const HeroSection = () => {
               </div>
             </motion.div>
           </motion.div>
-          
-          {/* App Preview */}
-          <motion.div 
-            className="mt-16 max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-2xl border border-gray-100"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-          >
-            <img 
-              src="/images/differentages-ezgif.com-resize.gif" 
-              alt="App preview showing memory timeline" 
-              className="w-full h-auto rounded-lg shadow-lg"
-              loading="eager"
-            />
-          </motion.div>
-          
-          <div className="mt-20">
-            <p className="text-sm text-gray-500 mb-4 text-center">Trusted by families worldwide</p>
-            <div className="flex flex-wrap items-center justify-center gap-8 opacity-70">
-              {/* Logos would go here */}
-            </div>
-          </div>
           
           <motion.div 
             className="mt-24 relative"

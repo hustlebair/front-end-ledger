@@ -29,7 +29,15 @@ const NavBar = () => {
           <a href="#pricing" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">Pricing</a>
         </nav>
         <Button size="sm" variant="ghost" className="md:hidden">Menu</Button>
-        <Button size="sm" className="hidden md:inline-flex">Start Free</Button>
+        <div className="relative hidden md:inline-flex group">
+          <div className="absolute -inset-0.5 rounded-lg bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 opacity-75 blur transition-all duration-300 group-hover:opacity-100 group-hover:blur-md" />
+          <Button 
+            size="sm" 
+            className="relative z-10 bg-gray-900 text-white hover:bg-gray-800 transition-all duration-300"
+          >
+            Start Free
+          </Button>
+        </div>
       </div>
     </header>
   );
