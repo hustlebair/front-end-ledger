@@ -1,15 +1,16 @@
 
 const WhySection = () => {
   return (
-    <section className="py-20 bg-white">
-      <div className="container-narrow">
+    <section className="py-24 bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="container-narrow px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="order-2 md:order-1">
-            <div className="rounded-xl overflow-hidden shadow-soft transform rotate-1 hover:rotate-0 transition-transform duration-300">
+            <div className="rounded-2xl overflow-hidden shadow-xl transform rotate-1 hover:rotate-0 transition-all duration-500 hover:shadow-2xl">
               <img 
-                src="/lovable-uploads/4c8e77cb-2cab-454d-80c5-0018ebfbdbea.png" 
-                alt="Happy children smiling" 
+                src="/images/9 faces square.png" 
+                alt="Faces evolution showing growth over time" 
                 className="w-full h-auto object-cover"
+                loading="lazy"
               />
             </div>
           </div>
