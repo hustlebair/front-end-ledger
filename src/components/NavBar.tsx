@@ -15,7 +15,7 @@ const NavBar = () => {
   }, []);
 
   return (
-    <header className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 shadow-sm backdrop-blur-sm py-3' : 'bg-transparent py-5'}`}>
+    <header className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 shadow-[0_4px_12px_rgba(0,0,0,0.05)] backdrop-blur-sm py-3' : 'bg-transparent shadow-[0_4px_12px_rgba(0,0,0,0.03)] py-5'}`}>
       <div className="container-narrow flex items-center justify-between">
         <a href="/" className="flex items-center">
           <img 
