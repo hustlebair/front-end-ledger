@@ -25,9 +25,36 @@ const NavBar = () => {
           />
         </a>
         <nav className="hidden md:flex items-center space-x-6">
-          <a href="#features" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">How It Works</a>
-          <a href="#testimonials" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">Testimonials</a>
-          <a href="#pricing" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">Pricing</a>
+          <a 
+            href="#features" 
+            className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          >
+            How It Works
+          </a>
+          <a 
+            href="#testimonials" 
+            className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('testimonials')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          >
+            Testimonials
+          </a>
+          <a 
+            href="#pricing" 
+            className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          >
+            Pricing
+          </a>
         </nav>
         <Button size="sm" variant="ghost" className="md:hidden">Menu</Button>
         <div className="relative hidden md:inline-flex group">

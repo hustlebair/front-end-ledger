@@ -119,7 +119,7 @@ const HeroSection = () => {
           </motion.div>
           
           <motion.div 
-            className="mt-24 relative"
+            className="mt-12 relative"
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.6, duration: 0.8, ease: 'easeOut' }}
