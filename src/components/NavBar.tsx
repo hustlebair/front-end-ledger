@@ -31,7 +31,7 @@ const NavBar = () => {
         </nav>
         <Button size="sm" variant="ghost" className="md:hidden">Menu</Button>
         <div className="relative hidden md:inline-flex group">
-          <div className="absolute -inset-0.5 rounded-lg bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 opacity-75 blur transition-all duration-300 group-hover:opacity-100 group-hover:blur-md" />
+          <div className="absolute -inset-0.5 rounded-lg bg-[linear-gradient(90deg,#fa2284_0%,#ff8b00_50%,#00afe4_100%)] opacity-75 blur transition-all duration-300 group-hover:opacity-100 group-hover:blur-md" />
           <a href="https://www.littleledger.co" target="_blank" rel="noopener noreferrer">
             <Button 
               size="sm" 
