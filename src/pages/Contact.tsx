@@ -4,6 +4,71 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Mail, MessageSquare, HelpCircle } from 'lucide-react';
+import { useForm, ValidationError } from '@formspree/react';
+
+const ContactForm = () => {
+  const [state, handleSubmit] = useForm("xkgbjqlg");
+  
+  if (state.succeeded) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-lg text-green-600 mb-4">Thanks for your message! We'll get back to you soon.</p>
+      </div>
+    );
+  }
+  
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label htmlFor="email" className="block text-sm font-medium mb-2">
+          Email Address
+        </label>
+        <input
+          id="email"
+          type="email"
+          name="email"
+          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blush-500"
+          placeholder="your@email.com"
+        />
+        <ValidationError 
+          prefix="Email" 
+          field="email"
+          errors={state.errors}
+          className="text-red-500 text-sm mt-1"
+        />
+      </div>
+      <div>
+        <label htmlFor="message" className="block text-sm font-medium mb-2">
+          Message
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          rows={5}
+          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blush-500"
+          placeholder="Tell us more about your question or issue..."
+        />
+        <ValidationError 
+          prefix="Message" 
+          field="message"
+          errors={state.errors}
+          className="text-red-500 text-sm mt-1"
+        />
+      </div>
+      <Button 
+        type="submit" 
+        disabled={state.submitting}
+        className="w-full"
+        style={{
+          background: 'linear-gradient(to right, #F28CA5, #B187F2)',
+          border: 'none',
+        }}
+      >
+        {state.submitting ? 'Sending...' : 'Send Message'}
+      </Button>
+    </form>
+  );
+};
 
 const Contact = () => {
   return (
@@ -82,49 +147,7 @@ const Contact = () => {
               <CardTitle className="text-center">Send us a message</CardTitle>
             </CardHeader>
             <CardContent>
-              <form className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2">Name</label>
-                  <input 
-                    type="text" 
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blush-500"
-                    placeholder="Your name"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Email</label>
-                  <input 
-                    type="email" 
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blush-500"
-                    placeholder="your@email.com"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Subject</label>
-                  <input 
-                    type="text" 
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blush-500"
-                    placeholder="How can we help?"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Message</label>
-                  <textarea 
-                    rows={5}
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blush-500"
-                    placeholder="Tell us more about your question or issue..."
-                  />
-                </div>
-                <Button 
-                  className="w-full"
-                  style={{
-                    background: 'linear-gradient(to right, #F28CA5, #B187F2)',
-                    border: 'none',
-                  }}
-                >
-                  Send Message
-                </Button>
-              </form>
+              <ContactForm />
             </CardContent>
           </Card>
         </div>
