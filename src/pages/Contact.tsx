@@ -79,7 +79,7 @@ const Contact = () => {
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
             <p className="text-xl text-gray-600">
-              We're here to help! Get in touch with our team.
+              Get in touch with our team using the form below or email <a href="mailto:help@kidera.co" className="text-blue-600 hover:underline">help@kidera.co</a>.
             </p>
           </div>
 
