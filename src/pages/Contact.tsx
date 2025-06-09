@@ -83,65 +83,6 @@ const Contact = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            <Card className="text-center">
-              <CardHeader>
-                <div className="mx-auto w-12 h-12 bg-blush-100 rounded-lg flex items-center justify-center mb-4">
-                  <Mail className="h-6 w-6 text-blush-500" />
-                </div>
-                <CardTitle className="text-lg">General Support</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 mb-4">
-                  Questions about your account or general inquiries
-                </p>
-                <Button variant="outline" asChild>
-                  <a href="mailto:support@littleledger.com">
-                    support@littleledger.com
-                  </a>
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center">
-              <CardHeader>
-                <div className="mx-auto w-12 h-12 bg-blush-100 rounded-lg flex items-center justify-center mb-4">
-                  <MessageSquare className="h-6 w-6 text-blush-500" />
-                </div>
-                <CardTitle className="text-lg">Sales & Billing</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 mb-4">
-                  Questions about pricing, billing, or subscriptions
-                </p>
-                <Button variant="outline" asChild>
-                  <a href="mailto:billing@littleledger.com">
-                    billing@littleledger.com
-                  </a>
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center">
-              <CardHeader>
-                <div className="mx-auto w-12 h-12 bg-blush-100 rounded-lg flex items-center justify-center mb-4">
-                  <HelpCircle className="h-6 w-6 text-blush-500" />
-                </div>
-                <CardTitle className="text-lg">Technical Help</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 mb-4">
-                  Technical issues, bug reports, or feature requests
-                </p>
-                <Button variant="outline" asChild>
-                  <a href="mailto:tech@littleledger.com">
-                    tech@littleledger.com
-                  </a>
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-
           <Card className="max-w-2xl mx-auto">
             <CardHeader>
               <CardTitle className="text-center">Send us a message</CardTitle>
