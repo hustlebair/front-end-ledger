@@ -89,6 +89,36 @@ const PrivacyPolicy = () => {
             <h2 className="text-2xl font-semibold mt-12 mb-6 pb-2 border-b border-gray-100 text-gray-800">Data Security & Retention</h2>
             <p className="mb-6 text-gray-700 leading-relaxed">We take reasonable steps to secure your information but cannot guarantee complete protection. Data is retained as long as needed to provide services or comply with legal obligations.</p>
 
+            <h2 className="text-2xl font-semibold mt-12 mb-6 pb-2 border-b border-gray-100 text-gray-800">AI Disclosure Notice</h2>
+            <h3 className="text-xl font-semibold mt-8 mb-4 text-gray-800">How We Use AI in Kidera</h3>
+            <p className="mb-6 text-gray-700 leading-relaxed">
+              Kidera uses AI technologies to enhance your experience by providing features such as automatic summaries of journal entries, and the generation of images or videos based on content you provide. These features are designed to help you reflect on and preserve meaningful moments in a more creative and insightful way.
+            </p>
+
+            <h3 className="text-xl font-semibold mt-8 mb-4 text-gray-800">What Data Is Used</h3>
+            <p className="mb-4 text-gray-700">We may process the following user-submitted data through AI services:</p>
+            <ul className="list-disc pl-6 mb-6 space-y-2 text-gray-700">
+              <li>Journal text entries (for summaries or suggestions)</li>
+              <li>Uploaded photos and videos (for AI-generated visuals or timelines)</li>
+              <li>Metadata such as timestamps or filenames</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-8 mb-4 text-gray-800">How AI Services Work</h3>
+            <p className="mb-4 text-gray-700">
+              To deliver these features, we integrate with trusted third-party AI providers (including OpenAI, Replicate, and ElevenLabs). Your data may be temporarily transmitted to these services for processing. These providers do not store your data or use it to train their models.
+            </p>
+            <p className="mb-6 text-gray-700 leading-relaxed">
+              We retain AI-generated outputs (e.g., summaries, image enhancements, timeline videos) within your Kidera account to support features like "AI Timeline" or "Past Generations."
+            </p>
+
+            <h3 className="text-xl font-semibold mt-8 mb-4 text-gray-800">Your Control</h3>
+            <p className="mb-6 text-gray-700 leading-relaxed">
+              You can delete any AI-generated content at any time from your account. If you delete your original entry or media, the associated AI outputs will be removed as well.
+            </p>
+            <p className="mb-6 text-gray-700 leading-relaxed">
+              We do not sell or share your data with advertisers or data brokers. All data handling complies with our broader Privacy Policy and applicable data protection laws.
+            </p>
+
             <h2 className="text-2xl font-semibold mt-12 mb-6 pb-2 border-b border-gray-100 text-gray-800">Your Rights</h2>
             <p className="mb-4 text-gray-700">Depending on your region, you may have rights including:</p>
             <ul className="list-disc pl-6 mb-6 space-y-2 text-gray-700">
