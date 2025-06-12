@@ -1,15 +1,18 @@
 
 const WhySection = () => {
   return (
-    <section className="py-24 bg-gradient-to-br from-gray-50 to-gray-100">
+    <section className="relative py-24 bg-cover bg-center bg-no-repeat bg-fixed" style={{ backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.75)), url(/family.jpg)' }}>
+      {/* Background overlay */}
+      <div className="absolute inset-0 bg-white/20 backdrop-blur-sm" />
+      <div className="relative z-10">
       <div className="container-narrow px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="order-2 md:order-1">
+          <div className="order-2 md:order-1 max-w-[80%] mx-auto md:max-w-none md:mx-0">
             <div className="rounded-2xl overflow-hidden shadow-xl transform rotate-1 hover:rotate-0 transition-all duration-500 hover:shadow-2xl">
               <img 
-                src="/images/9 faces square.png" 
-                alt="Faces evolution showing growth over time" 
-                className="w-full h-auto object-cover"
+                src="/images/iphonecalendar.png" 
+                alt="Kidera App Preview" 
+                className="w-full h-auto max-h-[400px] object-contain"
                 loading="lazy"
               />
             </div>
@@ -21,11 +24,12 @@ const WhySection = () => {
             <p className="text-gray-700 mb-6 text-lg">
               Kidera was built by a new dad who wanted a simple way to preserve the memories he never wanted to forget—from first words to sleepy snuggles.
             </p>
-            <blockquote className="border-l-4 border-blush-300 pl-4 italic text-gray-600 font-light">
+            <blockquote className="border-l-4 border-blush-400 pl-4 italic text-gray-700 font-light">
               "I started Kidera because I kept forgetting the small, beautiful details of my daughter's first year."
             </blockquote>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

@@ -28,10 +28,10 @@ const PricingSection = () => {
       cta: 'Get Started',
       highlight: false,
       recommended: false,
-      glowColor: 'rgba(250, 34, 132, 0.5)'  // #fa2284 with 50% opacity
+      glowColor: 'transparent'  // No glow for free plan
     },
     {
-      name: 'Moments Plan',
+      name: 'Milestone Plan',
       price: '$6.99',
       period: 'm',
       description: 'Everything you need',
@@ -44,7 +44,7 @@ const PricingSection = () => {
         'Face Evolution',
         'Data Export'
       ],
-      cta: 'Upgrade Now',
+      cta: 'Get Milestone Plan',
       highlight: true,
       recommended: true,
       glowColor: 'rgba(255, 139, 0, 0.5)'  // #ff8b00 with 50% opacity
@@ -63,7 +63,7 @@ const PricingSection = () => {
         'Face Evolution',
         'Data Export'
       ],
-      cta: 'Choose Legacy',
+      cta: 'Get Legacy Plan',
       highlight: false,
       recommended: false,
       glowColor: 'rgba(0, 175, 228, 0.5)'  // #00afe4 with 50% opacity
@@ -77,7 +77,7 @@ const PricingSection = () => {
           Free to start. Upgrade when you’re ready.
         </h2>
         <p className="text-center text-gray-600 mb-12 max-w-xl mx-auto">
-          Little Ledger grows with your family. Start free and add more
+          Kidera grows with your family. Start free and add more
           storage as your memories multiply.
         </p>
 
@@ -86,22 +86,29 @@ const PricingSection = () => {
             {plans.map((plan, idx) => (
               <Card
                 key={idx}
-                className="relative flex flex-col h-full overflow-hidden pricing-card"
+                className={`relative flex flex-col h-full overflow-hidden pricing-card ${
+                  plan.name === 'Free Plan' ? 'shadow-none' : ''
+                }`}
                 style={{
                   backgroundClip: 'padding-box',
-                  border: '1px solid transparent',
-                  boxShadow: `0 0 15px ${plan.glowColor}`,
+                  border: '1px solid #e5e7eb',
+                  ...(plan.name !== 'Free Plan' && {
+                    border: '1px solid transparent',
+                    boxShadow: `0 0 15px ${plan.glowColor}`
+                  })
                 }}
               >
-                {/* gradient border behind */}
-                <div
-                  className="absolute inset-0 -z-10"
-                  style={{
-                    background: 'linear-gradient(to right, #F28CA5, #B187F2)',
-                    margin: '-1px',
-                    borderRadius: 'inherit',
-                  }}
-                />
+                {/* gradient border behind - only for paid plans */}
+                {plan.name !== 'Free Plan' && (
+                  <div
+                    className="absolute inset-0 -z-10"
+                    style={{
+                      background: 'linear-gradient(to right, #F28CA5, #B187F2)',
+                      margin: '-1px',
+                      borderRadius: 'inherit',
+                    }}
+                  />
+                )}
 
                 {plan.recommended && (
                   <Badge className="absolute top-2 right-4 bg-blush-500">
@@ -139,24 +146,22 @@ const PricingSection = () => {
 
                 <CardFooter className="mt-auto">
                   <div className="relative inline-block w-full group">
-                    {/* Glow effect for all plans */}
-                    <div 
-                      className="absolute -inset-0.5 rounded-lg blur-sm transition-all duration-300 group-hover:blur"
-                      style={{
-                        backgroundColor: plan.name === 'Moments Plan' 
-                          ? 'rgba(255, 139, 0, 0.4)' 
-                          : plan.name === 'Legacy Plan'
-                          ? 'rgba(0, 175, 228, 0.4)'
-                          : 'rgba(250, 34, 132, 0.4)',
-                        boxShadow: `0 0 8px 3px ${
-                          plan.name === 'Moments Plan' 
+                    {/* Glow effect for paid plans only */}
+                    {plan.name !== 'Free Plan' && (
+                      <div 
+                        className="absolute -inset-0.5 rounded-lg blur-sm transition-all duration-300 group-hover:blur"
+                        style={{
+                          backgroundColor: plan.name === 'Milestone Plan' 
                             ? 'rgba(255, 139, 0, 0.4)' 
-                            : plan.name === 'Legacy Plan'
-                            ? 'rgba(0, 175, 228, 0.4)'
-                            : 'rgba(250, 34, 132, 0.4)'
-                        }`
-                      }}
-                    />
+                            : 'rgba(0, 175, 228, 0.4)',
+                          boxShadow: `0 0 8px 3px ${
+                            plan.name === 'Milestone Plan' 
+                              ? 'rgba(255, 139, 0, 0.4)' 
+                              : 'rgba(0, 175, 228, 0.4)'
+                          }`
+                        }}
+                      />
+                    )}
                     {false && (
                       <div 
                         className="absolute -inset-0.5 rounded-lg blur-sm transition-all duration-300 group-hover:blur"

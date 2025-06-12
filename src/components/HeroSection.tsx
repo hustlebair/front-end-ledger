@@ -119,17 +119,27 @@ const HeroSection = () => {
           </motion.div>
           
           <motion.div 
-            className="mt-12 relative"
+            className="mt-12 relative max-w-4xl mx-auto"
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.6, duration: 0.8, ease: 'easeOut' }}
           >
             <div className="relative">
-              <img 
-                src="/images/iphonecalendar.png" 
-                alt="Kidera App Preview" 
-                className="mx-auto h-80 md:h-[32rem] object-contain drop-shadow-2xl"
-              />
+              {/* Glow effect */}
+              <div className="absolute inset-0 bg-white/30 blur-3xl -z-10 rounded-full scale-90" />
+              {/* Video container with glow border */}
+              <div className="relative mx-auto max-w-3xl rounded-3xl overflow-hidden shadow-2xl bg-white/10 backdrop-blur-sm border border-white/20">
+                <video 
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline
+                  className="w-full h-auto max-h-[32rem] object-cover"
+                >
+                  <source src="/kiderakids.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
             </div>
           </motion.div>
         </motion.div>

@@ -50,10 +50,10 @@ const FeaturesSection = () => {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-800 to-gray-600 mb-4">
-            Journaling should feel effortless.
+          Memories don’t belong buried in your camera roll.
           </h2>
           <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-            We've designed Little Ledger to fit into your busy life as a parent, not add to your to-do list.
+          Built for parents, powered by AI — Kidera keeps your most important memories safe, organized, and separate from the noise.
           </p>
         </motion.div>
         
