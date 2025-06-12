@@ -16,13 +16,13 @@ const WhySection = () => {
           </div>
           <div className="order-1 md:order-2">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              You blink, and it's gone.
+              They Grow. You Blink. It's Gone.
             </h2>
             <p className="text-gray-700 mb-6 text-lg">
-              Little Ledger was built by a new dad who wanted a simple way to preserve the memories he never wanted to forget—from first words to sleepy snuggles.
+              Kidera was built by a new dad who wanted a simple way to preserve the memories he never wanted to forget—from first words to sleepy snuggles.
             </p>
             <blockquote className="border-l-4 border-blush-300 pl-4 italic text-gray-600 font-light">
-              "I started Little Ledger because I kept forgetting the small, beautiful details of my daughter's first year."
+              "I started Kidera because I kept forgetting the small, beautiful details of my daughter's first year."
             </blockquote>
           </div>
         </div>

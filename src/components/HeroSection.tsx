@@ -69,7 +69,7 @@ const HeroSection = () => {
               className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed"
               variants={item}
             >
-              Little Ledger helps parents capture the moments they'll wish they remembered.
+              Helping Parents Solve The "I Wish I Rememebered More" Problem.
             </motion.p>
           </div>
           
@@ -87,7 +87,7 @@ const HeroSection = () => {
                 <div className="absolute -inset-0.5 rounded-lg bg-[linear-gradient(90deg,#fa2284_0%,#ff8b00_50%,#00afe4_100%)] opacity-75 blur transition-all duration-300 group-hover:opacity-100 group-hover:blur-md" />
                 
                 {/* Button */}
-                <a href="https://www.littleledger.co" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.kidera.co" target="_blank" rel="noopener noreferrer">
                   <Button 
                     size="lg" 
                     className="relative z-10 bg-gray-900 text-white hover:bg-gray-800 transition-all duration-300"
@@ -127,7 +127,7 @@ const HeroSection = () => {
             <div className="relative">
               <img 
                 src="/images/iphonecalendar.png" 
-                alt="Little Ledger App Preview" 
+                alt="Kidera App Preview" 
                 className="mx-auto h-80 md:h-[32rem] object-contain drop-shadow-2xl"
               />
             </div>
