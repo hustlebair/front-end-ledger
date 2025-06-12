@@ -14,57 +14,60 @@ import {
 const PricingSection = () => {
   const plans = [
     {
-      name: 'Free',
+      name: 'Free Plan',
       price: '$0',
-      period: 'forever',
-      description: 'Perfect for getting started',
+      period: 'm',
+      description: 'Start Remembering Now',
       features: [
         'Unlimited text entries',
-        '30 photos per month',
-        '5 videos per month',
-        'Basic search',
+        '1GB Media Storage (photo and Video)',
+        '40 Free Credits',
+        'Limited Ask Kidera™️',
+        'Data Export'
       ],
-      cta: 'Start Free',
+      cta: 'Get Started',
       highlight: false,
       recommended: false,
-      glowColor: 'rgba(0, 0, 0, 0.1)',        // grey glow
+      glowColor: 'rgba(250, 34, 132, 0.5)'  // #fa2284 with 50% opacity
     },
     {
-      name: 'Moments',
-      price: '$7.99',
-      period: 'per month',
-      description: 'For the complete memory archive',
+      name: 'Moments Plan',
+      price: '$6.99',
+      period: 'm',
+      description: 'Everything you need',
       features: [
-        'Unlimited text entries',
-        'Unlimited photos & videos',
-        'Advanced AI summaries',
-        'Face recognition',
-        'Cloud backup',
-        'Timeline visualization',
+        'Unlimited Text entries',
+        '15gb Media Storage (photos + videos)',
+        '200 credits monthly',
+        'Ask Kidera™️',
+        'Weekly AI Summary',
+        'Face Evolution',
+        'Data Export'
       ],
-      cta: 'Get Moments',
+      cta: 'Upgrade Now',
       highlight: true,
       recommended: true,
-      glowColor: 'rgba(242, 140, 165, 0.5)',  // coral pink glow
+      glowColor: 'rgba(255, 139, 0, 0.5)'  // #ff8b00 with 50% opacity
     },
     {
-      name: 'Legacy',
-      price: '$14.99',
-      period: 'per month',
-      description: 'Create lasting family heirlooms',
+      name: 'Legacy Plan',
+      price: '$12.99',
+      period: 'm',
+      description: 'Never forgetting anything',
       features: [
-        'Everything in Moments',
-        'Physical photo book (yearly)',
-        'Family sharing (up to 5)',
-        'Custom printing credits',
-        'Personal memory consultant',
-        'Priority support',
+        'Unlimited Text Entries',
+        '50gb Media Storage (photos + videos)',
+        '600 credits monthly',
+        'Ask Kidera™️',
+        'Weekly AI Summary',
+        'Face Evolution',
+        'Data Export'
       ],
       cta: 'Choose Legacy',
       highlight: false,
       recommended: false,
-      glowColor: 'rgba(177, 135, 242, 0.5)',  // lavender-violet glow
-    },
+      glowColor: 'rgba(0, 175, 228, 0.5)'  // #00afe4 with 50% opacity
+    }
   ];
 
   return (
@@ -136,18 +139,35 @@ const PricingSection = () => {
 
                 <CardFooter className="mt-auto">
                   <div className="relative inline-block w-full group">
-                    {/* Glow effect - only show for Moments and Legacy plans */}
-                    {plan.name !== 'Free' && (
+                    {/* Glow effect for all plans */}
+                    <div 
+                      className="absolute -inset-0.5 rounded-lg blur-sm transition-all duration-300 group-hover:blur"
+                      style={{
+                        backgroundColor: plan.name === 'Moments Plan' 
+                          ? 'rgba(255, 139, 0, 0.4)' 
+                          : plan.name === 'Legacy Plan'
+                          ? 'rgba(0, 175, 228, 0.4)'
+                          : 'rgba(250, 34, 132, 0.4)',
+                        boxShadow: `0 0 8px 3px ${
+                          plan.name === 'Moments Plan' 
+                            ? 'rgba(255, 139, 0, 0.4)' 
+                            : plan.name === 'Legacy Plan'
+                            ? 'rgba(0, 175, 228, 0.4)'
+                            : 'rgba(250, 34, 132, 0.4)'
+                        }`
+                      }}
+                    />
+                    {false && (
                       <div 
                         className="absolute -inset-0.5 rounded-lg blur-sm transition-all duration-300 group-hover:blur"
                         style={{
-                          backgroundColor: plan.name === 'Moments' 
-                            ? 'rgba(242, 140, 165, 0.7)' 
-                            : 'rgba(177, 135, 242, 0.7)',
+                          backgroundColor: plan.name === 'Moments Plan' 
+                            ? 'rgba(255, 139, 0, 0.7)' 
+                            : 'rgba(0, 175, 228, 0.7)',
                           boxShadow: `0 0 10px 5px ${
-                            plan.name === 'Moments' 
-                              ? 'rgba(242, 140, 165, 0.7)' 
-                              : 'rgba(177, 135, 242, 0.7)'
+                            plan.name === 'Moments Plan' 
+                              ? 'rgba(255, 139, 0, 0.7)' 
+                              : 'rgba(0, 175, 228, 0.7)'
                           }`
                         }}
                       />
@@ -157,10 +177,10 @@ const PricingSection = () => {
                     <Button 
                       size="lg" 
                       className={`relative z-10 w-full ${
-                        plan.name === 'Free' 
+                        plan.name === 'Free Plan' 
                           ? 'bg-gray-900 hover:bg-gray-800' 
                           : 'bg-gray-900 hover:bg-gray-800'
-                      } text-white transition-all duration-300`}
+                      } text-white transition-all duration-300 hover:scale-105`}
                     >
                       <span className="relative z-10">
                         {plan.cta}

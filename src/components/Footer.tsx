@@ -11,10 +11,11 @@ const Footer = () => {
       <div className="container-narrow">
         <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="flex items-center gap-2 mb-4 md:mb-0">
-            <div className="w-8 h-8 bg-blush-500 rounded-lg flex items-center justify-center">
-              <span className="text-white font-semibold">LL</span>
-            </div>
-            <span className="font-semibold text-lg">Little Ledger</span>
+            <img 
+              src="/images/kidera_logo.png" 
+              alt="Kidera" 
+              className="h-8 w-auto"
+            />
           </div>
           
           <div className="flex flex-wrap justify-center space-x-6 mb-4 md:mb-0">
@@ -49,7 +50,7 @@ const Footer = () => {
           </div>
           
           <div className="text-sm text-gray-400">
-            © {new Date().getFullYear()} Little Ledger
+            © {new Date().getFullYear()} Kidera
           </div>
         </div>
       </div>
