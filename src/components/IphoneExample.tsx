@@ -56,7 +56,7 @@ const IphoneExample = () => {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
             >
-              <div className={`relative w-full h-full flex items-center ${index % 2 === 0 ? 'justify-end md:justify-center' : 'justify-start md:justify-center'}`}>
+              <div className="relative w-full h-full flex items-center justify-center">
                 <div className="w-full max-w-[160px] sm:max-w-[180px] md:max-w-[220px] lg:max-w-[260px] xl:max-w-[280px]">
                   <img 
                     src={feature.image} 
