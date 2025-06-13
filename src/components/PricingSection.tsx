@@ -74,7 +74,7 @@ const PricingSection = () => {
     <section id="pricing" className="py-20 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl md:text-4xl font-bold mb-3 text-center">
-          Free to start. Upgrade when you’re ready.
+          Free to start. Upgrade when you're ready.
         </h2>
         <p className="text-center text-gray-600 mb-12 max-w-xl mx-auto">
           Kidera grows with your family. Start free and add more
@@ -186,6 +186,15 @@ const PricingSection = () => {
                           ? 'bg-gray-900 hover:bg-gray-800' 
                           : 'bg-gray-900 hover:bg-gray-800'
                       } text-white transition-all duration-300 hover:scale-105`}
+                      onClick={() => {
+                        if (plan.name === 'Milestone Plan') {
+                          window.location.href = 'https://www.kidera.app/login?plan=milestone';
+                        } else if (plan.name === 'Free Plan') {
+                          window.location.href = 'https://www.kidera.app';
+                        } else if (plan.name === 'Legacy Plan') {
+                          window.location.href = 'https://www.kidera.app/login?plan=legacy';
+                        }
+                      }}
                     >
                       <span className="relative z-10">
                         {plan.cta}
