@@ -147,7 +147,7 @@ const TestimonialsSection = () => {
           }}
         />
       </div>
-      <div className="absolute inset-0 bg-white/80 backdrop-blur-sm"></div>
+      <div className="absolute inset-0 bg-white/65 backdrop-blur-sm"></div>
       <div className="container-narrow relative z-10">
         <blockquote className="text-center mb-12">
           <p className="text-3xl md:text-4xl font-medium italic mb-4">"I wish I started this sooner."</p>
@@ -162,7 +162,7 @@ const TestimonialsSection = () => {
                   key={groupIndex} 
                   className="flex-[0_0_100%] min-w-0 px-1"
                 >
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 w-full px-2 sm:px-0">
                     {group.map((testimonial) => (
                       <div key={testimonial.id} className="h-full">
                         <TestimonialCard testimonial={testimonial} />
@@ -176,20 +176,20 @@ const TestimonialsSection = () => {
           
           <button 
             onClick={scrollPrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-8 bg-white p-3 rounded-full shadow-md hover:shadow-lg transition-all z-10"
+            className="absolute -left-4 sm:-left-6 top-1/2 -translate-y-1/2 bg-white p-1.5 sm:p-2 rounded-full shadow-md hover:shadow-lg transition-all z-10"
             aria-label="Previous testimonial"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
           
           <button 
             onClick={scrollNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-8 bg-white p-3 rounded-full shadow-md hover:shadow-lg transition-all z-10"
+            className="absolute -right-4 sm:-right-6 top-1/2 -translate-y-1/2 bg-white p-1.5 sm:p-2 rounded-full shadow-md hover:shadow-lg transition-all z-10"
             aria-label="Next testimonial"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>

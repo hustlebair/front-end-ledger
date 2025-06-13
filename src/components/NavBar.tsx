@@ -58,7 +58,7 @@ const NavBar = () => {
         </nav>
         <div className="relative inline-flex">
           <div className="absolute -inset-0.5 rounded-lg bg-[linear-gradient(90deg,#fa2284_0%,#ff8b00_50%,#00afe4_100%)] opacity-75 blur transition-all duration-300 hover:opacity-100 hover:blur-sm md:hover:blur-md" />
-          <a href="https://www.kidera.co" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.kidera.app" target="_blank" rel="noopener noreferrer">
             <Button 
               size="sm" 
               className="relative z-10 bg-gray-900 text-white hover:bg-gray-800 transition-all duration-300 text-sm px-4"

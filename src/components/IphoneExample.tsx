@@ -26,23 +26,23 @@ const IphoneExample = () => {
         {features.map((feature, index) => (
           <div 
             key={index}
-            className={`flex flex-col items-center gap-12 md:gap-16 mb-20 md:mb-28 last:mb-0 md:flex-row ${
-              index % 2 === 1 && 'md:flex-row-reverse'
+            className={`flex flex-row items-stretch gap-4 md:gap-8 mb-12 md:mb-24 last:mb-0 ${
+              index % 2 === 1 ? 'flex-row-reverse' : ''
             }`}
           >
             {/* Text Block */}
             <motion.div 
-              className="w-full md:w-1/2 flex flex-col items-center"
+              className="w-1/2 flex items-center"
               initial={{ opacity: 0, x: index % 2 === 0 ? -40 : 40 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
-              <div className="w-full max-w-md px-4 text-left">
-                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 leading-tight">
+              <div className={`w-full ${index % 2 === 0 ? 'pr-2 md:pr-4 lg:pr-8' : 'pl-2 md:pl-4 lg:pl-8'}`}>
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 md:mb-4 leading-tight">
                   {feature.title}
                 </h3>
-                <p className="text-gray-600 leading-relaxed text-base md:text-lg">
+                <p className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed">
                   {feature.description}
                 </p>
               </div>
@@ -50,22 +50,24 @@ const IphoneExample = () => {
 
             {/* Image Container */}
             <motion.div 
-              className="w-full md:w-1/2 flex justify-center"
+              className="w-1/2 flex items-center"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
             >
-              <div className="relative w-full max-w-[180px] sm:max-w-[200px] md:max-w-[240px] lg:max-w-[280px]">
-                <img 
-                  src={feature.image} 
-                  alt={feature.title}
-                  className="w-full h-auto block rounded-lg shadow-xl"
-                  style={{
-                    background: 'transparent',
-                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15)'
-                  }}
-                />
+              <div className={`relative w-full h-full flex items-center ${index % 2 === 0 ? 'justify-end' : 'justify-start'}`}>
+                <div className="w-full max-w-[160px] sm:max-w-[180px] md:max-w-[220px] lg:max-w-[260px] xl:max-w-[280px]">
+                  <img 
+                    src={feature.image} 
+                    alt={feature.title}
+                    className="w-full h-auto block rounded-lg shadow-xl"
+                    style={{
+                      background: 'transparent',
+                      boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15)'
+                    }}
+                  />
+                </div>
               </div>
             </motion.div>
           </div>
