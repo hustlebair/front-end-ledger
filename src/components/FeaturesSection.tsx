@@ -3,6 +3,7 @@ import { Calendar, FileImage, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const FeaturesSection = () => {
+
   const features = [
     {
       icon: Calendar,
@@ -67,7 +68,7 @@ const FeaturesSection = () => {
           {features.map((feature, index) => (
             <motion.div 
               key={index} 
-              className="group relative p-10 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-transparent"
+              className="group relative p-10 bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-white/20 hover:border-white/40"
               variants={item}
               whileHover={{ y: -5 }}
             >

@@ -93,7 +93,7 @@ const HeroSection = () => {
                     className="relative z-10 bg-gray-900 text-white hover:bg-gray-800 transition-all duration-300"
                   >
                     <span className="relative z-10 flex items-center">
-                      Start Remembering More
+                      Start Saving Memories
                       <motion.span 
                         className="ml-2"
                         animate={{ x: [0, 4, 0] }}
@@ -125,21 +125,17 @@ const HeroSection = () => {
             transition={{ delay: 0.6, duration: 0.8, ease: 'easeOut' }}
           >
             <div className="relative">
-              {/* Glow effect */}
-              <div className="absolute inset-0 bg-white/30 blur-3xl -z-10 rounded-full scale-90" />
-              {/* Video container with glow border */}
-              <div className="relative mx-auto max-w-3xl rounded-3xl overflow-hidden shadow-2xl bg-white/10 backdrop-blur-sm border border-white/20">
-                <video 
-                  autoPlay 
-                  loop 
-                  muted 
-                  playsInline
-                  className="w-full h-auto max-h-[32rem] object-cover"
-                >
-                  <source src="/kiderakids.mp4" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              </div>
+              <img 
+                src="/growth.jpg" 
+                alt="Family growth journey" 
+                className="w-full h-auto max-h-[32rem] object-cover"
+                style={{
+                  boxShadow: 'none',
+                  border: 'none',
+                  borderRadius: 0
+                }}
+                loading="lazy"
+              />
             </div>
           </motion.div>
         </motion.div>
