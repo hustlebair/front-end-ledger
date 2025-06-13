@@ -1,9 +1,15 @@
 
 const WhySection = () => {
   return (
-    <section className="relative py-24 bg-cover bg-center bg-no-repeat bg-fixed" style={{ backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.70)), url(/family.jpg)' }}>
-      {/* Background overlay */}
-      <div className="absolute inset-0 bg-white/10 backdrop-blur-sm" />
+    <section className="relative py-16 md:py-24">
+      {/* Background image with mobile support */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat md:bg-fixed" 
+          style={{ backgroundImage: 'url(/family.jpg)' }}
+        />
+        <div className="absolute inset-0 bg-white/90 md:bg-white/70" />
+      </div>
       <div className="relative z-10">
       <div className="container-narrow px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-2 gap-12 items-center">

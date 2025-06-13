@@ -125,15 +125,28 @@ const TestimonialsSection = () => {
   }
 
   return (
-    <section 
-      id="testimonials" 
-      className="py-16 relative overflow-hidden"
-      style={{
-        backgroundImage: "url('/momsun.jpg')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'center'
-      }}
-    >
+    <section id="testimonials" className="py-16 relative overflow-hidden">
+      {/* Background with different images for mobile and desktop */}
+      <div className="absolute inset-0">
+        {/* Mobile background */}
+        <div 
+          className="md:hidden absolute inset-0"
+          style={{
+            backgroundImage: "url('/momsunmobile.jpg')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        {/* Desktop background */}
+        <div 
+          className="hidden md:block absolute inset-0"
+          style={{
+            backgroundImage: "url('/momsun.jpg')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+      </div>
       <div className="absolute inset-0 bg-white/80 backdrop-blur-sm"></div>
       <div className="container-narrow relative z-10">
         <blockquote className="text-center mb-12">
