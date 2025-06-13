@@ -27,22 +27,22 @@ const IphoneExample = () => {
           <div 
             key={index}
             className={`flex flex-row items-stretch gap-4 md:gap-8 mb-12 md:mb-24 last:mb-0 ${
-              index % 2 === 1 ? 'flex-row-reverse' : ''
+              index % 2 === 1 ? 'flex-row-reverse md:flex-row-reverse' : ''
             }`}
           >
             {/* Text Block */}
             <motion.div 
-              className="w-1/2 flex items-center"
+              className="w-1/2 flex items-center md:justify-center"
               initial={{ opacity: 0, x: index % 2 === 0 ? -40 : 40 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
-              <div className={`w-full ${index % 2 === 0 ? 'pr-2 md:pr-4 lg:pr-8' : 'pl-2 md:pl-4 lg:pl-8'}`}>
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 md:mb-4 leading-tight">
+              <div className={`w-full ${index % 2 === 0 ? 'pr-2 md:pr-0 md:pl-4' : 'pl-2 md:pl-0 md:pr-4'}`}>
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 md:mb-4 leading-tight md:text-center">
                   {feature.title}
                 </h3>
-                <p className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed">
+                <p className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed md:text-center">
                   {feature.description}
                 </p>
               </div>
@@ -50,13 +50,13 @@ const IphoneExample = () => {
 
             {/* Image Container */}
             <motion.div 
-              className="w-1/2 flex items-center"
+              className="w-1/2 flex items-center md:justify-center"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
             >
-              <div className={`relative w-full h-full flex items-center ${index % 2 === 0 ? 'justify-end' : 'justify-start'}`}>
+              <div className={`relative w-full h-full flex items-center ${index % 2 === 0 ? 'justify-end md:justify-center' : 'justify-start md:justify-center'}`}>
                 <div className="w-full max-w-[160px] sm:max-w-[180px] md:max-w-[220px] lg:max-w-[260px] xl:max-w-[280px]">
                   <img 
                     src={feature.image} 
