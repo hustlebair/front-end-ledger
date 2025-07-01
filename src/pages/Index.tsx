@@ -7,6 +7,7 @@ import IphoneExample from '@/components/IphoneExample';
 import FeaturesSection from '@/components/FeaturesSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import PricingSection from '@/components/PricingSection';
+import FaqSection from '@/components/FaqSection';
 import CtaSection from '@/components/CtaSection';
 import Footer from '@/components/Footer';
 import ScrollToTop from '@/components/ScrollToTop';
@@ -42,6 +43,7 @@ const Index = () => {
       <FeaturesSection />
       <TestimonialsSection />
       <PricingSection />
+      <FaqSection />
       <CtaSection />
       <Footer />
       <ScrollToTop />
