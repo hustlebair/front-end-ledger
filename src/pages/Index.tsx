@@ -4,10 +4,10 @@ import NavBar from '@/components/NavBar';
 import HeroSection from '@/components/HeroSection';
 import WhySection from '@/components/WhySection';
 import IphoneExample from '@/components/IphoneExample';
-import FeaturesSection from '@/components/FeaturesSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import PricingSection from '@/components/PricingSection';
 import FaqSection from '@/components/FaqSection';
+import OverwhelmedSection from '@/components/OverwhelmedSection';
 import CtaSection from '@/components/CtaSection';
 import Footer from '@/components/Footer';
 import ScrollToTop from '@/components/ScrollToTop';
@@ -38,9 +38,9 @@ const Index = () => {
     <div className="min-h-screen bg-white">
       <NavBar />
       <HeroSection />
-      <WhySection />
+      <OverwhelmedSection />
       <IphoneExample />
-      <FeaturesSection />
+      <WhySection />
       <TestimonialsSection />
       <PricingSection />
       <FaqSection />
