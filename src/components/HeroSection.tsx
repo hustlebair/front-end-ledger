@@ -1,12 +1,12 @@
 import { Button } from '@/components/ui/button';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { Check } from 'lucide-react';
 
 const HeroSection = () => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
 
-  // Text animation variants
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -20,8 +20,8 @@ const HeroSection = () => {
 
   const item = {
     hidden: { y: 20, opacity: 0 },
-    show: { 
-      y: 0, 
+    show: {
+      y: 0,
       opacity: 1,
       transition: {
         type: 'spring',
@@ -31,114 +31,110 @@ const HeroSection = () => {
     },
   };
 
-  // Gradient blob animations
-  const blobVariants = {
-    hidden: { opacity: 0, scale: 0 },
-    visible: (i: number) => ({
-      opacity: [0.1, 0.15, 0.1],
-      scale: [1, 1.05, 1],
-      transition: {
-        duration: 10 + i * 2,
-        repeat: Infinity,
-        repeatType: 'reverse',
-        ease: 'easeInOut',
-      },
-    }),
-  };
-
   return (
-    <section ref={ref} className="relative pt-36 pb-12 bg-white">
-      <div className="container-narrow relative">
-        <motion.div 
-          className="text-center max-w-4xl mx-auto"
+    <section
+      ref={ref}
+      className="relative w-full pt-32 pb-16 bg-gradient-to-br from-[#fff6fa] via-[#fff8f2] to-[#f2faff]"
+    >
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between px-4 md:px-8 gap-8 lg:gap-12">
+        {/* Left: Text Content */}
+        <motion.div
+          className="w-full max-w-2xl mx-auto lg:mx-0 text-center lg:text-left"
           variants={container}
           initial="hidden"
           animate={isInView ? 'show' : 'hidden'}
         >
-          <div className="overflow-hidden mb-8">
-            <motion.h1 
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight"
-              variants={item}
-            >
-              Because they won't be this little forever.
-            </motion.h1>
-          </div>
-          
-          <div className="overflow-hidden mb-12">
-            <motion.p 
-              className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed"
-              variants={item}
-            >
-              Helping Parents Solve The "I Wish I Rememebered More" Problem.
-            </motion.p>
-          </div>
-          
-          <motion.div 
-            className="flex justify-center"
+          {/* Badge */}
+          <motion.div className="mb-8 flex justify-center lg:justify-start" variants={item}>
+            <span className="inline-block px-4 py-1 rounded-full text-sm font-semibold bg-[#00afe4]/10 text-[#00afe4] border border-[#00afe4]/20">
+              🌟 Join thousands of families preserving memories
+            </span>
+          </motion.div>
+          {/* Headline */}
+          <motion.h1
+            className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-4 lg:mb-5"
+            style={{ lineHeight: 1.25 }}
             variants={item}
           >
-            <motion.div
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 10 }}
-            >
-              <div className="relative inline-block group">
-                {/* Glow effect */}
-                <div className="absolute -inset-0.5 rounded-lg bg-[linear-gradient(90deg,#fa2284_0%,#ff8b00_50%,#00afe4_100%)] opacity-75 blur transition-all duration-300 group-hover:opacity-100 group-hover:blur-md" />
-                
-                {/* Button */}
-                <a href="https://www.kidera.app" target="_blank" rel="noopener noreferrer">
-                  <Button 
-                    size="lg" 
-                    className="relative z-10 bg-gray-900 text-white hover:bg-gray-800 transition-all duration-300"
-                  >
-                    <span className="relative z-10 flex items-center">
-                      Start Saving Memories
-                      <motion.span 
-                        className="ml-2"
-                        animate={{ x: [0, 4, 0] }}
-                        transition={{ 
-                          duration: 2,
-                          repeat: Infinity,
-                          repeatType: 'loop'
-                        }}
-                      >
-                        →
-                      </motion.span>
-                    </span>
-                    <motion.span 
-                      className="absolute inset-0 bg-white/10"
-                      initial={{ x: '-100%' }}
-                      whileHover={{ x: '100%' }}
-                      transition={{ duration: 0.6, ease: 'easeInOut' }}
-                    />
-                  </Button>
-                </a>
-              </div>
-            </motion.div>
+            Your Child's Story,{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fa2284] via-[#ff8b00] to-[#00afe4]">Beautifully Preserved</span>
+          </motion.h1>
+          {/* Subheadline */}
+          <motion.p
+            className="text-lg md:text-xl text-gray-700 mb-7 max-w-lg mx-auto lg:mx-0"
+            style={{ lineHeight: 1.7 }}
+            variants={item}
+          >
+            Join parents who never miss a milestone. Kidera makes it effortless to save, organize, and relive your family’s most precious moments.
+          </motion.p>
+          {/* Callout Box */}
+          <motion.div
+            className="mb-7 p-4 rounded-lg border border-[#fa2284]/30 bg-[#fa2284]/5 text-base font-medium text-gray-800 max-w-xl mx-auto lg:mx-0"
+            style={{ whiteSpace: 'normal', overflowX: 'visible' }}
+            variants={item}
+          >
+            Unlock lifetime access for a one-time price – <span className="text-[#fa2284] font-semibold">for a short time only!</span>
           </motion.div>
-          
-          <motion.div 
-            className="mt-12 relative max-w-4xl mx-auto"
+          {/* Inline Checklist */}
+          <motion.div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-8 gap-y-2 mb-7 text-base font-medium" variants={item}>
+            <span className="flex items-center text-gray-700">
+              <Check className="w-5 h-5 text-[#fa2284] mr-1.5" /> Advanced Digital Scrapbook
+            </span>
+            <span className="flex items-center text-gray-700">
+              <Check className="w-5 h-5 text-[#ff8b00] mr-1.5" /> AI-generated timelines
+            </span>
+            <span className="flex items-center text-gray-700">
+              <Check className="w-5 h-5 text-[#00afe4] mr-1.5" /> Private and Secure
+            </span>
+          </motion.div>
+          {/* CTAs */}
+          <motion.div className="flex flex-col sm:flex-row gap-4 md:gap-3 justify-center lg:justify-start mb-7" variants={item}>
+            <Button
+              size="lg"
+              className="font-bold text-white shadow-lg border-0 px-7 py-3 text-base transition-transform duration-200 hover:scale-105"
+              style={{
+                background: '#00afe4',
+              }}
+              onClick={() => window.location.href = '#pricing'}
+            >
+              Get Milestone Plan
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="font-bold border-2 border-[#fa2284] text-[#fa2284] bg-white hover:bg-[#fa2284]/10 px-7 py-3 text-base"
+              onClick={() => window.location.href = '#demo'}
+            >
+              Watch Demo
+            </Button>
+          </motion.div>
+          {/* Testimonial Card */}
+          <motion.div
+            className="bg-white rounded-xl shadow-md px-8 py-5 text-left border border-gray-100 w-full max-w-2xl mx-auto lg:mx-0"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.8, duration: 0.7, ease: 'easeOut' }}
+          >
+            <div className="flex items-center mb-2">
+              <span className="text-yellow-400 text-lg mr-1">★★★★★</span>
+            </div>
+            <div className="text-gray-700 text-base mb-1">
+              “I love how easy it is to capture every milestone. Kidera keeps our memories safe!”
+            </div>
+            <div className="text-gray-500 text-sm">— Emily R., mom of 3</div>
+          </motion.div>
+        </motion.div>
+        {/* Right: Illustration */}
+        <div className="w-full flex flex-col items-center mt-10 lg:mt-0">
+          <motion.div
+            className="w-full max-w-xs md:max-w-sm lg:max-w-md aspect-square bg-gradient-to-br from-[#fa2284]/10 via-[#ff8b00]/10 to-[#00afe4]/10 rounded-2xl flex items-center justify-center border border-gray-100 shadow-lg"
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.6, duration: 0.8, ease: 'easeOut' }}
           >
-            <div className="relative">
-              <img 
-                src="/growth.jpg" 
-                alt="Family growth journey" 
-                className="w-full h-auto max-h-[32rem] object-cover"
-                style={{
-                  boxShadow: 'none',
-                  border: 'none',
-                  borderRadius: 0
-                }}
-                loading="lazy"
-              />
-            </div>
+            <span className="text-7xl md:text-8xl lg:text-9xl" role="img" aria-label="Family">👨‍👩‍👧‍👦</span>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
