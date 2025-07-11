@@ -56,7 +56,7 @@ const HeroSection = () => {
             style={{ lineHeight: 1.25 }}
             variants={item}
           >
-            Your Child's Story,{' '}
+            Your Child's Story,<span className="block sm:inline"></span>{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fa2284] via-[#ff8b00] to-[#00afe4]">Beautifully Preserved</span>
           </motion.h1>
           {/* Subheadline */}
