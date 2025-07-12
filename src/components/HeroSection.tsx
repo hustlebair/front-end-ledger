@@ -76,7 +76,7 @@ const HeroSection = () => {
             Unlock lifetime access for a one-time price – <span className="text-[#fa2284] font-semibold">for a short time only!</span>
           </motion.div>
           {/* Inline Checklist */}
-          <motion.div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-8 gap-y-2 mb-7 text-base font-medium" variants={item}>
+          <motion.div className="flex flex-col items-start justify-start gap-y-2 mb-7 text-base font-medium" variants={item}>
             <span className="flex items-center text-gray-700">
               <Check className="w-5 h-5 text-[#fa2284] mr-1.5" /> Advanced Digital Scrapbook
             </span>
