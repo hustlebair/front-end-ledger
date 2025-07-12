@@ -52,7 +52,7 @@ const HeroSection = () => {
           </motion.div>
           {/* Headline */}
           <motion.h1
-            className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-4 lg:mb-5"
+            className="font-extrabold text-gray-900 leading-tight mb-4 lg:mb-5 text-[40px] md:text-5xl xl:text-[55px]"
             style={{ lineHeight: 1.25 }}
             variants={item}
           >
@@ -65,7 +65,7 @@ const HeroSection = () => {
             style={{ lineHeight: 1.7 }}
             variants={item}
           >
-            Join parents who never miss a milestone. Kidera makes it effortless to save, organize, and relive your family’s most precious moments.
+            Join parents who <b>never miss a milestone</b>. Kidera makes it <b>effortless</b> to <b>save</b>, <b>organize</b>, and <b>relive</b> your family’s most precious moments.
           </motion.p>
           {/* Callout Box */}
           <motion.div

@@ -15,8 +15,8 @@ const NavBar = () => {
   }, []);
 
   return (
-    <header className="fixed w-full z-50 transition-all duration-300 bg-white shadow-[0_4px_12px_rgba(0,0,0,0.05)] py-3">
-      <div className="container-narrow flex items-center justify-between">
+    <header className="fixed w-full z-50 transition-all duration-300 bg-white shadow-[0_4px_12px_rgba(0,0,0,0.05)]" style={{height: '70px'}}>
+      <div className="container-narrow flex items-center justify-between h-full px-4 md:px-8">
         <a href="/" className="flex items-center">
           <img 
             src="/images/kidera_logo.png" 

@@ -42,7 +42,7 @@ const FaqSection = () => {
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="text-4xl font-bold mb-4">
             <span className="text-gray-900">Frequently Asked </span>
-            <span className="text-purple-600">Questions</span>
+            <span className="text-orange-500">Questions</span>
           </h2>
           <p className="text-lg text-gray-600">
             Find answers to common questions about Kidera.
