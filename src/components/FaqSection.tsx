@@ -45,7 +45,7 @@ const FaqSection = () => {
             <span className="text-purple-600">Questions</span>
           </h2>
           <p className="text-lg text-gray-600">
-            Find answers to common questions about our sleep training methods and platform.
+            Find answers to common questions about Kidera.
           </p>
         </div>
 
