@@ -37,12 +37,12 @@ const FaqSection = () => {
   };
 
   return (
-    <section id="faq" className="py-20 bg-gray-50">
+    <section id="faq" className="py-20 bg-gradient-to-br from-blue-50 via-sky-50 to-cyan-50">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="text-4xl font-bold mb-4">
             <span className="text-gray-900">Frequently Asked </span>
-            <span className="text-orange-500">Questions</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fa2284] via-[#ff8b00] to-[#00afe4]">Questions</span>
           </h2>
           <p className="text-lg text-gray-600">
             Find answers to common questions about Kidera.
@@ -64,7 +64,7 @@ const FaqSection = () => {
             >
               <button
                 className={`w-full px-6 py-5 text-left flex items-center justify-between transition-colors ${
-                  openIndex === index ? 'bg-gray-100' : 'hover:bg-gray-50'
+                  openIndex === index ? 'bg-gradient-to-r from-[#fa2284]/10 via-[#ff8b00]/10 to-[#00afe4]/10' : 'hover:bg-gray-50'
                 }`}
                 onClick={() => toggleFaq(index)}
                 aria-expanded={openIndex === index}
@@ -92,7 +92,7 @@ const FaqSection = () => {
                       open: { 
                         opacity: 1, 
                         height: 'auto',
-                        padding: '0 1.5rem 1.5rem'
+                        padding: '1.5rem 1.5rem 1.5rem'
                       },
                       collapsed: { 
                         opacity: 0, 
@@ -103,9 +103,9 @@ const FaqSection = () => {
                       }
                     }}
                     transition={{ duration: 0.2, ease: 'easeInOut' }}
-                    className="text-gray-600"
+                    className="text-gray-700 leading-relaxed text-base"
                   >
-                    {faq.answer}
+                    <p className="mb-0">{faq.answer}</p>
                   </motion.div>
                 )}
               </AnimatePresence>

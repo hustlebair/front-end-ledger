@@ -39,13 +39,13 @@ const Index = () => {
       <NavBar />
       <HeroSection />
       {/* Featured On Section */}
-      <section className="py-6 bg-white">
-        <div className="max-w-5xl mx-auto flex flex-col items-center">
+      <section className="hidden md:block py-6 bg-white">
+        <div className="max-w-7xl mx-auto flex flex-col items-center">
           <h3 className="text-xl font-light mb-4 text-center" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 300 }}>
             Featured On
           </h3>
           <div className="w-full">
-            <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 gap-8 justify-items-center items-center">
+            <div className="grid grid-cols-6 gap-12 justify-items-center items-center">
               <img src="/featured-on-logos/tiktok-logo.png" alt="TikTok" className="h-10 object-contain inline-block grayscale opacity-70" />
               <img src="/featured-on-logos/facebook-logo.png" alt="Facebook" className="h-8 object-contain inline-block grayscale opacity-70" />
               <img src="/featured-on-logos/pinterest-logo.png" alt="Pinterest" className="h-10 object-contain inline-block grayscale opacity-70" />
@@ -65,7 +65,7 @@ const Index = () => {
       `}</style>
       <OverwhelmedSection />
       <IphoneExample />
-      <WhySection />
+      {/* <WhySection /> */}
       {/* <TestimonialsSection /> */}
       <PricingSection />
       <FaqSection />
