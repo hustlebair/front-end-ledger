@@ -5,28 +5,28 @@ import { ChevronDown } from 'lucide-react';
 const FaqSection = () => {
   const faqs = [
     {
-      question: 'What age should I start sleep training my baby?',
-      answer: 'Most babies are ready for sleep training between 4-6 months of age, when they have developed a more regular sleep-wake cycle and no longer need to feed during the night. However, every child is different, and some may be ready earlier or later.'
+      question: 'What exactly is Kidera, and how does it work?',
+      answer: 'Kidera is a private digital journal designed for parents to capture and preserve their child’s most meaningful moments. You can write memories, upload photos or videos, and Kidera helps organize them into a beautiful timeline. Our AI also generates thoughtful summaries that help you reflect on how your child is growing over time.'
     },
     {
-      question: 'Are your sleep methods gentle and safe?',
-      answer: 'Yes, our sleep training methods are designed to be gentle and responsive to your baby\'s needs. We focus on creating healthy sleep habits while ensuring your baby feels secure and loved throughout the process.'
+      question: 'Is this just for babies or can I use it as my child grows?',
+      answer: 'Kidera is built to grow with your child. Whether you’re documenting first steps or their first big win at school, it’s designed to capture moments at every age and stage.'
     },
     {
-      question: 'How long does it typically take to see results?',
-      answer: 'Most families see significant improvements within 3-7 days of consistent implementation. However, every child is different, and some may take up to 2-3 weeks to fully adjust to the new sleep routine.'
+      question: 'Do I need to download an app to use Kidera?',
+      answer: 'Nope! Kidera works right in your browser on any device. You can access your memories from your phone, tablet, or computer. You can add the site to your home screen for easy access. App coming soon!'
     },
     {
-      question: 'What if my baby has special needs or medical conditions?',
-      answer: 'We recommend consulting with your pediatrician before starting any sleep training program, especially if your baby has special needs or medical conditions. Our methods can often be adapted, but professional medical advice should always come first.'
+      question: 'Can I upload photos and videos?',
+      answer: 'Yes! You can add photos and videos alongside your journal entries to bring each memory to life. They’re securely stored and organized by date, so you can easily look back anytime.'
     },
     {
-      question: 'Do you offer refunds if the methods don\'t work?',
-      answer: 'Yes, we offer a 30-day money-back guarantee. If you don\'t see improvements in your baby\'s sleep after following our program consistently for 30 days, we\'ll provide a full refund.'
+      question: 'How do the AI-powered summaries work?',
+      answer: 'Our AI reads your entries and creates weekly summaries that highlight growth, milestones, and recurring themes. It’s like having a thoughtful assistant who helps you reflect on the journey of parenthood.'
     },
     {
-      question: 'Can I use these methods for naps and nighttime sleep?',
-      answer: 'Absolutely! Our methods are designed to work for both nap time and nighttime sleep. We provide specific guidance for establishing healthy sleep habits throughout the entire 24-hour period.'
+      question: 'What if I forget to write every day?',
+      answer: 'That’s totally okay. Kidera isn’t about perfection — it’s about capturing the moments that matter. Whether you write weekly, monthly, or just when something special happens, every entry adds to your child’s beautiful story. Plus, you can always go back and add more details later.'
     }
   ];
 
