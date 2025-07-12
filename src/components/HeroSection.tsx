@@ -110,18 +110,18 @@ const HeroSection = () => {
           </motion.div>
           {/* Testimonial Card */}
           <motion.div
-            className="bg-white rounded-xl shadow-md px-8 py-5 text-left border border-gray-100 w-full max-w-2xl mx-auto lg:mx-0"
+            className="bg-white rounded-xl shadow-md px-4 py-3 text-left border border-gray-100 w-full max-w-md mx-auto lg:mx-0"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.8, duration: 0.7, ease: 'easeOut' }}
           >
-            <div className="flex items-center mb-2">
-              <span className="text-yellow-400 text-lg mr-1">★★★★★</span>
+            <div className="flex items-center mb-1">
+              <span className="text-yellow-400 text-base mr-1">★★★★★</span>
             </div>
-            <div className="text-gray-700 text-base mb-1">
+            <div className="text-gray-700 text-sm mb-0">
               “I love how easy it is to capture every milestone. Kidera keeps our memories safe!”
             </div>
-            <div className="text-gray-500 text-sm">— Emily R., mom of 3</div>
+            <div className="text-gray-500 text-xs mt-1">— Emily R., mom of 3</div>
           </motion.div>
         </motion.div>
         {/* Right: Illustration */}
