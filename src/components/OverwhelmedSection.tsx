@@ -1,25 +1,25 @@
 import React from 'react';
-import { Clock, Heart, Camera, Calendar } from 'lucide-react';
+import { Heart } from 'lucide-react';
 
 const OverwhelmedSection = () => {
   const cards = [
     {
-      icon: <Clock className="w-8 h-8 text-blue-500" />,
+      icon: <img src="/icons/later.webp" alt="Later icon" className="w-14 h-14" />,
       title: '"I\'ll Do It Later" Syndrome',
       description: 'You meant to write it down… but now the moment\'s gone.'
     },
     {
-      icon: <Heart className="w-8 h-8 text-pink-500" />,
+      icon: <img src="/icons/remember.png" alt="Remember icon" className="w-16 h-16" />,
       title: 'Memory Guilt',
       description: 'You can\'t recall when they first smiled or said "mama." It eats at you.'
     },
     {
-      icon: <Camera className="w-8 h-8 text-yellow-500" />,
+      icon: <img src="/icons/roll.png" alt="Roll icon" className="w-16 h-16" />,
       title: 'Camera Roll Chaos',
       description: 'Thousands of photos, no context. What\'s worth keeping?'
     },
     {
-      icon: <Calendar className="w-8 h-8 text-purple-500" />,
+      icon: <img src="/icons/repetitive.png" alt="Repetitive icon" className="w-16 h-16" />,
       title: 'Repetitive Days Blur Together',
       description: 'The early months are a fog. You\'re afraid you\'ll forget what made this day unique.'
     }
@@ -43,7 +43,7 @@ const OverwhelmedSection = () => {
               key={index}
               className="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col items-center text-center h-full"
             >
-              <div className="mb-4 p-3 bg-gray-50 rounded-full">
+              <div className="mb-4">
                 {card.icon}
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">{card.title}</h3>
