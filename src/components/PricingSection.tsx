@@ -32,7 +32,7 @@ const PricingSection = () => {
     },
     {
       name: 'Milestone Plan',
-      price: '$6.99',
+      price: '$8',
       period: 'm',
       description: 'Everything you need',
       features: [
@@ -51,7 +51,7 @@ const PricingSection = () => {
     },
     {
       name: 'Legacy Plan',
-      price: '$12.99',
+      price: '$14',
       period: 'm',
       description: 'Never forgetting anything',
       features: [
