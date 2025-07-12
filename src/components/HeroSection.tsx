@@ -127,15 +127,15 @@ const HeroSection = () => {
         {/* Right: Illustration */}
         <div className="w-full flex flex-col items-center mt-10 lg:mt-0">
           <motion.div
-            className="w-full max-w-xs md:max-w-sm lg:max-w-md aspect-square bg-gradient-to-br from-[#fa2284]/10 via-[#ff8b00]/10 to-[#00afe4]/10 rounded-2xl flex items-center justify-center border border-gray-100 shadow-lg"
+            className="w-full h-full flex items-center justify-center"
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.6, duration: 0.8, ease: 'easeOut' }}
           >
             <img
-              src="/images/hero-section.png"
+              src="/hero-section.png"
               alt="Family illustration"
-              className="w-4/5 h-4/5 object-contain"
+              className="w-full h-full object-contain"
               loading="lazy"
             />
           </motion.div>

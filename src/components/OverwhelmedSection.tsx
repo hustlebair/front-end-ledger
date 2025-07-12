@@ -30,10 +30,10 @@ const OverwhelmedSection = () => {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            We Know You're <span className="text-red-500">Overwhelmed</span>
+            The Future of Family <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fa2284] via-[#ff8b00] to-[#00afe4]">Memory Making</span>
           </h2>
           <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-            Every new parent wants to remember everything — but life moves too fast, and memories slip away.
+            Advanced AI handles the chaos of scattered photos and forgotten moments, turning them into beautiful, organized memories.
           </p>
         </div>
 

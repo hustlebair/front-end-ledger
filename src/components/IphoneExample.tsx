@@ -61,11 +61,8 @@ const IphoneExample = () => {
                   <img 
                     src={feature.image} 
                     alt={feature.title}
-                    className="w-full h-auto block rounded-lg shadow-xl"
-                    style={{
-                      background: 'transparent',
-                      boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15)'
-                    }}
+                    className="w-full h-auto block rounded-lg"
+                    style={{ background: 'transparent' }}
                   />
                 </div>
               </div>

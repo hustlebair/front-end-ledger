@@ -38,6 +38,31 @@ const Index = () => {
     <div className="min-h-screen bg-white">
       <NavBar />
       <HeroSection />
+      {/* Featured On Section */}
+      <section className="py-6 bg-white">
+        <div className="max-w-5xl mx-auto flex flex-col items-center">
+          <h3 className="text-xl font-light mb-4 text-center" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 300 }}>
+            Featured On
+          </h3>
+          <div className="w-full">
+            <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 gap-8 justify-items-center items-center">
+              <img src="/featured-on-logos/tiktok-logo.png" alt="TikTok" className="h-10 object-contain inline-block grayscale opacity-70" />
+              <img src="/featured-on-logos/facebook-logo.png" alt="Facebook" className="h-8 object-contain inline-block grayscale opacity-70" />
+              <img src="/featured-on-logos/pinterest-logo.png" alt="Pinterest" className="h-10 object-contain inline-block grayscale opacity-70" />
+              <img src="/featured-on-logos/instagram-logo.png" alt="Instagram" className="h-10 object-contain inline-block grayscale opacity-70" />
+              <img src="/featured-on-logos/reddit-logo.png" alt="Reddit" className="h-10 object-contain inline-block grayscale opacity-70" />
+              <img src="/featured-on-logos/todays-parent.webp" alt="Today's Parent" className="h-10 object-contain inline-block grayscale opacity-70" />
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* Add keyframes for scroll-logos */}
+      <style jsx global>{`
+        @keyframes scroll-logos {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+      `}</style>
       <OverwhelmedSection />
       <IphoneExample />
       <WhySection />
