@@ -132,7 +132,12 @@ const HeroSection = () => {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.6, duration: 0.8, ease: 'easeOut' }}
           >
-            <span className="text-7xl md:text-8xl lg:text-9xl" role="img" aria-label="Family">👨‍👩‍👧‍👦</span>
+            <img
+              src="/images/hero-section.png"
+              alt="Family illustration"
+              className="w-4/5 h-4/5 object-contain"
+              loading="lazy"
+            />
           </motion.div>
         </div>
       </div>
