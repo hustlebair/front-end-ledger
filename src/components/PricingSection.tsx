@@ -71,10 +71,10 @@ const PricingSection = () => {
   ];
 
   return (
-    <section id="pricing" className="py-20 bg-white">
+    <section id="pricing" className="py-20 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl md:text-4xl font-bold mb-3 text-center">
-          Free to start. Upgrade when you're ready.
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fa2284] via-[#ff8b00] to-[#00afe4]">Free to start.</span> Upgrade when you're ready.
         </h2>
         <p className="text-center text-gray-600 mb-12 max-w-xl mx-auto">
           Kidera grows with your family. Start free and add more
