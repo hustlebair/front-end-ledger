@@ -23,6 +23,18 @@ const IphoneExample = () => {
   return (
     <section className="py-12 md:py-20 bg-transparent">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <div className="inline-block mb-6">
+            <span className="text-6xl">✨</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <span className="text-gray-900">Simple. Smart. </span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fa2284] via-[#ff8b00] to-[#00afe4]">Memorable.</span>
+          </h2>
+          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+            Effortlessly organize your child's precious moments with intelligent features that do the work for you.
+          </p>
+        </div>
         {features.map((feature, index) => (
           <div 
             key={index}
