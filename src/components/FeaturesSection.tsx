@@ -1,87 +1,135 @@
 
-import { Calendar, FileImage, Sparkles } from 'lucide-react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const FeaturesSection = () => {
-
   const features = [
     {
-      icon: Calendar,
-      title: "Pick a date",
-      description: "Tap a day on the calendar to add a new memory or revisit a special moment.",
-      color: "from-pink-500 to-rose-500"
+      id: 1,
+      title: "Weekly AI Summaries",
+      description: "Get beautiful weekly summaries of your child's growth and milestones, automatically generated from your memories.",
+      image: "/weekly-summary.png"
     },
     {
-      icon: FileImage,
-      title: "Add a memory",
-      description: "Write, upload a photo or video with just a few taps.",
-      color: "from-blue-500 to-indigo-500"
+      id: 2,
+      title: "Face Evolution",
+      description: "Watch your child grow through AI-generated face evolution videos that show their journey over time.",
+      image: "/placeholder.svg" // You can replace with actual image
     },
     {
-      icon: Sparkles,
-      title: "Relive the magic",
-      description: "AI summaries and face evolution visuals help you see growth and change.",
-      color: "from-purple-500 to-fuchsia-500"
+      id: 3,
+      title: "Smart Memory Search",
+      description: "Find any memory instantly with AI-powered search that understands context and relationships.",
+      image: "/placeholder.svg" // You can replace with actual image
     }
   ];
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const nextFeature = () => {
+    setCurrentIndex((prev) => (prev + 1) % features.length);
   };
 
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+  const prevFeature = () => {
+    setCurrentIndex((prev) => (prev - 1 + features.length) % features.length);
   };
 
   return (
-    <section id="features" className="py-24 bg-gradient-to-b from-white to-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div 
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-800 to-gray-600 mb-4">
-          Memories don’t belong buried in your camera roll.
+    <section className="py-16 md:py-24 bg-gradient-to-br from-gray-50 to-white">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <span className="text-gray-900">Powered by </span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fa2284] via-[#ff8b00] to-[#00afe4]">AI Magic</span>
           </h2>
-          <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-          Built for parents, powered by AI — Kidera keeps your most important memories safe, organized, and separate from the noise.
+          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+            Experience the future of memory keeping with intelligent features that bring your child's story to life.
           </p>
-        </motion.div>
-        
-        <motion.div 
-          className="grid md:grid-cols-3 gap-8 lg:gap-12 px-4"
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          {features.map((feature, index) => (
-            <motion.div 
-              key={index} 
-              className="group relative p-10 bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-white/20 hover:border-white/40"
-              variants={item}
-              whileHover={{ y: -5 }}
-            >
-              <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-10 rounded-2xl`} />
-              <div className={`w-16 h-16 rounded-2xl mb-6 flex items-center justify-center bg-gradient-to-br ${feature.color} text-white shadow-lg`}>
-                <feature.icon className="w-7 h-7" />
-              </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-800">{feature.title}</h3>
-              <p className="text-gray-600 leading-relaxed text-lg">{feature.description}</p>
-              <div className="mt-6 h-0.5 w-12 bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
-            </motion.div>
-          ))}
-        </motion.div>
+        </div>
+
+        {/* Feature Carousel */}
+        <div className="relative">
+          {/* Navigation Arrows */}
+          <button
+            onClick={prevFeature}
+            className="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 hover:bg-white rounded-full p-2 md:p-3 shadow-lg transition-all duration-300 hover:scale-110"
+            aria-label="Previous feature"
+          >
+            <ChevronLeft className="w-6 h-6 text-gray-700" />
+          </button>
+          
+          <button
+            onClick={nextFeature}
+            className="absolute right-2 md:right-4 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 hover:bg-white rounded-full p-2 md:p-3 shadow-lg transition-all duration-300 hover:scale-110"
+            aria-label="Next feature"
+          >
+            <ChevronRight className="w-6 h-6 text-gray-700" />
+          </button>
+
+          {/* Feature Content */}
+          <div className="relative overflow-hidden rounded-2xl bg-white shadow-xl">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentIndex}
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -100 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                className="flex flex-col md:flex-row items-center"
+              >
+                {/* Image Section */}
+                <div className="w-full md:w-1/2 p-6 md:p-8">
+                  <div className="relative">
+                    <img
+                      src={features[currentIndex].image}
+                      alt={features[currentIndex].title}
+                      className="w-full h-auto rounded-xl shadow-lg"
+                    />
+                    {/* Optional overlay or badge */}
+                    <div className="absolute top-4 right-4 bg-gradient-to-r from-[#fa2284] to-[#00afe4] text-white px-3 py-1 rounded-full text-sm font-semibold">
+                      AI Powered
+                    </div>
+                  </div>
+                </div>
+
+                {/* Text Section */}
+                <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-center">
+                  <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+                    {features[currentIndex].title}
+                  </h3>
+                  <p className="text-lg text-gray-600 leading-relaxed mb-6">
+                    {features[currentIndex].description}
+                  </p>
+                  
+                  {/* Feature indicators */}
+                  <div className="flex space-x-2">
+                    {features.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentIndex(index)}
+                        className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                          index === currentIndex 
+                            ? 'bg-gradient-to-r from-[#fa2284] to-[#00afe4]' 
+                            : 'bg-gray-300 hover:bg-gray-400'
+                        }`}
+                        aria-label={`Go to feature ${index + 1}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/* Mobile Swipe Hint */}
+        <div className="text-center mt-8 md:hidden">
+          <p className="text-sm text-gray-500">
+            Swipe or use arrows to explore features
+          </p>
+        </div>
       </div>
     </section>
   );

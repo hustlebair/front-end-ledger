@@ -4,6 +4,7 @@ import NavBar from '@/components/NavBar';
 import HeroSection from '@/components/HeroSection';
 import WhySection from '@/components/WhySection';
 import IphoneExample from '@/components/IphoneExample';
+import FeaturesSection from '@/components/FeaturesSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import PricingSection from '@/components/PricingSection';
 import FaqSection from '@/components/FaqSection';
@@ -65,6 +66,7 @@ const Index = () => {
       `}</style>
       <OverwhelmedSection />
       <IphoneExample />
+      <FeaturesSection />
       {/* <WhySection /> */}
       {/* <TestimonialsSection /> */}
       <PricingSection />
