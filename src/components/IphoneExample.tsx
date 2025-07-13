@@ -3,19 +3,19 @@ import { motion } from 'framer-motion';
 
 const features = [
   {
-    title: 'Capture Moments Effortlessly',
-    description: 'Quickly save precious memories with our intuitive interface. Never miss a moment with one-tap saving.',
-    image: '/images/iphonecalendar.png' // You can replace this with your actual image path
+    title: 'Intuitive Interface',
+    description: 'Quickly save precious memories with our beautiful calendar display. Relive your memories with ease.',
+    image: '/calendarviewiphone.png' // You can replace this with your actual image path
   },
   {
-    title: 'Organize with Ease',
-    description: 'Categorize and tag your memories for easy retrieval. Create custom collections that grow with your family.',
-    image: '/images/iphonecalendar.png'
+    title: 'Your Helpful AI Assistant',
+    description: 'Kidera is your personal AI assistant for quick tips on the go and helping you organize and remember your memories.',
+    image: '/kideraai.png'
   },
   {
-    title: 'Relive the Journey',
-    description: 'Beautifully presented memories that take you back in time. Watch your child\'s story unfold.',
-    image: '/images/iphonecalendar.png'
+    title: 'Their Story, Organized',
+    description: 'Give your child\'s special moments the dedicated space they deserve, away from the clutter of daily life.',
+    image: '/iphonemediagrid.png'
   }
 ];
 
