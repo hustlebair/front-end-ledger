@@ -132,11 +132,13 @@ const HeroSection = () => {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.6, duration: 0.8, ease: 'easeOut' }}
           >
-            <img
-              src="/hero-section.png"
-              alt="Family illustration"
+            <video
+              src="/jittertrans.webm"
+              autoPlay
+              loop
+              muted
+              playsInline
               className="w-full h-full object-contain"
-              loading="lazy"
             />
           </motion.div>
         </div>
