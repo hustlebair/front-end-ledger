@@ -118,10 +118,7 @@ const FeaturesSection = () => {
                         className={`w-full h-auto rounded-xl shadow-lg ${currentIndex === 2 ? 'scale-110' : ''}`}
                       />
                     )}
-                    {/* Optional overlay or badge */}
-                    <div className="absolute top-4 right-4 bg-gradient-to-r from-[#fa2284] to-[#00afe4] text-white px-2 py-1 rounded-full text-xs font-semibold">
-                      ⚡ AI Powered
-                    </div>
+
                   </div>
                 </div>
 
