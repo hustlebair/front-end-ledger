@@ -9,7 +9,7 @@ const FeaturesSection = () => {
       id: 1,
       title: "Face Evolution",
       description: "Watch your child grow through AI-generated face evolution videos that show their journey over time.",
-      image: "/bringtolife.mp4",
+      image: "/moving-baby.mp4",
       type: "video"
     },
     {
@@ -82,7 +82,7 @@ const FeaturesSection = () => {
         </div>
 
         {/* Feature Carousel */}
-        <div className="relative px-16 md:px-20">
+        <div className="relative px-2 md:px-20">
           {/* Feature Content */}
           <div 
             className="relative overflow-hidden rounded-2xl bg-white shadow-2xl border border-gray-100"
@@ -100,7 +100,7 @@ const FeaturesSection = () => {
                 className="flex flex-col md:flex-row items-center"
               >
                 {/* Image/Video Section */}
-                <div className="w-full md:w-3/5 p-6 md:p-8">
+                <div className="w-full md:w-3/5 p-3 md:p-8">
                   <div className="relative">
                     {features[currentIndex].type === "video" ? (
                       <video
@@ -119,14 +119,14 @@ const FeaturesSection = () => {
                       />
                     )}
                     {/* Optional overlay or badge */}
-                    <div className="absolute top-4 right-4 bg-gradient-to-r from-[#fa2284] to-[#00afe4] text-white px-3 py-1 rounded-full text-sm font-semibold">
-                      AI Powered
+                    <div className="absolute top-4 right-4 bg-gradient-to-r from-[#fa2284] to-[#00afe4] text-white px-2 py-1 rounded-full text-xs font-semibold">
+                      ⚡ AI Powered
                     </div>
                   </div>
                 </div>
 
                 {/* Text Section */}
-                <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-center">
+                <div className="w-full md:w-1/2 p-3 md:p-8 flex flex-col justify-center">
                   <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
                     {features[currentIndex].title}
                   </h3>
