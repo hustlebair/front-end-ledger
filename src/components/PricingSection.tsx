@@ -20,8 +20,7 @@ const PricingSection = () => {
       description: 'Start Remembering Now',
       features: [
         'Unlimited text entries',
-        '1GB Media Storage (photo and Video)',
-        '40 Free Credits',
+        '500MB Media Storage (photo + Video)',
         'Limited Ask Kidera™️',
         'Data Export'
       ],
