@@ -45,12 +45,6 @@ const HeroSection = () => {
           initial="hidden"
           animate={isInView ? 'show' : 'hidden'}
         >
-          {/* Badge */}
-          <motion.div className="mb-8 flex justify-start" variants={item}>
-            <span className="inline-block px-4 py-1 rounded-full text-sm font-semibold bg-[#00afe4]/10 text-[#00afe4] border border-[#00afe4]/20">
-              🌟 Join thousands of families preserving memories
-            </span>
-          </motion.div>
           {/* Headline */}
           <motion.h1
             className="font-extrabold text-gray-900 leading-tight mb-4 lg:mb-5 text-[40px] md:text-5xl xl:text-[55px]"
@@ -68,14 +62,26 @@ const HeroSection = () => {
           >
             Join parents who <b>never miss a milestone</b>. Kidera makes it <b>effortless</b> to <b>save</b>, <b>organize</b>, and <b>relive</b> your family's most precious moments.
           </motion.p>
-          {/* Callout Box */}
-          <motion.div
-            className="mb-7 p-4 rounded-lg border border-[#fa2284]/30 bg-[#fa2284]/5 text-base font-medium text-gray-800 max-w-xl mx-0"
-            style={{ whiteSpace: 'normal', overflowX: 'visible' }}
-            variants={item}
-          >
-            Unlock a full year of access at a special rate – <span className="text-[#fa2284] font-semibold">for a short time only!</span>
+          {/* View Monthly Plans Button */}
+          <motion.div className="mb-7" variants={item}>
+            <div className="relative inline-flex w-full sm:w-auto">
+              <div className="absolute -inset-0.5 rounded-lg bg-[linear-gradient(90deg,#fa2284_0%,#ff8b00_50%,#00afe4_100%)] opacity-75 blur transition-all duration-300 hover:opacity-100 hover:blur-sm md:hover:blur-md" />
+              <Button
+                size="lg"
+                className="relative z-10 bg-gray-900 text-white hover:bg-gray-800 transition-all duration-300 px-7 py-3 text-base font-bold rounded-lg w-full sm:w-auto"
+                onClick={() => window.location.href = '#pricing'}
+              >
+                Start Remembering
+              </Button>
+            </div>
           </motion.div>
+          {/* Badge */}
+          <motion.div className="mb-7 flex justify-start" variants={item}>
+            <span className="inline-block px-3 py-0.5 rounded-full text-xs font-semibold bg-[#00afe4]/10 text-[#00afe4] border border-[#00afe4]/20">
+              🌟 Join thousands of families preserving memories
+            </span>
+          </motion.div>
+
           {/* Inline Checklist */}
           <motion.div className="flex flex-col items-start justify-start gap-y-2 mb-7 text-base font-medium" variants={item}>
             <span className="flex items-center text-gray-700">
@@ -87,27 +93,6 @@ const HeroSection = () => {
             <span className="flex items-center text-gray-700">
               <Check className="w-5 h-5 text-[#00afe4] mr-1.5 flex-shrink-0" /> From lifelike cartoons to dreamlike backdrops — reimagine your child's photos in seconds
             </span>
-          </motion.div>
-          {/* CTAs */}
-          <motion.div className="flex flex-col sm:flex-row gap-4 md:gap-3 justify-start mb-7" variants={item}>
-            <div className="relative inline-flex w-full sm:w-auto">
-              <div className="absolute -inset-0.5 rounded-lg bg-[linear-gradient(90deg,#fa2284_0%,#ff8b00_50%,#00afe4_100%)] opacity-75 blur transition-all duration-300 hover:opacity-100 hover:blur-sm md:hover:blur-md" />
-              <Button
-                size="lg"
-                className="relative z-10 bg-gray-900 text-white hover:bg-gray-800 transition-all duration-300 px-7 py-3 text-base font-bold rounded-lg w-full sm:w-auto"
-                onClick={() => window.location.href = '#pricing'}
-              >
-                View Monthly Plans
-              </Button>
-            </div>
-            <Button
-              size="lg"
-              variant="outline"
-              className="font-bold border-2 border-[#fa2284] text-[#fa2284] bg-white hover:bg-[#fa2284]/10 px-7 py-3 text-base"
-              onClick={() => window.location.href = '#demo'}
-            >
-              Get Yearly Access
-            </Button>
           </motion.div>
           {/* Testimonial Card */}
           <motion.div
