@@ -34,12 +34,13 @@ const HeroSection = () => {
   return (
     <section
       ref={ref}
-      className="relative w-full pt-32 pb-16 bg-gradient-to-br from-[#fff6fa] via-[#fff8f2] to-[#f2faff]"
+      className="relative w-full pt-32 pb-16"
+      style={{ backgroundColor: '#FFF8F2' }}
     >
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between px-4 md:px-8 gap-8 lg:gap-12">
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
         {/* Left: Text Content */}
         <motion.div
-          className="w-full max-w-2xl mx-auto lg:mx-0 text-center lg:text-left"
+          className="w-full max-w-2xl mx-auto lg:mx-0 text-center lg:text-left px-4 md:px-8"
           variants={container}
           initial="hidden"
           animate={isInView ? 'show' : 'hidden'}
@@ -65,7 +66,7 @@ const HeroSection = () => {
             style={{ lineHeight: 1.7 }}
             variants={item}
           >
-            Join parents who <b>never miss a milestone</b>. Kidera makes it <b>effortless</b> to <b>save</b>, <b>organize</b>, and <b>relive</b> your family’s most precious moments.
+            Join parents who <b>never miss a milestone</b>. Kidera makes it <b>effortless</b> to <b>save</b>, <b>organize</b>, and <b>relive</b> your family's most precious moments.
           </motion.p>
           {/* Callout Box */}
           <motion.div
@@ -119,12 +120,12 @@ const HeroSection = () => {
               <span className="text-yellow-400 text-base mr-1">★★★★★</span>
             </div>
             <div className="text-gray-700 text-sm mb-0">
-              “I love how easy it is to capture every milestone. Kidera keeps our memories safe!”
+              "I love how easy it is to capture every milestone. Kidera keeps our memories safe!"
             </div>
             <div className="text-gray-500 text-xs mt-1">— Emily R., mom of 3</div>
           </motion.div>
         </motion.div>
-        {/* Right: Illustration */}
+        {/* Right: Video */}
         <div className="w-full flex flex-col items-center mt-10 lg:mt-0">
           <motion.div
             className="w-full h-full flex items-center justify-center"
@@ -133,13 +134,17 @@ const HeroSection = () => {
             transition={{ delay: 0.6, duration: 0.8, ease: 'easeOut' }}
           >
             <video
-              src="/jittertrans.webm"
+              src="/beige.mp4"
               autoPlay
               loop
               muted
               playsInline
               className="w-full h-full object-contain"
-            />
+              poster="/hero-section.png"
+            >
+              <source src="/beige.mp4" type="video/mp4" />
+              <img src="/hero-section.png" alt="Family illustration" className="w-full h-full object-contain" />
+            </video>
           </motion.div>
         </div>
       </div>
