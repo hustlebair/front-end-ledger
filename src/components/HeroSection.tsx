@@ -133,18 +133,12 @@ const HeroSection = () => {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.6, duration: 0.8, ease: 'easeOut' }}
           >
-            <video
-              src="/beige.mp4"
-              autoPlay
-              loop
-              muted
-              playsInline
+            <img
+              src="/canva-hero.png"
+              alt="Hero illustration"
               className="w-full h-full object-contain"
-              poster="/hero-section.png"
-            >
-              <source src="/beige.mp4" type="video/mp4" />
-              <img src="/hero-section.png" alt="Family illustration" className="w-full h-full object-contain" />
-            </video>
+              loading="lazy"
+            />
           </motion.div>
         </div>
       </div>

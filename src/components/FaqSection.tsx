@@ -37,7 +37,7 @@ const FaqSection = () => {
   };
 
   return (
-    <section id="faq" className="py-20 bg-gradient-to-br from-blue-50 via-sky-50 to-cyan-50">
+    <section id="faq" className="py-20 bg-gradient-to-br from-blue-50 via-sky-50 to-cyan-50 shadow-lg">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="text-4xl font-bold mb-4">

@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -7,20 +7,20 @@ const FeaturesSection = () => {
   const features = [
     {
       id: 1,
+      title: "Turn Everyday Moments Into Magic",
+      description: "Swap backgrounds or transform your child into a Pixar-style character — perfect for memory books, gifts, or just pure joy.",
+      image: "/ai-change.png"
+    },
+    {
+      id: 2,
       title: "Weekly AI Summaries",
       description: "Get beautiful weekly summaries of your child's growth and milestones, automatically generated from your memories.",
       image: "/weekly-summary.png"
     },
     {
-      id: 2,
+      id: 3,
       title: "Face Evolution",
       description: "Watch your child grow through AI-generated face evolution videos that show their journey over time.",
-      image: "/placeholder.svg" // You can replace with actual image
-    },
-    {
-      id: 3,
-      title: "Smart Memory Search",
-      description: "Find any memory instantly with AI-powered search that understands context and relationships.",
       image: "/placeholder.svg" // You can replace with actual image
     }
   ];
@@ -35,8 +35,37 @@ const FeaturesSection = () => {
     setCurrentIndex((prev) => (prev - 1 + features.length) % features.length);
   };
 
+  // Mobile swipe functionality
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(0);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      nextFeature();
+    }
+    if (isRightSwipe) {
+      prevFeature();
+    }
+  };
+
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-br from-gray-50 to-white">
+    <section className="py-16 md:py-24 bg-gradient-to-br from-gray-50 to-white shadow-lg">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-12">
@@ -50,26 +79,14 @@ const FeaturesSection = () => {
         </div>
 
         {/* Feature Carousel */}
-        <div className="relative">
-          {/* Navigation Arrows */}
-          <button
-            onClick={prevFeature}
-            className="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 hover:bg-white rounded-full p-2 md:p-3 shadow-lg transition-all duration-300 hover:scale-110"
-            aria-label="Previous feature"
-          >
-            <ChevronLeft className="w-6 h-6 text-gray-700" />
-          </button>
-          
-          <button
-            onClick={nextFeature}
-            className="absolute right-2 md:right-4 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 hover:bg-white rounded-full p-2 md:p-3 shadow-lg transition-all duration-300 hover:scale-110"
-            aria-label="Next feature"
-          >
-            <ChevronRight className="w-6 h-6 text-gray-700" />
-          </button>
-
+        <div className="relative px-16 md:px-20">
           {/* Feature Content */}
-          <div className="relative overflow-hidden rounded-2xl bg-white shadow-xl">
+          <div 
+            className="relative overflow-hidden rounded-2xl bg-white shadow-2xl border border-gray-100"
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+          >
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentIndex}
@@ -102,25 +119,42 @@ const FeaturesSection = () => {
                   <p className="text-lg text-gray-600 leading-relaxed mb-6">
                     {features[currentIndex].description}
                   </p>
-                  
-                  {/* Feature indicators */}
-                  <div className="flex space-x-2">
-                    {features.map((_, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setCurrentIndex(index)}
-                        className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                          index === currentIndex 
-                            ? 'bg-gradient-to-r from-[#fa2284] to-[#00afe4]' 
-                            : 'bg-gray-300 hover:bg-gray-400'
-                        }`}
-                        aria-label={`Go to feature ${index + 1}`}
-                      />
-                    ))}
-                  </div>
                 </div>
               </motion.div>
             </AnimatePresence>
+          </div>
+
+          {/* Navigation Arrows - positioned outside content */}
+          <button
+            onClick={prevFeature}
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-white rounded-full p-3 shadow-lg transition-all duration-300 hover:scale-110 hidden md:block"
+            aria-label="Previous feature"
+          >
+            <ChevronLeft className="w-6 h-6 text-gray-700" />
+          </button>
+          
+          <button
+            onClick={nextFeature}
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-white rounded-full p-3 shadow-lg transition-all duration-300 hover:scale-110 hidden md:block"
+            aria-label="Next feature"
+          >
+            <ChevronRight className="w-6 h-6 text-gray-700" />
+          </button>
+
+          {/* Feature indicators - moved below content */}
+          <div className="flex justify-center space-x-2 mt-6">
+            {features.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  index === currentIndex 
+                    ? 'bg-gradient-to-r from-[#fa2284] to-[#00afe4]' 
+                    : 'bg-gray-300 hover:bg-gray-400'
+                }`}
+                aria-label={`Go to feature ${index + 1}`}
+              />
+            ))}
           </div>
         </div>
 
