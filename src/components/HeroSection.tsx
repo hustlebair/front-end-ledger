@@ -90,16 +90,16 @@ const HeroSection = () => {
           </motion.div>
           {/* CTAs */}
           <motion.div className="flex flex-col sm:flex-row gap-4 md:gap-3 justify-start mb-7" variants={item}>
-            <Button
-              size="lg"
-              className="font-bold text-white shadow-lg border-0 px-7 py-3 text-base transition-transform duration-200 hover:scale-105"
-              style={{
-                background: '#00afe4',
-              }}
-              onClick={() => window.location.href = '#pricing'}
-            >
-              View Monthly Plans
-            </Button>
+            <div className="relative inline-flex">
+              <div className="absolute -inset-0.5 rounded-lg bg-[linear-gradient(90deg,#fa2284_0%,#ff8b00_50%,#00afe4_100%)] opacity-75 blur transition-all duration-300 hover:opacity-100 hover:blur-sm md:hover:blur-md" />
+              <Button
+                size="lg"
+                className="relative z-10 bg-gray-900 text-white hover:bg-gray-800 transition-all duration-300 px-7 py-3 text-base font-bold rounded-lg"
+                onClick={() => window.location.href = '#pricing'}
+              >
+                View Monthly Plans
+              </Button>
+            </div>
             <Button
               size="lg"
               variant="outline"

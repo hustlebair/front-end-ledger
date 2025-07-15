@@ -26,6 +26,16 @@ const NavBar = () => {
         </a>
         <nav className="hidden md:flex items-center space-x-6">
           <a 
+            href="#how-it-works" 
+            className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          >
+            How It Works
+          </a>
+          <a 
             href="#features" 
             className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
             onClick={(e) => {
@@ -33,7 +43,7 @@ const NavBar = () => {
               document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
             }}
           >
-            How It Works
+            Features
           </a>
           <a 
             href="#pricing" 

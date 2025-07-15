@@ -90,16 +90,18 @@ const HowItWorksSection = () => {
           <p className="text-lg text-gray-600 mb-6">
             Ready to start preserving your child's story?
           </p>
-          <a 
-            href="https://kidera.app/signup" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="inline-block"
-          >
-            <button className="bg-gradient-to-r from-[#fa2284] via-[#ff8b00] to-[#00afe4] text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-              Get Started Free
-            </button>
-          </a>
+          <div className="relative inline-flex">
+            <div className="absolute -inset-0.5 rounded-lg bg-[linear-gradient(90deg,#fa2284_0%,#ff8b00_50%,#00afe4_100%)] opacity-75 blur transition-all duration-300 hover:opacity-100 hover:blur-sm md:hover:blur-md" />
+            <a 
+              href="https://kidera.app/signup" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              <button className="relative z-10 bg-gray-900 text-white hover:bg-gray-800 transition-all duration-300 text-base px-6 py-3 font-bold rounded-lg">
+                Capture Every Memory
+              </button>
+            </a>
+          </div>
         </motion.div>
       </div>
     </section>
