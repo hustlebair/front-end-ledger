@@ -5,7 +5,7 @@ const features = [
   {
     title: 'Intuitive Interface',
     description: 'Quickly save precious memories with our beautiful calendar display. Relive your memories with ease.',
-    image: '/calendarviewiphone.png' // You can replace this with your actual image path
+    image: '/entriesdisplay.png' // You can replace this with your actual image path
   },
   {
     title: 'Your Helpful AI Assistant',

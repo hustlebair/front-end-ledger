@@ -7,21 +7,24 @@ const FeaturesSection = () => {
   const features = [
     {
       id: 1,
-      title: "Turn Everyday Moments Into Magic",
-      description: "Swap backgrounds or transform your child into a Pixar-style character — perfect for memory books, gifts, or just pure joy.",
-      image: "/ai-change.png"
+      title: "Face Evolution",
+      description: "Watch your child grow through AI-generated face evolution videos that show their journey over time.",
+      image: "/bringtolife.mp4",
+      type: "video"
     },
     {
       id: 2,
-      title: "Weekly AI Summaries",
-      description: "Get beautiful weekly summaries of your child's growth and milestones, automatically generated from your memories.",
-      image: "/weekly-summary.png"
+      title: "Turn Everyday Moments Into Magic",
+      description: "Swap backgrounds or transform your child into a Pixar-style character — perfect for memory books, gifts, or just pure joy.",
+      image: "/ai-change.png",
+      type: "image"
     },
     {
       id: 3,
-      title: "Face Evolution",
-      description: "Watch your child grow through AI-generated face evolution videos that show their journey over time.",
-      image: "/placeholder.svg" // You can replace with actual image
+      title: "Weekly AI Summaries",
+      description: "Get beautiful weekly summaries of your child's growth and milestones, automatically generated from your memories.",
+      image: "/weekly-summary.png",
+      type: "image"
     }
   ];
 
@@ -96,14 +99,25 @@ const FeaturesSection = () => {
                 transition={{ duration: 0.5, ease: "easeInOut" }}
                 className="flex flex-col md:flex-row items-center"
               >
-                {/* Image Section */}
-                <div className="w-full md:w-1/2 p-6 md:p-8">
+                {/* Image/Video Section */}
+                <div className="w-full md:w-3/5 p-6 md:p-8">
                   <div className="relative">
-                    <img
-                      src={features[currentIndex].image}
-                      alt={features[currentIndex].title}
-                      className="w-full h-auto rounded-xl shadow-lg"
-                    />
+                    {features[currentIndex].type === "video" ? (
+                      <video
+                        src={features[currentIndex].image}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className={`w-full h-auto rounded-xl shadow-lg ${currentIndex === 2 ? 'scale-110' : ''}`}
+                      />
+                    ) : (
+                      <img
+                        src={features[currentIndex].image}
+                        alt={features[currentIndex].title}
+                        className={`w-full h-auto rounded-xl shadow-lg ${currentIndex === 2 ? 'scale-110' : ''}`}
+                      />
+                    )}
                     {/* Optional overlay or badge */}
                     <div className="absolute top-4 right-4 bg-gradient-to-r from-[#fa2284] to-[#00afe4] text-white px-3 py-1 rounded-full text-sm font-semibold">
                       AI Powered
