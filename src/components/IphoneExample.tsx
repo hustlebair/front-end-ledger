@@ -21,7 +21,7 @@ const features = [
 
 const IphoneExample = () => {
   return (
-    <section className="py-12 md:py-20 bg-white shadow-xl">
+    <section className="py-12 md:py-20 shadow-xl" style={{ backgroundColor: '#FFF8F2' }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <div className="inline-block mb-6">

@@ -5,7 +5,7 @@ import HeroSection from '@/components/HeroSection';
 import WhySection from '@/components/WhySection';
 import IphoneExample from '@/components/IphoneExample';
 import FeaturesSection from '@/components/FeaturesSection';
-import TestimonialsSection from '@/components/TestimonialsSection';
+import HowItWorksSection from '@/components/HowItWorksSection';
 import PricingSection from '@/components/PricingSection';
 import FaqSection from '@/components/FaqSection';
 import OverwhelmedSection from '@/components/OverwhelmedSection';
@@ -39,6 +39,7 @@ const Index = () => {
     <div className="min-h-screen bg-white">
       <NavBar />
       <HeroSection />
+      <HowItWorksSection />
       {/* Featured On Section */}
       {/* <section className="hidden md:block py-6 bg-white">
         <div className="max-w-7xl mx-auto flex flex-col items-center">

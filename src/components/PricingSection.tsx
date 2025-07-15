@@ -71,7 +71,7 @@ const PricingSection = () => {
   ];
 
   return (
-    <section id="pricing" className="py-20 bg-white shadow-lg">
+    <section id="pricing" className="py-20 bg-gradient-to-br from-gray-50 to-white shadow-lg">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl md:text-4xl font-bold mb-3 text-center">
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fa2284] via-[#ff8b00] to-[#00afe4]">Free to start.</span> Upgrade when you're ready.

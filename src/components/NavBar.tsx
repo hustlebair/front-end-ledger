@@ -36,16 +36,6 @@ const NavBar = () => {
             How It Works
           </a>
           <a 
-            href="#testimonials" 
-            className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
-            onClick={(e) => {
-              e.preventDefault();
-              document.getElementById('testimonials')?.scrollIntoView({ behavior: 'smooth' });
-            }}
-          >
-            Testimonials
-          </a>
-          <a 
             href="#pricing" 
             className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
             onClick={(e) => {

@@ -7,8 +7,8 @@ const FeaturesSection = () => {
   const features = [
     {
       id: 1,
-      title: "Face Evolution",
-      description: "Watch your child grow through AI-generated face evolution videos that show their journey over time.",
+      title: "Bring Photos To Life",
+      description: "Use AI to animate your child's expression and bring moments to life.",
       image: "/moving-baby.mp4",
       type: "video"
     },

@@ -19,12 +19,14 @@ const CtaSection = () => {
         </p>
         <div className="relative inline-flex">
           <div className="absolute -inset-0.5 rounded-lg bg-white opacity-75 blur transition-all duration-300 hover:opacity-100 hover:blur-sm md:hover:blur-md" />
-          <Button 
-            size="lg" 
-            className="relative z-10 bg-[#00afe4] text-white hover:bg-[#0098cc] transition-all duration-300 px-8 py-4 text-lg font-semibold"
-          >
-            Start Saving Memories
-          </Button>
+          <a href="https://kidera.app/signup" target="_blank" rel="noopener noreferrer">
+            <Button 
+              size="lg" 
+              className="relative z-10 bg-[#00afe4] text-white hover:bg-[#0098cc] transition-all duration-300 px-8 py-4 text-lg font-semibold"
+            >
+              Start Saving Memories
+            </Button>
+          </a>
         </div>
       </div>
     </section>

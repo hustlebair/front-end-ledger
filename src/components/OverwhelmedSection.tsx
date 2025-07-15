@@ -26,7 +26,7 @@ const OverwhelmedSection = () => {
   ];
 
   return (
-    <section className="py-16 px-4 bg-gradient-to-r from-purple-50 to-pink-50 shadow-lg">
+    <section className="py-16 px-4 shadow-lg" style={{ backgroundColor: '#FFF8F2' }}>
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
