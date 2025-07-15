@@ -74,7 +74,7 @@ const HeroSection = () => {
             style={{ whiteSpace: 'normal', overflowX: 'visible' }}
             variants={item}
           >
-            Unlock lifetime access for a one-time price – <span className="text-[#fa2284] font-semibold">for a short time only!</span>
+            Unlock a full year of access at a special rate – <span className="text-[#fa2284] font-semibold">for a short time only!</span>
           </motion.div>
           {/* Inline Checklist */}
           <motion.div className="flex flex-col items-start justify-start gap-y-2 mb-7 text-base font-medium" variants={item}>
@@ -98,7 +98,7 @@ const HeroSection = () => {
               }}
               onClick={() => window.location.href = '#pricing'}
             >
-              Get Milestone Plan
+              View Monthly Plans
             </Button>
             <Button
               size="lg"
@@ -106,7 +106,7 @@ const HeroSection = () => {
               className="font-bold border-2 border-[#fa2284] text-[#fa2284] bg-white hover:bg-[#fa2284]/10 px-7 py-3 text-base"
               onClick={() => window.location.href = '#demo'}
             >
-              Watch Demo
+              Get Yearly Access
             </Button>
           </motion.div>
           {/* Testimonial Card */}

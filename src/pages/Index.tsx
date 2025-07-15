@@ -40,7 +40,7 @@ const Index = () => {
       <NavBar />
       <HeroSection />
       {/* Featured On Section */}
-      <section className="hidden md:block py-6 bg-white">
+      {/* <section className="hidden md:block py-6 bg-white">
         <div className="max-w-7xl mx-auto flex flex-col items-center">
           <h3 className="text-xl font-light mb-4 text-center" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 300 }}>
             Featured On
@@ -56,7 +56,7 @@ const Index = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       {/* Add keyframes for scroll-logos */}
       <style jsx global>{`
         @keyframes scroll-logos {
@@ -64,9 +64,9 @@ const Index = () => {
           100% { transform: translateX(-50%); }
         }
       `}</style>
-      <OverwhelmedSection />
       <IphoneExample />
       <FeaturesSection />
+      <OverwhelmedSection />
       {/* <WhySection /> */}
       {/* <TestimonialsSection /> */}
       <PricingSection />
