@@ -79,13 +79,13 @@ const HeroSection = () => {
           {/* Inline Checklist */}
           <motion.div className="flex flex-col items-start justify-start gap-y-2 mb-7 text-base font-medium" variants={item}>
             <span className="flex items-center text-gray-700">
-              <Check className="w-5 h-5 text-[#fa2284] mr-1.5" /> Advanced Digital Scrapbook
+              <Check className="w-5 h-5 text-[#fa2284] mr-1.5" /> A Digital Keepsake for Every Stage of Parenthood
             </span>
             <span className="flex items-center text-gray-700">
-              <Check className="w-5 h-5 text-[#ff8b00] mr-1.5" /> AI-generated timelines
+              <Check className="w-5 h-5 text-[#ff8b00] mr-1.5" /> AI-crafted weekly summaries and effortless memory organization
             </span>
             <span className="flex items-center text-gray-700">
-              <Check className="w-5 h-5 text-[#00afe4] mr-1.5" /> Private and Secure
+              <Check className="w-5 h-5 text-[#00afe4] mr-1.5" /> From lifelike cartoons to dreamlike backdrops — reimagine your child's photos in seconds
             </span>
           </motion.div>
           {/* CTAs */}
