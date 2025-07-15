@@ -40,13 +40,13 @@ const HeroSection = () => {
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
         {/* Left: Text Content */}
         <motion.div
-          className="w-full max-w-2xl mx-auto lg:mx-0 text-center lg:text-left px-4 md:px-8"
+          className="w-full max-w-2xl mx-auto lg:mx-0 text-left px-4 md:px-8"
           variants={container}
           initial="hidden"
           animate={isInView ? 'show' : 'hidden'}
         >
           {/* Badge */}
-          <motion.div className="mb-8 flex justify-center lg:justify-start" variants={item}>
+          <motion.div className="mb-8 flex justify-start" variants={item}>
             <span className="inline-block px-4 py-1 rounded-full text-sm font-semibold bg-[#00afe4]/10 text-[#00afe4] border border-[#00afe4]/20">
               🌟 Join thousands of families preserving memories
             </span>
@@ -62,7 +62,7 @@ const HeroSection = () => {
           </motion.h1>
           {/* Subheadline */}
           <motion.p
-            className="text-lg md:text-xl text-gray-700 mb-7 max-w-lg mx-auto lg:mx-0"
+            className="text-lg md:text-xl text-gray-700 mb-7 max-w-lg mx-0"
             style={{ lineHeight: 1.7 }}
             variants={item}
           >
@@ -70,7 +70,7 @@ const HeroSection = () => {
           </motion.p>
           {/* Callout Box */}
           <motion.div
-            className="mb-7 p-4 rounded-lg border border-[#fa2284]/30 bg-[#fa2284]/5 text-base font-medium text-gray-800 max-w-xl mx-auto lg:mx-0"
+            className="mb-7 p-4 rounded-lg border border-[#fa2284]/30 bg-[#fa2284]/5 text-base font-medium text-gray-800 max-w-xl mx-0"
             style={{ whiteSpace: 'normal', overflowX: 'visible' }}
             variants={item}
           >
@@ -79,17 +79,17 @@ const HeroSection = () => {
           {/* Inline Checklist */}
           <motion.div className="flex flex-col items-start justify-start gap-y-2 mb-7 text-base font-medium" variants={item}>
             <span className="flex items-center text-gray-700">
-              <Check className="w-5 h-5 text-[#fa2284] mr-1.5" /> A Digital Keepsake for Every Stage of Parenthood
+              <Check className="w-5 h-5 text-[#fa2284] mr-1.5 flex-shrink-0" /> A Digital Keepsake for Every Stage of Parenthood
             </span>
             <span className="flex items-center text-gray-700">
-              <Check className="w-5 h-5 text-[#ff8b00] mr-1.5" /> AI-crafted weekly summaries and effortless memory organization
+              <Check className="w-5 h-5 text-[#ff8b00] mr-1.5 flex-shrink-0" /> AI-crafted weekly summaries and effortless memory organization
             </span>
             <span className="flex items-center text-gray-700">
-              <Check className="w-5 h-5 text-[#00afe4] mr-1.5" /> From lifelike cartoons to dreamlike backdrops — reimagine your child's photos in seconds
+              <Check className="w-5 h-5 text-[#00afe4] mr-1.5 flex-shrink-0" /> From lifelike cartoons to dreamlike backdrops — reimagine your child's photos in seconds
             </span>
           </motion.div>
           {/* CTAs */}
-          <motion.div className="flex flex-col sm:flex-row gap-4 md:gap-3 justify-center lg:justify-start mb-7" variants={item}>
+          <motion.div className="flex flex-col sm:flex-row gap-4 md:gap-3 justify-start mb-7" variants={item}>
             <Button
               size="lg"
               className="font-bold text-white shadow-lg border-0 px-7 py-3 text-base transition-transform duration-200 hover:scale-105"
@@ -111,7 +111,7 @@ const HeroSection = () => {
           </motion.div>
           {/* Testimonial Card */}
           <motion.div
-            className="bg-white rounded-xl shadow-md px-4 py-3 text-left border border-gray-100 w-full max-w-md mx-auto lg:mx-0"
+            className="bg-white rounded-xl shadow-md px-4 py-3 text-left border border-gray-100 w-full max-w-md mx-0"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.8, duration: 0.7, ease: 'easeOut' }}
