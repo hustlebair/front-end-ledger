@@ -47,7 +47,7 @@ const HeroSection = () => {
         >
           {/* Headline */}
           <motion.h1
-            className="font-extrabold text-gray-900 leading-tight mb-4 lg:mb-5 text-[40px] md:text-5xl xl:text-[55px]"
+            className="font-extrabold text-gray-900 leading-tight mb-4 lg:mb-5 text-[36px] md:text-5xl xl:text-[55px] text-center"
             style={{ lineHeight: 1.25 }}
             variants={item}
           >
@@ -56,7 +56,7 @@ const HeroSection = () => {
           </motion.h1>
           {/* Subheadline */}
           <motion.p
-            className="text-lg md:text-xl text-gray-700 mb-7 max-w-lg mx-0"
+            className="text-lg md:text-xl text-gray-700 mb-7 max-w-lg mx-auto text-center"
             style={{ lineHeight: 1.7 }}
             variants={item}
           >
@@ -76,7 +76,7 @@ const HeroSection = () => {
             </div>
           </motion.div>
           {/* Badge */}
-          <motion.div className="mb-7 flex justify-start" variants={item}>
+          <motion.div className="mb-7 flex justify-center" variants={item}>
             <span className="inline-block px-3 py-0.5 rounded-full text-xs font-semibold bg-[#00afe4]/10 text-[#00afe4] border border-[#00afe4]/20">
               🌟 Join thousands of families preserving memories
             </span>
