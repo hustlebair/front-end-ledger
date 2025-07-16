@@ -5,16 +5,25 @@ import { Button } from '@/components/ui/button';
 const CtaSection = () => {
   return (
     <section className="py-20 relative">
+      {/* Desktop Background */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed hidden lg:block"
         style={{ backgroundImage: 'url(/family.jpg)' }}
       />
-      <div className="absolute inset-0 bg-black/40" />
+      {/* Mobile Background */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat lg:hidden"
+        style={{ backgroundImage: 'url(/momsunmobile.jpg)' }}
+      />
+      {/* Desktop Overlay */}
+      <div className="absolute inset-0 bg-black/40 hidden lg:block" />
+      {/* Mobile Overlay - lighter for better text readability */}
+      <div className="absolute inset-0 bg-white/70 lg:hidden" />
       <div className="container-narrow text-center relative z-10">
-        <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+        <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900 lg:text-white">
           Start your child's story today.
         </h2>
-        <p className="text-lg text-white/90 mb-8 max-w-xl mx-auto">
+        <p className="text-lg text-gray-700 lg:text-white/90 mb-8 max-w-xl mx-auto">
           Don't let another precious memory fade away. Begin your journal in just a minute.
         </p>
         <div className="relative inline-flex">

@@ -57,7 +57,6 @@ const HeroSection = () => {
           {/* Subheadline */}
           <motion.p
             className="text-lg md:text-xl text-gray-700 mb-7 max-w-lg mx-auto lg:mx-0 text-center lg:text-left"
-            style={{ lineHeight: 1.7 }}
             variants={item}
           >
             Join parents who <b>never miss a milestone</b>. Kidera makes it <b>effortless</b> to <b>save</b>, <b>organize</b>, and <b>relive</b> your family's most precious moments.
