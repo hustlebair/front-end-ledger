@@ -47,23 +47,23 @@ const HeroSection = () => {
         >
           {/* Headline */}
           <motion.h1
-            className="font-extrabold text-gray-900 leading-tight mb-4 lg:mb-5 text-[36px] md:text-5xl xl:text-[55px] text-center"
+            className="font-extrabold text-gray-900 leading-tight mb-4 lg:mb-5 text-[36px] md:text-5xl xl:text-[55px] text-center lg:text-left"
             style={{ lineHeight: 1.25 }}
             variants={item}
           >
-            Your Child's Story,<span className="block sm:inline"></span>{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fa2284] via-[#ff8b00] to-[#00afe4]">Beautifully Preserved</span>
+            The Days Are Long,<span className="block sm:inline"></span>{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fa2284] via-[#ff8b00] to-[#00afe4]">The Years Are Short</span>
           </motion.h1>
           {/* Subheadline */}
           <motion.p
-            className="text-lg md:text-xl text-gray-700 mb-7 max-w-lg mx-auto text-center"
+            className="text-lg md:text-xl text-gray-700 mb-7 max-w-lg mx-auto lg:mx-0 text-center lg:text-left"
             style={{ lineHeight: 1.7 }}
             variants={item}
           >
             Join parents who <b>never miss a milestone</b>. Kidera makes it <b>effortless</b> to <b>save</b>, <b>organize</b>, and <b>relive</b> your family's most precious moments.
           </motion.p>
           {/* View Monthly Plans Button */}
-          <motion.div className="mb-7" variants={item}>
+          <motion.div className="mb-7 flex justify-center lg:justify-start" variants={item}>
             <div className="relative inline-flex w-full sm:w-auto">
               <div className="absolute -inset-0.5 rounded-lg bg-[linear-gradient(90deg,#fa2284_0%,#ff8b00_50%,#00afe4_100%)] opacity-75 blur transition-all duration-300 hover:opacity-100 hover:blur-sm md:hover:blur-md" />
               <Button
@@ -76,7 +76,7 @@ const HeroSection = () => {
             </div>
           </motion.div>
           {/* Badge */}
-          <motion.div className="mb-7 flex justify-center" variants={item}>
+          <motion.div className="mb-7 flex justify-center lg:justify-start" variants={item}>
             <span className="inline-block px-3 py-0.5 rounded-full text-xs font-semibold bg-[#00afe4]/10 text-[#00afe4] border border-[#00afe4]/20">
               🌟 Join thousands of families preserving memories
             </span>
