@@ -58,10 +58,6 @@ const HowItWorksSection = () => {
                     <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-r from-[#fa2284] via-[#ff8b00] to-[#00afe4] flex items-center justify-center shadow-lg">
                       <span className="text-white text-2xl md:text-3xl font-bold">{step.number}</span>
                     </div>
-                    {/* Icon */}
-                    <div className="absolute -top-2 -right-2 w-8 h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center shadow-md border-2 border-white">
-                      <span className="text-lg md:text-xl">{step.icon}</span>
-                    </div>
                   </div>
                 </div>
 
