@@ -83,7 +83,7 @@ const PricingSection = () => {
           Upgrade when you're ready.
         </h2>
         <p className="text-center text-gray-600 mb-12 max-w-xl mx-auto">
-          Kidera grows with your family. Start free and add more storage as your memories multiply.
+          Kidera grows with your family. Start free and add more storage and features as your memories multiply.
         </p>
         <div className="max-w-[1400px] mx-auto">
           <div className="grid md:grid-cols-3 gap-8">
