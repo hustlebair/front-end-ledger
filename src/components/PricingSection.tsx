@@ -19,15 +19,14 @@ const PricingSection = () => {
       features: [
         'Unlimited Text Entries',
         '500MB Media Storage (photos & videos)',
-        '50 Free AI Enhancement Credits',
-        'Basic AskKidera Access',
-        'Standard Data Export',
-        'Community Support',
+        'Premium AI Photo Tools (credits required)',
+        'Limited AskKidera Access',
+        'Weekly AI Summaries',
       ],
       cta: 'Start Free Today',
       recommended: false,
       borderColor: 'border-gray-200',
-      buttonColor: 'bg-gradient-to-r from-[#667eea] to-[#764ba2] hover:from-[#5a67d8] hover:to-[#6b46c1]',
+      buttonColor: 'bg-gradient-to-r from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-600',
     },
     {
       name: 'Milestone Plan',
@@ -37,11 +36,13 @@ const PricingSection = () => {
       features: [
         'Unlimited Text Entries',
         '15GB Media Storage (photos & videos)',
+        'Premium AI Photo Tools (credits required)',
         '200 Monthly AI Credits',
         'Full AskKidera Access',
-        'Weekly AI Summary Reports',
-        'Advanced Face Crop & Enhancement',
+        'Weekly AI Summaries',
+        'Face Cropping Software',
         'Priority Support',
+        'Data Export',
       ],
       cta: 'Get Milestone Plan',
       recommended: true,
@@ -56,17 +57,19 @@ const PricingSection = () => {
       features: [
         'Unlimited Text Entries',
         '50GB Media Storage (photos & videos)',
+        'Premium AI Photo Tools (credits required)',
         '600 Monthly AI Credits',
-        'Premium AskKidera Access',
-        'Daily AI Summary Reports',
-        'Professional Face Crop & Enhancement',
-        'Advanced Data Export & Backup',
-        'White-glove Support',
+        'Full AskKidera Access',
+        'Weekly AI Summaries',
+        'Face Cropping Software',
+        'Priority Support',
+        'Data Export',
+        'Access to New Features First',
       ],
       cta: 'Get Legacy Plan',
       recommended: false,
       borderColor: 'border-blue-400',
-      buttonColor: 'bg-gradient-to-r from-[#4299e1] to-[#3182ce] hover:from-[#3182ce] hover:to-[#2b6cb0]',
+      buttonColor: 'bg-gradient-to-r from-[#00afe4] to-[#0098cc] hover:from-[#0098cc] hover:to-[#0088b3]',
     },
   ];
 
@@ -100,20 +103,26 @@ const PricingSection = () => {
                   )}
                 <Card
                   className={`relative flex flex-col h-full bg-white rounded-[20px] shadow-[0_20px_40px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_60px_rgba(0,0,0,0.15)] transition-all duration-300 hover:-translate-y-2 overflow-hidden ${
-                    plan.recommended ? 'border-3 border-orange-400' : 'border border-gray-200'
+                    plan.recommended 
+                      ? 'border-3 border-orange-400 shadow-[0_0_30px_rgba(255,107,53,0.3)] group-hover:shadow-[0_0_30px_rgba(255,107,53,0.3)]' 
+                      : plan.name === 'Legacy Plan'
+                      ? 'border border-blue-400 hover:shadow-[0_0_30px_rgba(0,175,228,0.3)]'
+                      : 'border border-gray-200'
                   }`}
                   style={{
                     padding: '40px 30px',
                   }}
                 >
                   {/* Top border gradient */}
-                  <div
-                    className={`absolute top-0 left-0 right-0 h-1 ${
-                      plan.recommended
-                        ? 'bg-gradient-to-r from-[#ff6b35] to-[#f7931e]'
-                        : 'bg-gradient-to-r from-[#667eea] to-[#764ba2]'
-                    }`}
-                  />
+                                     <div
+                     className={`absolute top-0 left-0 right-0 h-1 ${
+                       plan.recommended
+                         ? 'bg-gradient-to-r from-[#ff6b35] to-[#f7931e]'
+                         : plan.name === 'Legacy Plan'
+                         ? 'bg-gradient-to-r from-[#00afe4] to-[#0098cc]'
+                         : 'bg-gradient-to-r from-gray-400 to-gray-500'
+                     }`}
+                   />
                   
                   <div className="text-center mb-8">
                     <h3 className="text-2xl font-bold text-gray-800 mb-2">
@@ -122,7 +131,7 @@ const PricingSection = () => {
                     <p className="text-gray-600 text-sm mb-6">
                       {plan.description}
                     </p>
-                    <div className="mb-6">
+                    <div className="mb-4">
                       <span className="text-5xl font-extrabold text-gray-800">
                         {plan.price}
                       </span>
