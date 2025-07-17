@@ -59,7 +59,7 @@ const HeroSection = () => {
             className="text-lg md:text-xl text-gray-700 mb-7 max-w-lg mx-auto lg:mx-0 text-center lg:text-left"
             variants={item}
           >
-            Join parents who <b>never miss a milestone</b>. Kidera makes it <b>effortless</b> to <b>save</b>, <b>organize</b>, and <b>relive</b> your family's most precious moments.
+            Join parents who capture every day. Kidera makes it effortless to journal daily memories, organize them by date, and bring photos to life with AI so no precious moment gets forgotten.
           </motion.p>
           {/* View Monthly Plans Button */}
           <motion.div className="mb-7 flex justify-center lg:justify-start" variants={item}>
