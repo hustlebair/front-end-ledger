@@ -91,13 +91,13 @@ const PricingSection = () => {
                   plan.recommended ? 'md:scale-105' : ''
                 }`}
               >
-                {plan.recommended && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-20">
-                    <span className="bg-gradient-to-r from-[#ff6b35] to-[#f7931e] text-white px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider">
-                      Most Popular
-                    </span>
-                  </div>
-                )}
+                                  {plan.recommended && (
+                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-20 transition-all duration-300 group-hover:-translate-y-2">
+                      <span className="bg-gradient-to-r from-[#ff6b35] to-[#f7931e] text-white px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300">
+                        Most Popular
+                      </span>
+                    </div>
+                  )}
                 <Card
                   className={`relative flex flex-col h-full bg-white rounded-[20px] shadow-[0_20px_40px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_60px_rgba(0,0,0,0.15)] transition-all duration-300 hover:-translate-y-2 overflow-hidden ${
                     plan.recommended ? 'border-3 border-orange-400' : 'border border-gray-200'
