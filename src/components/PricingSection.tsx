@@ -1,7 +1,5 @@
 import { Check } from 'lucide-react';
-import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import {
   Card,
   CardContent,
@@ -16,196 +14,128 @@ const PricingSection = () => {
     {
       name: 'Free Plan',
       price: '$0',
-      period: 'm',
-      description: 'Start Remembering Now',
+      period: '/month',
+      description: 'Start your journey with basic features',
       features: [
-        'Unlimited text entries',
-        '500MB Media Storage (photo + Video)',
-        'Limited Ask Kidera™️',
-        'Data Export'
+        'Unlimited Text Entries',
+        '500MB Media Storage (photos & videos)',
+        '40 free credits to use on AI photo enhancements',
+        'Limited AskKidera Usage',
+        'Data Export',
       ],
-      cta: 'Get Started',
-      highlight: false,
+      cta: 'Continue Free',
       recommended: false,
-      glowColor: 'transparent'  // No glow for free plan
+      borderColor: 'border-gray-200',
+      buttonColor: 'bg-gray-600 hover:bg-gray-700',
     },
     {
       name: 'Milestone Plan',
       price: '$8',
-      period: 'm',
-      description: 'Everything you need',
+      period: '/month',
+      description: "Perfect for tracking important moments in your child's development",
       features: [
-        'Unlimited Text entries',
-        '15gb Media Storage (photos + videos)',
-        '200 credits monthly',
-        'Ask Kidera™️',
+        'Unlimited Text Entries',
+        '15GB Media Storage (photos & videos)',
+        '200 Monthly Credits',
+        'AskKidera Access',
         'Weekly AI Summary',
-        'Face Evolution',
-        'Data Export'
+        'Face Crop',
+        'Data Export',
       ],
       cta: 'Get Milestone Plan',
-      highlight: true,
       recommended: true,
-      glowColor: 'rgba(255, 139, 0, 0.5)'  // #ff8b00 with 50% opacity
+      borderColor: 'border-orange-400',
+      buttonColor: 'bg-orange-500 hover:bg-orange-600',
     },
     {
       name: 'Legacy Plan',
       price: '$14',
-      period: 'm',
-      description: 'Never forgetting anything',
+      period: '/month',
+      description: 'Preserve precious memories for future generations',
       features: [
         'Unlimited Text Entries',
-        '50gb Media Storage (photos + videos)',
-        '600 credits monthly',
-        'Ask Kidera™️',
+        '50GB Media Storage (photos & videos)',
+        '600 Monthly Credits',
+        'AskKidera Access',
         'Weekly AI Summary',
-        'Face Evolution',
-        'Data Export'
+        'Face Crop',
+        'Data Export',
       ],
       cta: 'Get Legacy Plan',
-      highlight: false,
       recommended: false,
-      glowColor: 'rgba(0, 175, 228, 0.5)'  // #00afe4 with 50% opacity
-    }
+      borderColor: 'border-blue-400',
+      buttonColor: 'bg-blue-400 hover:bg-blue-500',
+    },
   ];
 
   return (
-    <section id="pricing" className="py-20 bg-gradient-to-br from-gray-50 to-white shadow-lg">
+    <section id="pricing" className="py-20 bg-gradient-to-br from-gray-50 to-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl md:text-4xl font-bold mb-3 text-center">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fa2284] via-[#ff8b00] to-[#00afe4]">Free to start.</span> Upgrade when you're ready.
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fa2284] via-[#ff8b00] to-[#00afe4]">
+            Free to start.
+          </span>{' '}
+          Upgrade when you're ready.
         </h2>
         <p className="text-center text-gray-600 mb-12 max-w-xl mx-auto">
-          Kidera grows with your family. Start free and add more
-          storage as your memories multiply.
+          Kidera grows with your family. Start free and add more storage as your memories multiply.
         </p>
-
         <div className="max-w-[1400px] mx-auto">
           <div className="grid md:grid-cols-3 gap-8">
             {plans.map((plan, idx) => (
               <Card
                 key={idx}
-                className={`relative flex flex-col h-full overflow-hidden pricing-card ${
-                  plan.name === 'Free Plan' ? 'shadow-none' : ''
-                }`}
-                style={{
-                  backgroundClip: 'padding-box',
-                  border: '1px solid #e5e7eb',
-                  ...(plan.name !== 'Free Plan' && {
-                    border: '1px solid transparent',
-                    boxShadow: `0 0 15px ${plan.glowColor}`
-                  })
-                }}
+                className={`relative flex flex-col h-full bg-white rounded-lg shadow-md ${plan.borderColor} ${plan.recommended ? 'border-2' : 'border'}`}
               >
-                {/* gradient border behind - only for paid plans */}
-                {plan.name !== 'Free Plan' && (
-                  <div
-                    className="absolute inset-0 -z-10"
-                    style={{
-                      background: 'linear-gradient(to right, #F28CA5, #B187F2)',
-                      margin: '-1px',
-                      borderRadius: 'inherit',
-                    }}
-                  />
-                )}
-
                 {plan.recommended && (
-                  <Badge className="absolute top-2 right-4 bg-blush-500">
-                    Most Popular
-                  </Badge>
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-20">
+                    <span className="bg-orange-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                      Most Popular
+                    </span>
+                  </div>
                 )}
-
-                <CardHeader>
-                  <CardTitle className="text-2xl font-bold">
+                <CardHeader className="pb-4">
+                  <CardTitle className="text-xl font-bold text-gray-900">
                     {plan.name}
                   </CardTitle>
-                  <div className="mt-4 mb-2">
-                    <span className="text-3xl font-bold">
+                  <CardDescription className="text-gray-600 text-sm">
+                    {plan.description}
+                  </CardDescription>
+                  <div className="mt-4">
+                    <span className="text-3xl font-bold text-gray-900">
                       {plan.price}
                     </span>
                     <span className="text-gray-500 ml-1">
-                      /{plan.period}
+                      {plan.period}
                     </span>
                   </div>
-                  <CardDescription className="text-gray-600">
-                    {plan.description}
-                  </CardDescription>
                 </CardHeader>
-
-                <CardContent className="flex-1">
-                  <ul className="space-y-3 mb-6">
+                <CardContent className="flex-1 pb-4">
+                  <ul className="space-y-3">
                     {plan.features.map((feature, i) => (
                       <li key={i} className="flex items-start">
                         <Check className="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                        <span>{feature}</span>
+                        <span className="text-gray-700 text-sm">{feature}</span>
                       </li>
                     ))}
                   </ul>
                 </CardContent>
-
-                <CardFooter className="mt-auto">
-                  <div className="relative inline-block w-full group">
-                    {/* Glow effect for paid plans only */}
-                    {plan.name !== 'Free Plan' && (
-                      <div 
-                        className="absolute -inset-0.5 rounded-lg blur-sm transition-all duration-300 group-hover:blur"
-                        style={{
-                          backgroundColor: plan.name === 'Milestone Plan' 
-                            ? 'rgba(255, 139, 0, 0.4)' 
-                            : 'rgba(0, 175, 228, 0.4)',
-                          boxShadow: `0 0 8px 3px ${
-                            plan.name === 'Milestone Plan' 
-                              ? 'rgba(255, 139, 0, 0.4)' 
-                              : 'rgba(0, 175, 228, 0.4)'
-                          }`
-                        }}
-                      />
-                    )}
-                    {false && (
-                      <div 
-                        className="absolute -inset-0.5 rounded-lg blur-sm transition-all duration-300 group-hover:blur"
-                        style={{
-                          backgroundColor: plan.name === 'Moments Plan' 
-                            ? 'rgba(255, 139, 0, 0.7)' 
-                            : 'rgba(0, 175, 228, 0.7)',
-                          boxShadow: `0 0 10px 5px ${
-                            plan.name === 'Moments Plan' 
-                              ? 'rgba(255, 139, 0, 0.7)' 
-                              : 'rgba(0, 175, 228, 0.7)'
-                          }`
-                        }}
-                      />
-                    )}
-                    
-                    {/* Button */}
-                    <Button 
-                      size="lg" 
-                      className={`relative z-10 w-full ${
-                        plan.name === 'Free Plan' 
-                          ? 'bg-gray-900 hover:bg-gray-800' 
-                          : 'bg-gray-900 hover:bg-gray-800'
-                      } text-white transition-all duration-300 hover:scale-105`}
-                      onClick={() => {
-                        if (plan.name === 'Milestone Plan') {
-                          window.location.href = 'https://www.kidera.app/login?plan=milestone';
-                        } else if (plan.name === 'Free Plan') {
-                          window.location.href = 'https://www.kidera.app';
-                        } else if (plan.name === 'Legacy Plan') {
-                          window.location.href = 'https://www.kidera.app/login?plan=legacy';
-                        }
-                      }}
-                    >
-                      <span className="relative z-10">
-                        {plan.cta}
-                      </span>
-                      <motion.span 
-                        className="absolute inset-0 bg-white/10"
-                        initial={{ x: '-100%' }}
-                        whileHover={{ x: '100%' }}
-                        transition={{ duration: 0.6, ease: 'easeInOut' }}
-                      />
-                    </Button>
-                  </div>
+                <CardFooter className="pt-4">
+                  <Button 
+                    size="lg" 
+                    className={`w-full font-semibold ${plan.buttonColor} text-white transition-all duration-300`}
+                    onClick={() => {
+                      if (plan.name === 'Milestone Plan') {
+                        window.location.href = 'https://www.kidera.app/login?plan=milestone';
+                      } else if (plan.name === 'Free Plan') {
+                        window.location.href = 'https://www.kidera.app';
+                      } else if (plan.name === 'Legacy Plan') {
+                        window.location.href = 'https://www.kidera.app/login?plan=legacy';
+                      }
+                    }}
+                  >
+                    {plan.cta}
+                  </Button>
                 </CardFooter>
               </Card>
             ))}
@@ -216,4 +146,4 @@ const PricingSection = () => {
   );
 };
 
-export default PricingSection;
+export default PricingSection; 
