@@ -51,8 +51,8 @@ const HeroSection = () => {
             style={{ lineHeight: 1.25 }}
             variants={item}
           >
-            The Days Are Long,<span className="block sm:inline"></span>{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fa2284] via-[#ff8b00] to-[#00afe4]">The Years Are Short</span>
+            Better Than a Baby Book.<span className="block sm:inline"></span>{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fa2284] via-[#ff8b00] to-[#00afe4]">Smarter Than Your Camera Roll.</span>
           </motion.h1>
           {/* Subheadline */}
           <motion.p
