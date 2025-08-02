@@ -67,10 +67,13 @@ const HeroSection = () => {
               <div className="absolute -inset-0.5 rounded-lg bg-[linear-gradient(90deg,#fa2284_0%,#ff8b00_50%,#00afe4_100%)] opacity-75 blur transition-all duration-300 hover:opacity-100 hover:blur-sm md:hover:blur-md" />
               <Button
                 size="lg"
-                className="relative z-10 bg-gray-900 text-white hover:bg-gray-800 transition-all duration-300 px-7 py-3 text-base font-bold rounded-lg w-full sm:w-auto"
+                className="relative z-10 text-white hover:bg-[#0098cc] transition-all duration-300 px-10 py-6 text-lg font-bold rounded-lg w-full sm:w-auto"
+                style={{
+                  background: '#00afe4',
+                }}
                 onClick={() => window.location.href = '#pricing'}
               >
-                Start Remembering
+                Start Your Journal
               </Button>
             </div>
           </motion.div>

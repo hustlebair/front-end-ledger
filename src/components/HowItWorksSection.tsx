@@ -90,8 +90,8 @@ const HowItWorksSection = () => {
               target="_blank" 
               rel="noopener noreferrer"
             >
-              <button className="relative z-10 bg-gray-900 text-white hover:bg-gray-800 transition-all duration-300 text-base px-6 py-3 font-bold rounded-lg">
-                Capture Every Memory
+              <button className="relative z-10 text-white hover:bg-[#0098cc] transition-all duration-300 text-base px-6 py-3 font-bold rounded-lg" style={{ background: '#00afe4' }}>
+                Start your Journal
               </button>
             </a>
           </div>
