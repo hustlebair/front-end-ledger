@@ -11,6 +11,7 @@ import FaqSection from '@/components/FaqSection';
 import OverwhelmedSection from '@/components/OverwhelmedSection';
 import CtaSection from '@/components/CtaSection';
 import Footer from '@/components/Footer';
+import KideraBlogGrid from '@/components/KideraBlogGrid';
 import ScrollToTop from '@/components/ScrollToTop';
 
 const Index = () => {
@@ -59,7 +60,7 @@ const Index = () => {
         </div>
       </section> */}
       {/* Add keyframes for scroll-logos */}
-      <style jsx global>{`
+      <style>{`
         @keyframes scroll-logos {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
@@ -71,6 +72,7 @@ const Index = () => {
       {/* <WhySection /> */}
       {/* <TestimonialsSection /> */}
       <PricingSection />
+      <KideraBlogGrid showHeader={true} maxPosts={4} showFilters={false} />
       <FaqSection />
       <CtaSection />
       <Footer />

@@ -16,12 +16,12 @@ const NavBar = () => {
 
   return (
     <header className="fixed w-full z-50 transition-all duration-300 bg-white shadow-[0_4px_12px_rgba(0,0,0,0.05)]" style={{height: '70px'}}>
-      <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between h-full">
-        <a href="/" className="flex items-center">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 md:px-8 flex items-center justify-between h-full">
+        <a href="/" className="flex items-center flex-shrink-0">
           <img 
             src="/images/kidera_logo.png" 
             alt="Kidera Logo" 
-            className="h-8 w-auto"
+            className="h-5 sm:h-6 md:h-8 w-auto"
           />
         </a>
         <nav className="hidden md:flex items-center space-x-6">
@@ -46,6 +46,12 @@ const NavBar = () => {
             Features
           </a>
           <a 
+            href="/blog" 
+            className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+          >
+            Blog
+          </a>
+          <a 
             href="#pricing" 
             className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
             onClick={(e) => {
@@ -56,14 +62,14 @@ const NavBar = () => {
             Pricing
           </a>
         </nav>
-        <div className="flex items-center space-x-3">
-          <a href="https://kidera.app/login" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+        <div className="flex items-center space-x-1 md:space-x-3 flex-shrink-0">
+          <a href="https://kidera.app/login" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors hidden sm:block">
             Log In
           </a>
           <a href="https://www.kidera.app" target="_blank" rel="noopener noreferrer">
             <Button 
               size="sm" 
-              className="text-white hover:bg-[#0098cc] transition-all duration-300 text-sm px-4 font-bold"
+              className="text-white hover:bg-[#0098cc] transition-all duration-300 text-xs sm:text-sm px-1 sm:px-4 py-1 sm:py-2 font-bold"
               style={{
                 background: '#00afe4',
               }}
