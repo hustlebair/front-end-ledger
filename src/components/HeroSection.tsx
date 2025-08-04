@@ -45,6 +45,13 @@ const HeroSection = () => {
           initial="hidden"
           animate={isInView ? 'show' : 'hidden'}
         >
+          {/* Badge - Moved above header */}
+          <motion.div className="mb-6 flex justify-center lg:justify-start" variants={item}>
+            <span className="inline-block px-3 py-0.5 rounded-full text-xs font-semibold bg-[#00afe4]/10 text-[#00afe4] border border-[#00afe4]/20">
+              🌟 Join thousands of families preserving memories
+            </span>
+          </motion.div>
+
           {/* Headline */}
           <motion.h1
             className="font-extrabold text-gray-900 leading-tight mb-4 lg:mb-5 text-[36px] md:text-5xl xl:text-[55px] text-center lg:text-left"
@@ -59,7 +66,7 @@ const HeroSection = () => {
             className="text-lg md:text-xl text-gray-700 mb-7 max-w-lg mx-auto lg:mx-0 text-center lg:text-left"
             variants={item}
           >
-            Join parents who capture every day. Kidera makes it effortless to journal daily memories, organize them by date, and bring photos to life with AI so no precious moment gets forgotten.
+            Our digital parenting journal transforms your chaotic photo storage into a heartfelt, organized story of your child's growth. 
           </motion.p>
           {/* View Monthly Plans Button */}
           <motion.div className="mb-7 flex justify-center lg:justify-start" variants={item}>
@@ -77,25 +84,7 @@ const HeroSection = () => {
               </Button>
             </div>
           </motion.div>
-          {/* Badge */}
-          <motion.div className="mb-7 flex justify-center lg:justify-start" variants={item}>
-            <span className="inline-block px-3 py-0.5 rounded-full text-xs font-semibold bg-[#00afe4]/10 text-[#00afe4] border border-[#00afe4]/20">
-              🌟 Join thousands of families preserving memories
-            </span>
-          </motion.div>
 
-          {/* Inline Checklist */}
-          <motion.div className="flex flex-col items-start justify-start gap-y-2 mb-7 text-base font-medium" variants={item}>
-            <span className="flex items-center text-gray-700">
-              <Check className="w-5 h-5 text-[#fa2284] mr-1.5 flex-shrink-0" /> A Digital Keepsake for Every Stage of Parenthood
-            </span>
-            <span className="flex items-center text-gray-700">
-              <Check className="w-5 h-5 text-[#ff8b00] mr-1.5 flex-shrink-0" /> AI-crafted weekly summaries and effortless memory organization
-            </span>
-            <span className="flex items-center text-gray-700">
-              <Check className="w-5 h-5 text-[#00afe4] mr-1.5 flex-shrink-0" /> From lifelike cartoons to dreamlike backdrops — reimagine your child's photos in seconds
-            </span>
-          </motion.div>
           {/* Testimonial Card */}
           <motion.div
             className="bg-white rounded-xl shadow-md px-4 py-3 text-left border border-gray-100 w-full max-w-md mx-0"
