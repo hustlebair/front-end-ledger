@@ -17,9 +17,10 @@ const PricingSection = () => {
     {
       name: 'Legacy Plan',
       monthlyPrice: '$6.99',
-      yearlyPrice: '$59.99',
+      yearlyPrice: '$4.99',
+      yearlyBilled: '$59.88',
       monthlyPeriod: '/month',
-      yearlyPeriod: '/year',
+      yearlyPeriod: '/month',
       description: 'Ideal for capturing every precious moment',
       features: [
         'Unlimited Text Entries',
@@ -32,10 +33,10 @@ const PricingSection = () => {
         'Priority Support',
         'Data Export',
       ],
-      cta: 'Get Legacy Plan',
+      cta: 'Get Started',
       recommended: true,
-      borderColor: 'border-orange-400',
-      buttonColor: 'bg-gradient-to-r from-[#ff6b35] to-[#f7931e] hover:from-[#e53e3e] hover:to-[#dd6b20]',
+      isDark: true,
+      hasToggle: true,
     },
     {
       name: 'Free Plan',
@@ -49,17 +50,17 @@ const PricingSection = () => {
         'Limited AskKidera Access',
         'Weekly AI Summaries',
       ],
-      cta: 'Start Free Today',
+      cta: 'Get Started',
       recommended: false,
-      borderColor: 'border-gray-200',
-      buttonColor: 'bg-gradient-to-r from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-600',
+      isDark: false,
+      hasToggle: false,
     },
   ];
 
-  const savings = Math.round(((6.99 * 12 - 59.99) / (6.99 * 12)) * 100);
+  const savings = Math.round(((6.99 * 12 - 59.88) / (6.99 * 12)) * 100);
 
   return (
-    <section id="pricing" className="py-20 bg-gradient-to-br from-gray-50 to-white">
+    <section id="pricing" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-4">
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fa2284] via-[#ff8b00] to-[#00afe4]">
@@ -67,110 +68,75 @@ const PricingSection = () => {
           </span>{' '}
           Upgrade when you're ready.
         </h2>
-        <p className="text-center text-gray-600 mb-8 max-w-xl mx-auto">
+        <p className="text-center text-gray-600 mb-12 max-w-xl mx-auto">
           Kidera grows with your family. Start free and add more storage and features as your memories multiply.
         </p>
-        
-        {/* Billing Toggle */}
-        <div className="flex justify-center mb-12">
-          <div className="bg-gray-100 p-1 rounded-lg flex items-center">
-            <button
-              onClick={() => setIsYearly(false)}
-              className={`px-6 py-2 rounded-md text-sm font-medium transition-all ${
-                !isYearly
-                  ? 'bg-white text-gray-900 shadow-sm'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              Monthly
-            </button>
-            <button
-              onClick={() => setIsYearly(true)}
-              className={`px-6 py-2 rounded-md text-sm font-medium transition-all relative ${
-                isYearly
-                  ? 'bg-white text-gray-900 shadow-sm'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              Yearly
-              <span className="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-2 py-0.5 rounded-full">
-                Save {savings}%
-              </span>
-            </button>
-          </div>
-        </div>
 
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8">
             {plans.map((plan, idx) => (
-              <div
-                key={idx}
-                className={`relative group ${
-                  plan.recommended ? 'md:scale-105' : ''
-                }`}
-              >
-                {plan.recommended && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-20 transition-all duration-300 group-hover:-translate-y-2">
-                    <span className="bg-gradient-to-r from-[#ff6b35] to-[#f7931e] text-white px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300">
-                      Most Popular
-                    </span>
-                  </div>
-                )}
+              <div key={idx} className="relative">
                 <Card
-                  className={`relative flex flex-col h-full bg-white rounded-[20px] shadow-[0_20px_40px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_60px_rgba(0,0,0,0.15)] transition-all duration-300 hover:-translate-y-2 overflow-hidden ${
-                    plan.recommended 
-                      ? 'border-3 border-orange-400 shadow-[0_0_30px_rgba(255,107,53,0.3)] group-hover:shadow-[0_0_30px_rgba(255,107,53,0.3)]' 
-                      : 'border border-gray-200'
+                  className={`relative h-full transition-all duration-300 hover:shadow-xl border ${
+                    plan.isDark 
+                      ? 'bg-gradient-to-br from-gray-900 to-blue-900 border-gray-700 text-white' 
+                      : 'bg-white border-gray-200 hover:border-gray-300'
                   }`}
                   style={{
-                    padding: '40px 30px',
+                    borderRadius: '24px',
+                    padding: '32px',
                   }}
                 >
-                  {/* Top border gradient */}
-                  <div
-                    className={`absolute top-0 left-0 right-0 h-1 ${
-                      plan.recommended
-                        ? 'bg-gradient-to-r from-[#ff6b35] to-[#f7931e]'
-                        : 'bg-gradient-to-r from-gray-400 to-gray-500'
-                    }`}
-                  />
-                  
-                  <div className="text-center mb-8">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
-                    <p className="text-gray-600 text-sm mb-4">{plan.description}</p>
-                    <div className="flex items-baseline justify-center mb-2">
-                      <span className="text-5xl font-bold text-gray-900">
-                        {plan.name === 'Legacy Plan' 
+                  <div className="text-left mb-8">
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className={`text-2xl font-bold ${plan.isDark ? 'text-white' : 'text-gray-900'}`}>
+                        {plan.name}
+                      </h3>
+                      {plan.hasToggle && (
+                        <button
+                          onClick={() => setIsYearly(!isYearly)}
+                          className="bg-gray-700 px-3 py-1 rounded-full text-xs font-medium text-white hover:bg-gray-600 transition-all flex items-center"
+                        >
+                          {isYearly ? 'Yearly' : 'Monthly'}
+                          {isYearly && (
+                            <span className="ml-2 bg-green-500 text-white text-xs px-1.5 py-0.5 rounded-full">
+                              Save {savings}%
+                            </span>
+                          )}
+                        </button>
+                      )}
+                    </div>
+                    <p className={`text-sm mb-6 ${plan.isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                      {plan.description}
+                    </p>
+                    <div className="flex items-baseline mb-2">
+                      <span className={`text-5xl font-bold ${plan.isDark ? 'text-white' : 'text-gray-900'}`}>
+                        {plan.hasToggle 
                           ? (isYearly ? plan.yearlyPrice : plan.monthlyPrice)
                           : plan.price
                         }
                       </span>
-                      <span className="text-xl text-gray-500 ml-1">
-                        {plan.name === 'Legacy Plan' 
+                      <span className={`text-xl ml-1 ${plan.isDark ? 'text-gray-300' : 'text-gray-500'}`}>
+                        {plan.hasToggle 
                           ? (isYearly ? plan.yearlyPeriod : plan.monthlyPeriod)
                           : plan.period
                         }
                       </span>
                     </div>
-                    {plan.name === 'Legacy Plan' && isYearly && (
-                      <p className="text-sm text-green-600 font-medium">
-                        Save ${(6.99 * 12 - 59.99).toFixed(2)} per year
+                    {plan.hasToggle && isYearly && (
+                      <p className="text-sm text-green-400 font-medium mb-6">
+                        Billed yearly at {plan.yearlyBilled}
                       </p>
                     )}
                   </div>
 
-                  <ul className="space-y-4 mb-8 flex-grow">
-                    {plan.features.map((feature, i) => (
-                      <li key={i} className="flex items-start">
-                        <Check className="h-5 w-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-700 text-sm leading-relaxed">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
                   <Button 
                     size="lg" 
-                    className={`w-full py-4 px-6 text-base font-semibold uppercase tracking-wider transition-all duration-300 hover:-translate-y-0.5 ${plan.buttonColor} text-white rounded-xl`}
+                    className={`w-full py-3 px-6 text-base font-semibold rounded-xl transition-all duration-300 mb-8 ${
+                      plan.isDark 
+                        ? 'bg-blue-500 hover:bg-blue-600 text-white border-0' 
+                        : 'bg-gray-900 hover:bg-gray-800 text-white border border-gray-300'
+                    }`}
                     onClick={() => {
                       if (plan.name === 'Legacy Plan') {
                         const planParam = isYearly ? 'legacy-yearly' : 'legacy';
@@ -180,8 +146,26 @@ const PricingSection = () => {
                       }
                     }}
                   >
-                    {plan.cta}
+                    {plan.cta} →
                   </Button>
+
+                  <div className="space-y-1">
+                    <h4 className={`text-sm font-medium mb-4 ${plan.isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                      Includes
+                    </h4>
+                    {plan.features.map((feature, i) => (
+                      <div key={i} className="flex items-start">
+                        <div className={`w-5 h-5 rounded-full flex items-center justify-center mr-3 mt-0.5 flex-shrink-0 ${
+                          plan.isDark ? 'bg-blue-500' : 'bg-blue-500'
+                        }`}>
+                          <Check className="w-3 h-3 text-white" />
+                        </div>
+                        <span className={`text-sm leading-relaxed ${plan.isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                          {feature}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </Card>
               </div>
             ))}
