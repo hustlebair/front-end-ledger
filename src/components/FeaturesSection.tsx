@@ -68,7 +68,7 @@ const FeaturesSection = () => {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-br from-gray-50 to-white shadow-lg">
+    <section className="py-16 md:py-24 shadow-lg" style={{ backgroundColor: '#FFF8F2' }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-12">

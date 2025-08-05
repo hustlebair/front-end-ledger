@@ -7,24 +7,27 @@ const HowItWorksSection = () => {
       number: "1",
       title: "Capture Memories",
       description: "Start a dedicated space to capture your child's story through photos, videos, and written reflections. Every memory is beautifully organized in a visual calendar that grows with your child.",
-      icon: "📝"
+      icon: "📝",
+      gradient: "bg-gradient-to-br from-[#fa2284] to-[#e91e63]"
     },
     {
       number: "2", 
       title: "AI Organizes Everything",
       description: "Our intelligent system automatically organizes your memories by date, creates weekly summaries, and helps you find specific moments instantly.",
-      icon: "🤖"
+      icon: "🤖",
+      gradient: "bg-gradient-to-br from-[#ff8b00] to-[#f57c00]"
     },
     {
       number: "3",
       title: "Reimagine Your Photos",
       description: "Animate your favorite moments using your own prompts. Turn everyday photos into something magical—make your child a superhero, a princess, or anything you can imagine. Kidera lets you bring photos to life in fun, creative ways.",
-      icon: "💝"
+      icon: "💝",
+      gradient: "bg-gradient-to-br from-[#00afe4] to-[#0288d1]"
     }
   ];
 
   return (
-    <section id="how-it-works" className="py-16 md:py-24 bg-gradient-to-br from-gray-50 to-white shadow-lg">
+    <section id="how-it-works" className="py-16 md:py-24 shadow-lg" style={{ backgroundColor: '#FFF8F2' }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
@@ -52,7 +55,7 @@ const HowItWorksSection = () => {
                 {/* Step Number */}
                 <div className="flex items-center justify-center mb-6">
                   <div className="relative">
-                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-r from-[#fa2284] via-[#ff8b00] to-[#00afe4] flex items-center justify-center shadow-lg">
+                    <div className={`w-16 h-16 md:w-20 md:h-20 rounded-full ${step.gradient} flex items-center justify-center shadow-lg`}>
                       <span className="text-white text-2xl md:text-3xl font-bold">{step.number}</span>
                     </div>
                   </div>

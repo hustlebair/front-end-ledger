@@ -40,6 +40,7 @@ const Index = () => {
     <div className="min-h-screen bg-white">
       <NavBar />
       <HeroSection />
+      <OverwhelmedSection />
       <HowItWorksSection />
       {/* Featured On Section */}
       {/* <section className="hidden md:block py-6 bg-white">
@@ -68,7 +69,6 @@ const Index = () => {
       `}</style>
       <IphoneExample />
       <FeaturesSection />
-      <OverwhelmedSection />
       {/* <WhySection /> */}
       {/* <TestimonialsSection /> */}
       <PricingSection />

@@ -1,32 +1,31 @@
 import React from 'react';
-import { Heart } from 'lucide-react';
 
 const OverwhelmedSection = () => {
   const cards = [
     {
-      icon: <img src="/icons/later.webp" alt="Later icon" className="w-14 h-14" />,
-      title: '"I\'ll Do It Later" Syndrome',
-      description: 'You meant to write it down… but now the moment\'s gone.'
+      icon: <div className="text-4xl">📸</div>,
+      title: "Scattered Photos",
+      description: "Hundreds of photos scattered across different apps, with no organization or context about what made each moment special."
     },
     {
-      icon: <img src="/icons/remember.png" alt="Remember icon" className="w-16 h-16" />,
-      title: 'Memory Guilt',
-      description: 'You can\'t recall when they first smiled or said "mama." It eats at you.'
+      icon: <div className="text-4xl">😴</div>,
+      title: "Forgotten Moments",
+      description: "Those sweet bedtime conversations and funny things they said that seemed impossible to forget—but somehow you did."
     },
     {
-      icon: <img src="/icons/roll.png" alt="Roll icon" className="w-16 h-16" />,
-      title: 'Camera Roll Chaos',
-      description: 'Thousands of photos, no context. What\'s worth keeping?'
+      icon: <div className="text-4xl">🤯</div>,
+      title: "Chaos Overwhelm",
+      description: "The exhaustion of parenting leaves little energy for organizing memories, so precious moments slip through the cracks."
     },
     {
-      icon: <img src="/icons/repetitive.png" alt="Repetitive icon" className="w-16 h-16" />,
-      title: 'Repetitive Days Blur Together',
-      description: 'The early months are a fog. You\'re afraid you\'ll forget what made this day unique.'
+      icon: <div className="text-4xl">⏰</div>,
+      title: "Time Flies",
+      description: "Days blur together in the beautiful chaos of raising kids. Before you know it, you'll forget what made this day unique."
     }
   ];
 
   return (
-    <section className="py-16 px-4 shadow-lg" style={{ backgroundColor: '#FFF8F2' }}>
+    <section className="py-16 px-4 shadow-lg bg-gradient-to-br from-gray-50 to-white">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
@@ -41,7 +40,8 @@ const OverwhelmedSection = () => {
           {cards.map((card, index) => (
             <div 
               key={index}
-              className="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col items-center text-center h-full"
+              className="p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col items-center text-center h-full"
+              style={{ backgroundColor: '#FFF8F2' }}
             >
               <div className="mb-4">
                 {card.icon}
