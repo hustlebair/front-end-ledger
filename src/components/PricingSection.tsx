@@ -13,29 +13,48 @@ import { useState } from 'react';
 const PricingSection = () => {
   const [isYearly, setIsYearly] = useState(false);
 
-  const plan = {
-    name: 'Legacy Plan',
-    monthlyPrice: '$6.99',
-    yearlyPrice: '$59.99',
-    monthlyPeriod: '/month',
-    yearlyPeriod: '/year',
-    description: 'Ideal for capturing every precious moment',
-    features: [
-      'Unlimited Text Entries',
-      '20GB Media Storage (photos & videos)',
-      'Premium AI Photo Tools (credits required)',
-      '1,000 Free Credits',
-      'Full AskKidera Access',
-      'Weekly AI Summaries',
-      'Face Cropping Software',
-      'Priority Support',
-      'Data Export',
-    ],
-    cta: 'Get Legacy Plan',
-    recommended: true,
-    borderColor: 'border-orange-400',
-    buttonColor: 'bg-gradient-to-r from-[#ff6b35] to-[#f7931e] hover:from-[#e53e3e] hover:to-[#dd6b20]',
-  };
+  const plans = [
+    {
+      name: 'Legacy Plan',
+      monthlyPrice: '$6.99',
+      yearlyPrice: '$59.99',
+      monthlyPeriod: '/month',
+      yearlyPeriod: '/year',
+      description: 'Ideal for capturing every precious moment',
+      features: [
+        'Unlimited Text Entries',
+        '20GB Media Storage (photos & videos)',
+        'Premium AI Photo Tools (credits required)',
+        '1,000 Free Credits',
+        'Full AskKidera Access',
+        'Weekly AI Summaries',
+        'Face Cropping Software',
+        'Priority Support',
+        'Data Export',
+      ],
+      cta: 'Get Legacy Plan',
+      recommended: true,
+      borderColor: 'border-orange-400',
+      buttonColor: 'bg-gradient-to-r from-[#ff6b35] to-[#f7931e] hover:from-[#e53e3e] hover:to-[#dd6b20]',
+    },
+    {
+      name: 'Free Plan',
+      price: '$0',
+      period: '/month',
+      description: 'Perfect for getting started with essential features',
+      features: [
+        'Unlimited Text Entries',
+        '200MB Media Storage (photos & videos)',
+        'Premium AI Photo Tools (credits required)',
+        'Limited AskKidera Access',
+        'Weekly AI Summaries',
+      ],
+      cta: 'Start Free Today',
+      recommended: false,
+      borderColor: 'border-gray-200',
+      buttonColor: 'bg-gradient-to-r from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-600',
+    },
+  ];
 
   const savings = Math.round(((6.99 * 12 - 59.99) / (6.99 * 12)) * 100);
 
@@ -44,12 +63,12 @@ const PricingSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-4">
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fa2284] via-[#ff8b00] to-[#00afe4]">
-            Simple Pricing.
+            Free to start.
           </span>{' '}
-          Start Preserving Memories Today.
+          Upgrade when you're ready.
         </h2>
         <p className="text-center text-gray-600 mb-8 max-w-xl mx-auto">
-          Kidera grows with your family. Choose monthly or yearly billing and save with our annual plan.
+          Kidera grows with your family. Start free and add more storage and features as your memories multiply.
         </p>
         
         {/* Billing Toggle */}
@@ -81,60 +100,91 @@ const PricingSection = () => {
           </div>
         </div>
 
-        <div className="max-w-md mx-auto">
-          <div className="relative group">
-            <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-20 transition-all duration-300 group-hover:-translate-y-2">
-              <span className="bg-gradient-to-r from-[#ff6b35] to-[#f7931e] text-white px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300">
-                Most Popular
-              </span>
-            </div>
-            <Card
-              className="relative flex flex-col h-full bg-white rounded-[20px] shadow-[0_20px_40px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_60px_rgba(0,0,0,0.15)] transition-all duration-300 hover:-translate-y-2 overflow-hidden border-3 border-orange-400 shadow-[0_0_30px_rgba(255,107,53,0.3)] group-hover:shadow-[0_0_30px_rgba(255,107,53,0.3)]"
-              style={{
-                padding: '40px 30px',
-              }}
-            >
-              {/* Top border gradient */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#ff6b35] to-[#f7931e]" />
-              
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
-                <p className="text-gray-600 text-sm mb-4">{plan.description}</p>
-                <div className="flex items-baseline justify-center mb-2">
-                  <span className="text-5xl font-bold text-gray-900">
-                    {isYearly ? plan.yearlyPrice : plan.monthlyPrice}
-                  </span>
-                  <span className="text-xl text-gray-500 ml-1">
-                    {isYearly ? plan.yearlyPeriod : plan.monthlyPeriod}
-                  </span>
-                </div>
-                {isYearly && (
-                  <p className="text-sm text-green-600 font-medium">
-                    Save ${(6.99 * 12 - 59.99).toFixed(2)} per year
-                  </p>
-                )}
-              </div>
-
-              <ul className="space-y-4 mb-8 flex-grow">
-                {plan.features.map((feature, i) => (
-                  <li key={i} className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-700 text-sm leading-relaxed">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <Button 
-                size="lg" 
-                className={`w-full py-4 px-6 text-base font-semibold uppercase tracking-wider transition-all duration-300 hover:-translate-y-0.5 ${plan.buttonColor} text-white rounded-xl`}
-                onClick={() => {
-                  const planParam = isYearly ? 'legacy-yearly' : 'legacy';
-                  window.location.href = `https://www.kidera.app/login?plan=${planParam}`;
-                }}
+        <div className="max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8">
+            {plans.map((plan, idx) => (
+              <div
+                key={idx}
+                className={`relative group ${
+                  plan.recommended ? 'md:scale-105' : ''
+                }`}
               >
-                {plan.cta}
-              </Button>
-            </Card>
+                {plan.recommended && (
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-20 transition-all duration-300 group-hover:-translate-y-2">
+                    <span className="bg-gradient-to-r from-[#ff6b35] to-[#f7931e] text-white px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300">
+                      Most Popular
+                    </span>
+                  </div>
+                )}
+                <Card
+                  className={`relative flex flex-col h-full bg-white rounded-[20px] shadow-[0_20px_40px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_60px_rgba(0,0,0,0.15)] transition-all duration-300 hover:-translate-y-2 overflow-hidden ${
+                    plan.recommended 
+                      ? 'border-3 border-orange-400 shadow-[0_0_30px_rgba(255,107,53,0.3)] group-hover:shadow-[0_0_30px_rgba(255,107,53,0.3)]' 
+                      : 'border border-gray-200'
+                  }`}
+                  style={{
+                    padding: '40px 30px',
+                  }}
+                >
+                  {/* Top border gradient */}
+                  <div
+                    className={`absolute top-0 left-0 right-0 h-1 ${
+                      plan.recommended
+                        ? 'bg-gradient-to-r from-[#ff6b35] to-[#f7931e]'
+                        : 'bg-gradient-to-r from-gray-400 to-gray-500'
+                    }`}
+                  />
+                  
+                  <div className="text-center mb-8">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
+                    <p className="text-gray-600 text-sm mb-4">{plan.description}</p>
+                    <div className="flex items-baseline justify-center mb-2">
+                      <span className="text-5xl font-bold text-gray-900">
+                        {plan.name === 'Legacy Plan' 
+                          ? (isYearly ? plan.yearlyPrice : plan.monthlyPrice)
+                          : plan.price
+                        }
+                      </span>
+                      <span className="text-xl text-gray-500 ml-1">
+                        {plan.name === 'Legacy Plan' 
+                          ? (isYearly ? plan.yearlyPeriod : plan.monthlyPeriod)
+                          : plan.period
+                        }
+                      </span>
+                    </div>
+                    {plan.name === 'Legacy Plan' && isYearly && (
+                      <p className="text-sm text-green-600 font-medium">
+                        Save ${(6.99 * 12 - 59.99).toFixed(2)} per year
+                      </p>
+                    )}
+                  </div>
+
+                  <ul className="space-y-4 mb-8 flex-grow">
+                    {plan.features.map((feature, i) => (
+                      <li key={i} className="flex items-start">
+                        <Check className="h-5 w-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-700 text-sm leading-relaxed">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Button 
+                    size="lg" 
+                    className={`w-full py-4 px-6 text-base font-semibold uppercase tracking-wider transition-all duration-300 hover:-translate-y-0.5 ${plan.buttonColor} text-white rounded-xl`}
+                    onClick={() => {
+                      if (plan.name === 'Legacy Plan') {
+                        const planParam = isYearly ? 'legacy-yearly' : 'legacy';
+                        window.location.href = `https://www.kidera.app/login?plan=${planParam}`;
+                      } else if (plan.name === 'Free Plan') {
+                        window.location.href = 'https://www.kidera.app';
+                      }
+                    }}
+                  >
+                    {plan.cta}
+                  </Button>
+                </Card>
+              </div>
+            ))}
           </div>
         </div>
       </div>
