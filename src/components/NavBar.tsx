@@ -46,8 +46,12 @@ const NavBar = () => {
             Features
           </a>
           <a 
-            href="/blog" 
+            href="#blog" 
             className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('blog')?.scrollIntoView({ behavior: 'smooth' });
+            }}
           >
             Blog
           </a>
