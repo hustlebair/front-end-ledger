@@ -95,14 +95,9 @@ const PricingSection = () => {
                       {plan.hasToggle && (
                         <button
                           onClick={() => setIsYearly(!isYearly)}
-                          className="bg-gray-700 px-3 py-1 rounded-full text-xs font-medium text-white hover:bg-gray-600 transition-all flex items-center"
+                          className="bg-gray-700 px-2 py-1 rounded-full text-xs font-medium text-white hover:bg-gray-600 transition-all"
                         >
                           {isYearly ? 'Yearly' : 'Monthly'}
-                          {isYearly && (
-                            <span className="ml-2 bg-green-500 text-white text-xs px-1.5 py-0.5 rounded-full">
-                              Save {savings}%
-                            </span>
-                          )}
                         </button>
                       )}
                     </div>
@@ -142,7 +137,7 @@ const PricingSection = () => {
                         const planParam = isYearly ? 'legacy-yearly' : 'legacy';
                         window.location.href = `https://www.kidera.app/login?plan=${planParam}`;
                       } else if (plan.name === 'Free Plan') {
-                        window.location.href = 'https://www.kidera.app';
+                        window.location.href = 'https://www.kidera.app/login?plan=free';
                       }
                     }}
                   >
