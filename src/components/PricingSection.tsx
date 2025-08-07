@@ -21,13 +21,15 @@ const PricingSection = () => {
       yearlyBilled: '$59.88',
       monthlyPeriod: '/month',
       yearlyPeriod: '/month',
+      monthlyCta: 'Get Legacy Monthly',
+      yearlyCta: 'Get Legacy Yearly',
       description: 'Ideal for capturing every precious moment',
       features: [
         'Unlimited Text Entries',
-        '20GB Media Storage (photos & videos)',
-        'Premium AI Photo Tools (credits required)',
+        '20GB Media Storage [Photo/Video]',
+        'AI Photo Tools (credits required)',
         '1,000 Free Credits',
-        'Full AskKidera Access',
+        'Unlimited <em>Kidera</em> AI Agent',
         'Weekly AI Summaries',
         'Face Cropping Software',
         'Priority Support',
@@ -45,9 +47,9 @@ const PricingSection = () => {
       description: 'Perfect for getting started with essential features',
       features: [
         'Unlimited Text Entries',
-        '200MB Media Storage (photos & videos)',
-        'Premium AI Photo Tools (credits required)',
-        'Limited AskKidera Access',
+        '500MB Media Storage [Photo/Video]',
+        'AI Photo Tools (credits required)',
+        'Limited  <em>Kidera</em> AI Agent',
         'Weekly AI Summaries',
       ],
       cta: 'Get Started',
@@ -73,6 +75,37 @@ const PricingSection = () => {
         </p>
 
         <div className="max-w-5xl mx-auto">
+          {/* Billing Toggle for Legacy Plan */}
+          <div className="mb-6 flex justify-center">
+            <div className="flex bg-gray-100 rounded-lg p-1 border border-gray-200">
+              <button
+                onClick={() => setIsYearly(false)}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                  !isYearly 
+                    ? 'bg-white text-gray-900 shadow-sm' 
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                Monthly
+              </button>
+              <button
+                onClick={() => setIsYearly(true)}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all relative ${
+                  isYearly 
+                    ? 'bg-blue-500 text-white shadow-sm' 
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                Annually
+                {isYearly && (
+                  <span className="ml-2 px-2 py-0.5 bg-gray-800 text-white text-xs rounded-md">
+                    Save 29%
+                  </span>
+                )}
+              </button>
+            </div>
+          </div>
+
           <div className="grid md:grid-cols-2 gap-8">
             {plans.map((plan, idx) => (
               <div key={idx} className="relative">
@@ -87,19 +120,11 @@ const PricingSection = () => {
                     padding: '32px',
                   }}
                 >
-                  <div className="text-left mb-8">
+                  <div className="text-left mb-2">
                     <div className="flex items-center justify-between mb-2">
                       <h3 className={`text-2xl font-bold ${plan.isDark ? 'text-white' : 'text-gray-900'}`}>
                         {plan.name}
                       </h3>
-                      {plan.hasToggle && (
-                        <button
-                          onClick={() => setIsYearly(!isYearly)}
-                          className="bg-gray-700 px-2 py-1 rounded-full text-xs font-medium text-white hover:bg-gray-600 transition-all"
-                        >
-                          {isYearly ? 'Yearly' : 'Monthly'}
-                        </button>
-                      )}
                     </div>
                     <p className={`text-sm mb-6 ${plan.isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                       {plan.description}
@@ -118,16 +143,18 @@ const PricingSection = () => {
                         }
                       </span>
                     </div>
-                    {plan.hasToggle && isYearly && (
-                      <p className="text-sm text-green-400 font-medium mb-6">
-                        Billed yearly at {plan.yearlyBilled}
-                      </p>
-                    )}
+                    <div className="h-6 mb-2">
+                      {plan.hasToggle && isYearly && (
+                        <p className="text-sm text-green-400 font-medium">
+                          Billed yearly at {plan.yearlyBilled}
+                        </p>
+                      )}
+                    </div>
                   </div>
 
                   <Button 
                     size="lg" 
-                    className={`w-full py-3 px-6 text-base font-semibold rounded-xl transition-all duration-300 mb-8 ${
+                    className={`w-full py-3 px-6 text-base font-semibold rounded-xl transition-all duration-300 mb-8 mt-2 ${
                       plan.isDark 
                         ? 'bg-blue-500 hover:bg-blue-600 text-white border-0' 
                         : 'bg-gray-900 hover:bg-gray-800 text-white border border-gray-300'
@@ -141,13 +168,19 @@ const PricingSection = () => {
                       }
                     }}
                   >
-                    {plan.cta} →
+                    {plan.hasToggle 
+                      ? (isYearly ? plan.yearlyCta : plan.monthlyCta)
+                      : plan.cta
+                    } →
                   </Button>
 
                   <div className="space-y-1">
-                    <h4 className={`text-sm font-medium mb-4 ${plan.isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                    <h4 className={`text-base font-semibold mb-3 ${plan.isDark ? 'text-white' : 'text-gray-600'}`}>
                       Includes
                     </h4>
+                    {plan.isDark && (
+                      <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent mb-4"></div>
+                    )}
                     {plan.features.map((feature, i) => (
                       <div key={i} className="flex items-start">
                         <div className={`w-5 h-5 rounded-full flex items-center justify-center mr-3 mt-0.5 flex-shrink-0 ${
@@ -155,9 +188,10 @@ const PricingSection = () => {
                         }`}>
                           <Check className="w-3 h-3 text-white" />
                         </div>
-                        <span className={`text-sm leading-relaxed ${plan.isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                          {feature}
-                        </span>
+                        <span 
+                          className={`text-sm leading-relaxed ${plan.isDark ? 'text-white' : 'text-gray-700'}`}
+                          dangerouslySetInnerHTML={{ __html: feature }}
+                        />
                       </div>
                     ))}
                   </div>
