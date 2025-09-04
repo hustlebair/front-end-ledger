@@ -8,21 +8,15 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { useState } from 'react';
 
 const PricingSection = () => {
-  const [isYearly, setIsYearly] = useState(false);
 
   const plans = [
     {
       name: 'Legacy Plan',
-      monthlyPrice: '$6.99',
-      yearlyPrice: '$4.99',
-      yearlyBilled: '$59.88',
-      monthlyPeriod: '/month',
-      yearlyPeriod: '/month',
-      monthlyCta: 'Get Legacy Monthly',
-      yearlyCta: 'Get Legacy Yearly',
+      price: '$3.25',
+      period: '/month',
+      yearlyBilled: '$39',
       description: 'Ideal for capturing every precious moment',
       features: [
         'Unlimited Text Entries',
@@ -38,75 +32,26 @@ const PricingSection = () => {
       cta: 'Get Started',
       recommended: true,
       isDark: true,
-      hasToggle: true,
-    },
-    {
-      name: 'Free Plan',
-      price: '$0',
-      period: '/month',
-      description: 'Perfect for getting started with essential features',
-      features: [
-        'Unlimited Text Entries',
-        '500MB Media Storage [Photo/Video]',
-        'AI Photo Tools (credits required)',
-        'Limited  <em>Kidera</em> AI Agent',
-        'Weekly AI Summaries',
-      ],
-      cta: 'Get Started',
-      recommended: false,
-      isDark: false,
       hasToggle: false,
     },
   ];
 
-  const savings = Math.round(((6.99 * 12 - 59.88) / (6.99 * 12)) * 100);
 
   return (
     <section id="pricing" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-4">
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fa2284] via-[#ff8b00] to-[#00afe4]">
-            Free to start.
+            Limited Time Offer.
           </span>{' '}
-          Upgrade when you're ready.
+          Start your legacy today.
         </h2>
         <p className="text-center text-gray-600 mb-12 max-w-xl mx-auto">
-          Kidera grows with your family. Start free and add more storage and features as your memories multiply.
+          Capture every precious moment with our comprehensive parenting journal. Limited time offer - get started today!
         </p>
 
-        <div className="max-w-5xl mx-auto">
-          {/* Billing Toggle for Legacy Plan */}
-          <div className="mb-6 flex justify-center">
-            <div className="flex bg-gray-100 rounded-lg p-1 border border-gray-200">
-              <button
-                onClick={() => setIsYearly(false)}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
-                  !isYearly 
-                    ? 'bg-white text-gray-900 shadow-sm' 
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                Monthly
-              </button>
-              <button
-                onClick={() => setIsYearly(true)}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-all relative ${
-                  isYearly 
-                    ? 'bg-blue-500 text-white shadow-sm' 
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                Annually
-                {isYearly && (
-                  <span className="ml-2 px-2 py-0.5 bg-gray-800 text-white text-xs rounded-md">
-                    Save 29%
-                  </span>
-                )}
-              </button>
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
+        <div className="max-w-2xl mx-auto">
+          <div className="flex justify-center">
             {plans.map((plan, idx) => (
               <div key={idx} className="relative">
                 <Card
@@ -129,27 +74,19 @@ const PricingSection = () => {
                     <p className={`text-sm mb-6 ${plan.isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                       {plan.description}
                     </p>
-                    <div className="flex items-baseline mb-2">
-                      <span className={`text-5xl font-bold ${plan.isDark ? 'text-white' : 'text-gray-900'}`}>
-                        {plan.hasToggle 
-                          ? (isYearly ? plan.yearlyPrice : plan.monthlyPrice)
-                          : plan.price
-                        }
-                      </span>
-                      <span className={`text-xl ml-1 ${plan.isDark ? 'text-gray-300' : 'text-gray-500'}`}>
-                        {plan.hasToggle 
-                          ? (isYearly ? plan.yearlyPeriod : plan.monthlyPeriod)
-                          : plan.period
-                        }
-                      </span>
-                    </div>
-                    <div className="h-6 mb-2">
-                      {plan.hasToggle && isYearly && (
-                        <p className="text-sm text-green-400 font-medium">
-                          Billed yearly at {plan.yearlyBilled}
-                        </p>
-                      )}
-                    </div>
+                                         <div className="flex items-baseline mb-2">
+                       <span className={`text-5xl font-bold ${plan.isDark ? 'text-white' : 'text-gray-900'}`}>
+                         {plan.price}
+                       </span>
+                       <span className={`text-xl ml-1 ${plan.isDark ? 'text-gray-300' : 'text-gray-500'}`}>
+                         {plan.period}
+                       </span>
+                     </div>
+                     <div className="h-6 mb-2">
+                       <p className="text-sm text-green-400 font-medium">
+                         Billed annually at {plan.yearlyBilled} - Limited Time
+                       </p>
+                     </div>
                   </div>
 
                   <Button 
@@ -159,19 +96,11 @@ const PricingSection = () => {
                         ? 'bg-blue-500 hover:bg-blue-600 text-white border-0' 
                         : 'bg-gray-900 hover:bg-gray-800 text-white border border-gray-300'
                     }`}
-                    onClick={() => {
-                      if (plan.name === 'Legacy Plan') {
-                        const planParam = isYearly ? 'legacy-yearly' : 'legacy';
-                        window.location.href = `https://www.kidera.app/login?plan=${planParam}`;
-                      } else if (plan.name === 'Free Plan') {
-                        window.location.href = 'https://www.kidera.app/login?plan=free';
-                      }
-                    }}
+                                         onClick={() => {
+                       window.location.href = 'https://www.kidera.app/login?plan=legacy-yearly';
+                     }}
                   >
-                    {plan.hasToggle 
-                      ? (isYearly ? plan.yearlyCta : plan.monthlyCta)
-                      : plan.cta
-                    } →
+                    {plan.cta} →
                   </Button>
 
                   <div className="space-y-1">
