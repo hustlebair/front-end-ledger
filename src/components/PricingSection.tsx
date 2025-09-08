@@ -17,7 +17,7 @@ const PricingSection = () => {
       price: '$3.25',
       period: '/month',
       yearlyBilled: '$39',
-      description: 'Never lose a precious moment again',
+      description: "There's a small window to capture these memories",
       features: [
         'Unlimited daily journal entries',
         '50GB secure photo & video storage',
