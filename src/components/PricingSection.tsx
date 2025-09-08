@@ -17,19 +17,18 @@ const PricingSection = () => {
       price: '$3.25',
       period: '/month',
       yearlyBilled: '$39',
-      description: 'Ideal for capturing every precious moment',
+      description: 'Never lose a precious moment again',
       features: [
-        'Unlimited Text Entries',
-        '20GB Media Storage [Photo/Video]',
-        'AI Photo Tools (credits required)',
-        '1,000 Free Credits',
-        'Unlimited <em>Kidera</em> AI Agent',
-        'Weekly AI Summaries',
-        'Face Cropping Software',
-        'Priority Support',
-        'Data Export',
+        'Unlimited daily journal entries',
+        '50GB secure photo & video storage',
+        'AI Photo Magic Editor',
+        '2,000 AI credits for creative tools',
+        'Smart AI Assistant for parenting insights',
+        'Weekly AI summaries of special moments',
+        'Smart photo cropping & organization',
+        'Priority support & data export',
       ],
-      cta: 'Get Started',
+      cta: 'Start 14 Day Free Trial',
       recommended: true,
       isDark: true,
       hasToggle: false,
@@ -50,79 +49,83 @@ const PricingSection = () => {
           Capture every precious moment with our comprehensive parenting journal. Limited time offer - get started today!
         </p>
 
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-md mx-auto">
           <div className="flex justify-center">
             {plans.map((plan, idx) => (
-              <div key={idx} className="relative">
+              <div key={idx} className="relative w-full">
                 <Card
-                  className={`relative h-full transition-all duration-300 hover:shadow-xl border ${
-                    plan.isDark 
-                      ? 'bg-gradient-to-br from-gray-900 to-blue-900 border-gray-700 text-white' 
-                      : 'bg-white border-gray-200 hover:border-gray-300'
-                  }`}
+                  className="relative h-full transition-all duration-300 hover:shadow-xl bg-white border-0"
                   style={{
-                    borderRadius: '24px',
-                    padding: '32px',
+                    borderRadius: '16px',
+                    padding: '0',
+                    background: 'linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)',
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
                   }}
                 >
-                  <div className="text-left mb-2">
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className={`text-2xl font-bold ${plan.isDark ? 'text-white' : 'text-gray-900'}`}>
+                  {/* Gradient border at top */}
+                  <div
+                    className="bg-gradient-to-r from-pink-400 via-orange-400 via-green-400 to-blue-400"
+                    style={{
+                      height: '12px',
+                      borderTopLeftRadius: '16px',
+                      borderTopRightRadius: '16px',
+                    }}
+                  ></div>
+                  
+                  <div className="p-8">
+                    <div className="text-center mb-6">
+                      <h3 className="text-3xl font-bold text-gray-900 mb-3">
                         {plan.name}
                       </h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        {plan.description}
+                      </p>
                     </div>
-                    <p className={`text-sm mb-6 ${plan.isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-                      {plan.description}
-                    </p>
-                                         <div className="flex items-baseline mb-2">
-                       <span className={`text-5xl font-bold ${plan.isDark ? 'text-white' : 'text-gray-900'}`}>
-                         {plan.price}
-                       </span>
-                       <span className={`text-xl ml-1 ${plan.isDark ? 'text-gray-300' : 'text-gray-500'}`}>
-                         {plan.period}
-                       </span>
-                     </div>
-                     <div className="h-6 mb-2">
-                       <p className="text-sm text-green-400 font-medium">
-                         Billed annually at {plan.yearlyBilled} - Limited Time
-                       </p>
-                     </div>
-                  </div>
 
-                  <Button 
-                    size="lg" 
-                    className={`w-full py-3 px-6 text-base font-semibold rounded-xl transition-all duration-300 mb-8 mt-2 ${
-                      plan.isDark 
-                        ? 'bg-blue-500 hover:bg-blue-600 text-white border-0' 
-                        : 'bg-gray-900 hover:bg-gray-800 text-white border border-gray-300'
-                    }`}
-                                         onClick={() => {
-                       window.location.href = 'https://www.kidera.app/login?plan=legacy-yearly';
-                     }}
-                  >
-                    {plan.cta} →
-                  </Button>
-
-                  <div className="space-y-1">
-                    <h4 className={`text-base font-semibold mb-3 ${plan.isDark ? 'text-white' : 'text-gray-600'}`}>
-                      Includes
-                    </h4>
-                    {plan.isDark && (
-                      <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent mb-4"></div>
-                    )}
-                    {plan.features.map((feature, i) => (
-                      <div key={i} className="flex items-start">
-                        <div className={`w-5 h-5 rounded-full flex items-center justify-center mr-3 mt-0.5 flex-shrink-0 ${
-                          plan.isDark ? 'bg-blue-500' : 'bg-blue-500'
-                        }`}>
-                          <Check className="w-3 h-3 text-white" />
-                        </div>
-                        <span 
-                          className={`text-sm leading-relaxed ${plan.isDark ? 'text-white' : 'text-gray-700'}`}
-                          dangerouslySetInnerHTML={{ __html: feature }}
-                        />
+                    <div className="text-center mb-6">
+                      <div className="flex items-baseline justify-center mb-2">
+                        <span className="text-5xl font-black text-gray-900">
+                          {plan.price}
+                        </span>
+                        <span className="text-lg text-gray-500 ml-1">
+                          {plan.period}
+                        </span>
                       </div>
-                    ))}
+                      
+                      <div className="flex justify-center mb-4">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-pink-50 border border-pink-200 text-pink-600 text-xs font-semibold">
+                          Billed annually at {plan.yearlyBilled}
+                          <span className="mx-2 text-gray-300">•</span>
+                          Limited Time Offer ⏰
+                        </span>
+                      </div>
+                    </div>
+
+                    <Button 
+                      size="lg" 
+                      className="w-full py-4 px-6 text-base font-semibold rounded-xl transition-all duration-300 mb-8 bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white border-0 shadow-[0_8px_20px_rgba(250,34,132,0.3)] hover:shadow-[0_12px_24px_rgba(250,34,132,0.4)] hover:-translate-y-0.5"
+                      onClick={() => {
+                        window.location.href = 'https://www.kidera.app/login?plan=legacy-yearly';
+                      }}
+                    >
+                      {plan.cta} →
+                    </Button>
+
+                    <div className="space-y-1">
+                      <h4 className="text-lg font-bold text-gray-900 mb-4">
+                        Everything you need to capture childhood
+                      </h4>
+                      {plan.features.map((feature, i) => (
+                        <div key={i} className="flex items-start mb-3">
+                          <div className="w-5 h-5 rounded-full flex items-center justify-center mr-3 mt-0.5 flex-shrink-0 bg-blue-500">
+                            <Check className="w-3 h-3 text-white" />
+                          </div>
+                          <span className="text-sm text-gray-700 leading-relaxed">
+                            {feature}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </Card>
               </div>
