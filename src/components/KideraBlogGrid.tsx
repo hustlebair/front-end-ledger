@@ -1,281 +1,211 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Clock, Heart, ArrowRight, Search, Filter } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import {
-  BlogPost,
-  fetchBlogPosts,
-  formatDate,
-  getReadingTime,
-  getExcerpt,
-  defaultThumbnail
-} from '@/lib/blog-utils';
+import { Link } from 'react-router-dom';
+import { Calendar, Clock, ArrowRight } from 'lucide-react';
+import { fetchBlogPosts } from '../lib/blog-utils';
+import { BlogPost } from '../lib/seo-utils';
 
 interface KideraBlogGridProps {
+  limit?: number;
   showHeader?: boolean;
-  maxPosts?: number;
-  showFilters?: boolean;
 }
 
-const KideraBlogGrid: React.FC<KideraBlogGridProps> = ({
-  showHeader = true,
-  maxPosts,
-  showFilters = true
+const KideraBlogGrid: React.FC<KideraBlogGridProps> = ({ 
+  limit, 
+  showHeader = true 
 }) => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>([]);
-  const [featuredPosts, setFeaturedPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    loadBlogData();
-  }, []);
+    const loadPosts = async () => {
+      try {
+        const allPosts = await fetchBlogPosts();
+        const limitedPosts = limit ? allPosts.slice(0, limit) : allPosts;
+        setPosts(limitedPosts);
+      } catch (error) {
+        console.error('Error loading posts:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  useEffect(() => {
-    filterPosts();
-  }, [posts, searchTerm]);
+    loadPosts();
+  }, [limit]);
 
-  const loadBlogData = async () => {
-    setLoading(true);
-    try {
-      const allPosts = await fetchBlogPosts({ limit: maxPosts || 9 });
+  function formatDate(dateString: string): string {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  }
 
-      // Sort posts: featured first, then by date
-      const sortedPosts = allPosts.sort((a, b) => {
-        if (a.featured && !b.featured) return -1;
-        if (!a.featured && b.featured) return 1;
-        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-      });
-
-      setPosts(sortedPosts);
-      setFeaturedPosts(sortedPosts.filter(post => post.featured));
-    } catch (error) {
-      console.error('Error loading blog data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const filterPosts = () => {
-    let filtered = posts;
-
-    if (searchTerm) {
-      filtered = filtered.filter(post =>
-        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.description?.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    setFilteredPosts(filtered);
-  };
-
-  const clearFilters = () => {
-    setSearchTerm('');
-  };
-
-  const PostCard = ({ post }: { post: BlogPost }) => {
+  function PostCard({ post }: { post: BlogPost }) {
     return (
-      <motion.article
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        className="group cursor-pointer"
-        onClick={() => window.location.href = `/blog/${post.slug}`}
+      <Link 
+        to={`/blog/${post.slug}`}
+        className="group block bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100"
       >
-        <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 hover:border-pink-200">
-          <div className="relative overflow-hidden h-48">
+        {post.thumbnail_url && (
+          <div className="aspect-video overflow-hidden">
             <img
-              src={post.thumbnail_url || defaultThumbnail}
+              src={post.thumbnail_url}
               alt={post.title}
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            
-            <div className="absolute top-4 left-4">
-              <Badge className="bg-gradient-to-r from-pink-100 to-rose-100 text-pink-700 border-0 font-medium">
-                <span className="mr-1">📝</span>
-                By Kidera
-              </Badge>
-            </div>
-
+          </div>
+        )}
+        
+        <div className="p-6">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="bg-pink-100 text-pink-600 px-3 py-1 rounded-full text-sm font-medium">
+              By Kidera
+            </span>
             {post.featured && (
-              <div className="absolute top-4 right-4">
-                <Badge className="bg-gradient-to-r from-pink-500 to-rose-500 text-white border-0">
-                  <Heart className="w-3 h-3 mr-1" />
-                  Featured
-                </Badge>
-              </div>
+              <span className="bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-sm font-medium">
+                Featured
+              </span>
             )}
           </div>
-
-          <div className="p-6">
-            <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
-              <span className="flex items-center">
-                <Clock className="w-4 h-4 mr-1" />
-                {getReadingTime(post.content)}
-              </span>
-              <span>{formatDate(post.created_at)}</span>
-            </div>
-
-            <h3 className="font-bold text-gray-900 mb-3 group-hover:text-pink-600 transition-colors line-clamp-2 text-xl">
-              {post.title}
-            </h3>
-
+          
+          <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-pink-600 transition-colors duration-200 line-clamp-2">
+            {post.title}
+          </h3>
+          
+          {post.excerpt && (
             <p className="text-gray-600 mb-4 line-clamp-3">
-              {post.description || getExcerpt(post.content)}
+              {post.excerpt}
             </p>
-
-            <div className="flex items-center text-pink-600 font-medium group-hover:text-pink-700">
-              <span>Read full story</span>
-              <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+          )}
+          
+          <div className="flex items-center justify-between text-sm text-gray-500">
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-1">
+                <Calendar className="w-4 h-4" />
+                <span>{formatDate(post.published_at || post.created_at)}</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <Clock className="w-4 h-4" />
+                <span>{post.reading_time} min read</span>
+              </div>
             </div>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
           </div>
         </div>
-      </motion.article>
+      </Link>
     );
-  };
+  }
 
-  const LoadingSkeleton = () => {
+  function LoadingSkeleton() {
     return (
-      <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
-        <div className="h-48 bg-gray-200 animate-pulse" />
+      <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
+        <div className="aspect-video bg-gray-200 animate-pulse"></div>
         <div className="p-6">
-          <div className="h-4 bg-gray-200 rounded mb-3 animate-pulse" />
-          <div className="h-6 bg-gray-200 rounded mb-3 animate-pulse" />
-          <div className="h-4 bg-gray-200 rounded mb-2 animate-pulse" />
-          <div className="h-4 bg-gray-200 rounded w-3/4 animate-pulse" />
+          <div className="flex items-center gap-2 mb-3">
+            <div className="bg-gray-200 h-6 w-20 rounded-full animate-pulse"></div>
+          </div>
+          <div className="space-y-2 mb-4">
+            <div className="bg-gray-200 h-6 w-full rounded animate-pulse"></div>
+            <div className="bg-gray-200 h-6 w-3/4 rounded animate-pulse"></div>
+          </div>
+          <div className="space-y-2 mb-4">
+            <div className="bg-gray-200 h-4 w-full rounded animate-pulse"></div>
+            <div className="bg-gray-200 h-4 w-5/6 rounded animate-pulse"></div>
+            <div className="bg-gray-200 h-4 w-2/3 rounded animate-pulse"></div>
+          </div>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="bg-gray-200 h-4 w-24 rounded animate-pulse"></div>
+              <div className="bg-gray-200 h-4 w-16 rounded animate-pulse"></div>
+            </div>
+            <div className="bg-gray-200 h-4 w-4 rounded animate-pulse"></div>
+          </div>
         </div>
       </div>
     );
-  };
+  }
+
+  if (loading) {
+    return (
+      <section id="blog" className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {showHeader && (
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-gray-900 mb-4">
+                Parenting Wisdom
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Discover tips, stories, and insights to help you capture and preserve your family's precious memories.
+              </p>
+            </div>
+          )}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {Array.from({ length: limit || 6 }).map((_, index) => (
+              <LoadingSkeleton key={index} />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (posts.length === 0) {
+    return (
+      <section id="blog" className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {showHeader && (
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-gray-900 mb-4">
+                Parenting Wisdom
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Discover tips, stories, and insights to help you capture and preserve your family's precious memories.
+              </p>
+            </div>
+          )}
+          <div className="text-center py-12">
+            <p className="text-gray-500 text-lg">No blog posts available yet.</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
-    <section id="blog" className="py-16 bg-gradient-to-br from-pink-50 via-orange-50 to-yellow-50">
+    <section id="blog" className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {showHeader && (
           <div className="text-center mb-12">
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-4xl md:text-5xl font-bold mb-4"
-            >
-              <span className="text-gray-900">Parenting </span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-orange-500 to-yellow-500">
-                Wisdom
-              </span>
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto"
-            >
-              Tips, stories, and insights to support you on your parenting journey. From newborn care to toddler adventures, we're here to help.
-            </motion.p>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Parenting Wisdom
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Discover tips, stories, and insights to help you capture and preserve your family's precious memories.
+            </p>
           </div>
         )}
-
-        {showFilters && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="mb-8"
-          >
-            <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
-              <div className="flex flex-col lg:flex-row gap-4">
-                <div className="relative flex-1">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                  <Input
-                    placeholder="Search for parenting tips, activities, or topics..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10 border-gray-200 focus:border-pink-300 focus:ring-pink-200"
-                  />
-                </div>
-
-
-
-                {searchTerm && (
-                  <Button
-                    variant="outline"
-                    onClick={clearFilters}
-                    className="border-gray-200 hover:bg-pink-50 hover:border-pink-300"
-                  >
-                    <Filter className="w-4 h-4 mr-2" />
-                    Clear
-                  </Button>
-                )}
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-        >
-          {searchTerm && (
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">
-              {filteredPosts.length} {filteredPosts.length === 1 ? 'Story' : 'Stories'} Found
-            </h3>
-          )}
-
-          {loading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {Array.from({ length: 9 }).map((_, i) => (
-                <LoadingSkeleton key={i} />
-              ))}
-            </div>
-          ) : filteredPosts.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredPosts.map(post => (
-                <PostCard key={post.id} post={post} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4">🤱</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">No stories found</h3>
-              <p className="text-gray-600 mb-6">
-                We couldn't find any articles matching your search. Try different keywords!
-              </p>
-              <Button onClick={clearFilters} className="bg-pink-600 hover:bg-pink-700">
-                Show All Stories
-              </Button>
-            </div>
-          )}
-        </motion.div>
-
-        {maxPosts && posts.length >= maxPosts && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.5 }}
-            className="text-center mt-12"
-          >
-            <Button
-              onClick={() => window.location.href = '/blog'}
-              className="bg-gradient-to-r from-pink-600 to-orange-500 hover:from-pink-700 hover:to-orange-600 text-white px-8 py-3 text-lg font-semibold rounded-lg"
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {posts.map((post) => (
+            <PostCard key={post.id} post={post} />
+          ))}
+        </div>
+        
+        {limit && posts.length >= limit && (
+          <div className="text-center mt-12">
+            <Link
+              to="/blog"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-orange-500 text-white px-8 py-3 rounded-full font-semibold hover:from-pink-600 hover:to-orange-600 transition-all duration-300 shadow-lg hover:shadow-xl"
             >
-              Read More Parenting Stories
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
-          </motion.div>
+              View All Posts
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+          </div>
         )}
       </div>
     </section>
   );
 };
 
-export default KideraBlogGrid; 
+export default KideraBlogGrid;

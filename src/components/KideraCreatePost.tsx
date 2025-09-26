@@ -1,355 +1,381 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Badge } from '@/components/ui/badge';
-import { Label } from '@/components/ui/label';
-import { 
-  Upload, 
-  X, 
-  Save, 
-  Eye, 
-  Star,
-  Tag,
-  Image as ImageIcon
-} from 'lucide-react';
-import {
-  BlogPost,
-  generateSlug,
-  uploadBlogImage,
-  supabase
-} from '@/lib/blog-utils';
+import { Helmet } from 'react-helmet-async';
+import { useParams, useNavigate } from 'react-router-dom';
+import { ArrowLeft, Upload, Save, Eye, EyeOff } from 'lucide-react';
+import { Button } from './ui/button';
+import { Input } from './ui/input';
+import { Textarea } from './ui/textarea';
+import { Card } from './ui/card';
+import { Badge } from './ui/badge';
+import { fetchBlogPost, createBlogPost, updateBlogPost, uploadBlogImage } from '../lib/blog-utils';
+import { BlogPost, generateSlug } from '../lib/seo-utils';
 
-interface KideraCreatePostProps {
-  editPost?: BlogPost | null;
-  onSave: () => void;
-}
+const KideraCreatePost: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const isEdit = Boolean(id);
 
-const KideraCreatePost: React.FC<KideraCreatePostProps> = ({ editPost, onSave }) => {
   const [formData, setFormData] = useState({
     title: '',
-    slug: '',
-    description: '',
     content: '',
+    excerpt: '',
+    meta_title: '',
+    meta_description: '',
+    meta_keywords: '',
     featured: false,
-    published: false,
-    thumbnail_url: ''
+    published: false
   });
-  
-
-  const [isUploading, setIsUploading] = useState(false);
-  const [isSaving, setSaving] = useState(false);
-  const [previewMode, setPreviewMode] = useState(false);
-
-
+  const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
+  const [thumbnailUrl, setThumbnailUrl] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    if (editPost) {
-      setFormData({
-        title: editPost.title,
-        slug: editPost.slug,
-        description: editPost.description || '',
-        content: editPost.content,
-        featured: editPost.featured,
-        published: editPost.published,
-        thumbnail_url: editPost.thumbnail_url || ''
-      });
+    if (isEdit && id) {
+      loadPost();
     }
-  }, [editPost]);
+  }, [isEdit, id]);
 
-  useEffect(() => {
-    if (formData.title && !editPost) {
-      setFormData(prev => ({
-        ...prev,
-        slug: generateSlug(prev.title)
-      }));
-    }
-  }, [formData.title, editPost]);
-
-  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    console.log('File selected:', file.name, file.size, 'bytes');
-    setIsUploading(true);
+  const loadPost = async () => {
     try {
-      const imageUrl = await uploadBlogImage(file);
-      console.log('Image URL returned:', imageUrl);
-      if (imageUrl) {
-        setFormData(prev => ({ ...prev, thumbnail_url: imageUrl }));
-        console.log('Updated form data with image URL');
-      } else {
-        alert('Failed to upload image. Please check your Supabase storage bucket setup.');
+      setLoading(true);
+      const post = await fetchBlogPost(id!);
+      if (post) {
+        setFormData({
+          title: post.title,
+          content: post.content,
+          excerpt: post.excerpt || '',
+          meta_title: post.meta_title || '',
+          meta_description: post.meta_description || '',
+          meta_keywords: post.meta_keywords?.join(', ') || '',
+          featured: post.featured,
+          published: post.published
+        });
+        setThumbnailUrl(post.thumbnail_url || '');
       }
     } catch (error) {
-      console.error('Error uploading image:', error);
-      alert('Failed to upload image. Please try again.');
+      console.error('Error loading post:', error);
+      setError('Failed to load post');
     } finally {
-      setIsUploading(false);
+      setLoading(false);
     }
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
+    }));
+  };
 
-
-  const handleSave = async () => {
-    if (!formData.title.trim() || !formData.content.trim()) {
-      alert('Please fill in the title and content fields.');
-      return;
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setThumbnailFile(file);
+      setThumbnailUrl(URL.createObjectURL(file));
     }
+  };
 
-    setSaving(true);
+  const handleSave = async (publish: boolean = false) => {
     try {
-      const postData = {
-        title: formData.title.trim(),
-        slug: formData.slug.trim(),
-        description: formData.description.trim() || null,
-        content: formData.content.trim(),
-        featured: formData.featured,
-        published: formData.published,
-        thumbnail_url: formData.thumbnail_url || null,
-        author: 'Kidera'
-      };
+      setSaving(true);
+      setError('');
 
-      if (editPost) {
-        // Update existing post
-        const { error } = await supabase
-          .from('blog_posts')
-          .update(postData)
-          .eq('id', editPost.id);
+      // Validate required fields
+      if (!formData.title.trim()) {
+        setError('Title is required');
+        return;
+      }
+      if (!formData.content.trim()) {
+        setError('Content is required');
+        return;
+      }
 
-        if (error) {
-          console.error('Error updating post:', error);
-          alert('Failed to update post. Please try again.');
-          return;
-        }
-      } else {
-        // Create new post
-        const { error } = await supabase
-          .from('blog_posts')
-          .insert([postData]);
-
-        if (error) {
-          console.error('Error creating post:', error);
-          alert('Failed to create post. Please try again.');
-          return;
+      // Upload thumbnail if new file selected
+      let finalThumbnailUrl = thumbnailUrl;
+      if (thumbnailFile) {
+        const uploadedUrl = await uploadBlogImage(thumbnailFile);
+        if (uploadedUrl) {
+          finalThumbnailUrl = uploadedUrl;
         }
       }
 
-      onSave();
+      // Prepare post data
+      const postData = {
+        ...formData,
+        slug: generateSlug(formData.title),
+        thumbnail_url: finalThumbnailUrl,
+        meta_keywords: formData.meta_keywords
+          ? formData.meta_keywords.split(',').map(k => k.trim()).filter(Boolean)
+          : [],
+        published: publish ? true : formData.published
+      };
+
+      let result;
+      if (isEdit) {
+        result = await updateBlogPost(id!, postData);
+      } else {
+        result = await createBlogPost(postData);
+      }
+
+      if (result) {
+        navigate('/admin/blog');
+      } else {
+        setError('Failed to save post');
+      }
     } catch (error) {
       console.error('Error saving post:', error);
-      alert('Failed to save post. Please try again.');
+      setError('Failed to save post');
     } finally {
       setSaving(false);
     }
   };
 
-  const renderMarkdownPreview = (content: string) => {
-    return content
-      .replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold mb-4">$1</h1>')
-      .replace(/^## (.*$)/gim, '<h2 class="text-xl font-bold mb-3">$1</h2>')
-      .replace(/^### (.*$)/gim, '<h3 class="text-lg font-bold mb-2">$1</h3>')
-      .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
-      .replace(/^- (.*$)/gim, '<li class="mb-1">$1</li>')
-      .replace(/(<li.*<\/li>)/s, '<ul class="list-disc list-inside mb-4">$1</ul>')
-      .replace(/\n\n/g, '</p><p class="mb-4">')
-      .replace(/^(?!<[h|u|l])(.+)$/gm, '<p class="mb-4">$1</p>');
-  };
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading post...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="space-y-6">
-      {/* Title and Slug */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div>
-          <Label htmlFor="title" className="text-sm font-medium text-gray-700 mb-2 block">
-            Title *
-          </Label>
-          <Input
-            id="title"
-            value={formData.title}
-            onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-            placeholder="Enter post title..."
-            className="border-gray-200 focus:border-pink-300 focus:ring-pink-200"
-          />
-        </div>
-        
-        <div>
-          <Label htmlFor="slug" className="text-sm font-medium text-gray-700 mb-2 block">
-            URL Slug *
-          </Label>
-          <Input
-            id="slug"
-            value={formData.slug}
-            onChange={(e) => setFormData(prev => ({ ...prev, slug: e.target.value }))}
-            placeholder="url-friendly-slug"
-            className="border-gray-200 focus:border-pink-300 focus:ring-pink-200"
-          />
-        </div>
-      </div>
+    <>
+      <Helmet>
+        <title>{isEdit ? 'Edit Post' : 'Create Post'} | Kidera Blog Admin</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
 
-      {/* Description */}
-      <div>
-        <Label htmlFor="description" className="text-sm font-medium text-gray-700 mb-2 block">
-          Description (SEO & Preview)
-        </Label>
-        <Textarea
-          id="description"
-          value={formData.description}
-          onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-          placeholder="Brief description for SEO and social sharing..."
-          rows={3}
-          className="border-gray-200 focus:border-pink-300 focus:ring-pink-200"
-        />
-      </div>
-
-      {/* Post Settings */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-
-
-        <div className="flex items-center space-x-6 pt-8">
-          <label className="flex items-center">
-            <input
-              type="checkbox"
-              checked={formData.featured}
-              onChange={(e) => setFormData(prev => ({ ...prev, featured: e.target.checked }))}
-              className="w-4 h-4 text-pink-600 border-gray-300 rounded focus:ring-pink-200"
-            />
-            <span className="ml-2 text-sm text-gray-700 flex items-center">
-              <Star className="w-4 h-4 mr-1" />
-              Featured Post
-            </span>
-          </label>
-
-          <label className="flex items-center">
-            <input
-              type="checkbox"
-              checked={formData.published}
-              onChange={(e) => setFormData(prev => ({ ...prev, published: e.target.checked }))}
-              className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-200"
-            />
-            <span className="ml-2 text-sm text-gray-700 flex items-center">
-              <Eye className="w-4 h-4 mr-1" />
-              Published
-            </span>
-          </label>
-        </div>
-      </div>
-
-
-
-      {/* Thumbnail Upload */}
-      <div>
-        <Label className="text-sm font-medium text-gray-700 mb-2 block">
-          Thumbnail Image
-        </Label>
-        
-        {formData.thumbnail_url ? (
-          <div className="relative inline-block">
-            <img
-              src={formData.thumbnail_url}
-              alt="Thumbnail preview"
-              className="w-32 h-24 object-cover rounded-lg border border-gray-200"
-            />
-            <button
-              type="button"
-              onClick={() => setFormData(prev => ({ ...prev, thumbnail_url: '' }))}
-              className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
-            >
-              <X className="w-3 h-3" />
-            </button>
-          </div>
-        ) : (
-          <div className="flex items-center gap-4">
-            <label className="cursor-pointer">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                className="hidden"
-                disabled={isUploading}
-              />
-              <div className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                {isUploading ? (
-                  <div className="w-4 h-4 border-2 border-pink-600 border-t-transparent rounded-full animate-spin" />
-                ) : (
-                  <ImageIcon className="w-4 h-4" />
-                )}
-                <span className="text-sm text-gray-700">
-                  {isUploading ? 'Uploading...' : 'Upload Image'}
-                </span>
+      <div className="min-h-screen bg-gray-50">
+        {/* Header */}
+        <div className="bg-white shadow">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center py-6">
+              <div className="flex items-center gap-4">
+                <Button
+                  variant="outline"
+                  onClick={() => navigate('/admin/blog')}
+                  className="flex items-center gap-2"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  Back
+                </Button>
+                <div>
+                  <h1 className="text-3xl font-bold text-gray-900">
+                    {isEdit ? 'Edit Post' : 'Create New Post'}
+                  </h1>
+                  <p className="text-gray-600">
+                    {isEdit ? 'Update your blog post' : 'Write a new blog post'}
+                  </p>
+                </div>
               </div>
-            </label>
+              <div className="flex items-center gap-3">
+                <Button
+                  onClick={() => handleSave(false)}
+                  disabled={saving}
+                  variant="outline"
+                  className="flex items-center gap-2"
+                >
+                  <Save className="w-4 h-4" />
+                  {saving ? 'Saving...' : 'Save Draft'}
+                </Button>
+                <Button
+                  onClick={() => handleSave(true)}
+                  disabled={saving}
+                  className="flex items-center gap-2 bg-pink-600 hover:bg-pink-700"
+                >
+                  {formData.published ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                  {saving ? 'Publishing...' : (formData.published ? 'Update' : 'Publish')}
+                </Button>
+              </div>
+            </div>
           </div>
-        )}
-      </div>
-
-      {/* Content Editor */}
-      <div>
-        <div className="flex items-center justify-between mb-2">
-          <Label className="text-sm font-medium text-gray-700">
-            Content * (Markdown supported)
-          </Label>
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => setPreviewMode(!previewMode)}
-            className="border-gray-200"
-          >
-            {previewMode ? 'Edit' : 'Preview'}
-          </Button>
         </div>
 
-        {previewMode ? (
-          <div 
-            className="min-h-[300px] p-4 border border-gray-200 rounded-lg bg-gray-50 prose max-w-none"
-            dangerouslySetInnerHTML={{ __html: renderMarkdownPreview(formData.content) }}
-          />
-        ) : (
-          <Textarea
-            value={formData.content}
-            onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
-            placeholder="Write your parenting article here... 
+        {/* Form */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Main Content */}
+            <div className="lg:col-span-2 space-y-6">
+              {/* Title */}
+              <Card className="p-6">
+                <h3 className="text-lg font-medium text-gray-900 mb-4">Post Content</h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Title *
+                    </label>
+                    <Input
+                      name="title"
+                      value={formData.title}
+                      onChange={handleInputChange}
+                      placeholder="Enter post title..."
+                      className="text-lg"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Content *
+                    </label>
+                    <Textarea
+                      name="content"
+                      value={formData.content}
+                      onChange={handleInputChange}
+                      placeholder="Write your post content here..."
+                      rows={12}
+                      className="resize-none"
+                    />
+                    <p className="text-sm text-gray-500 mt-2">
+                      Use **bold** for bold text and *italic* for italic text.
+                    </p>
+                  </div>
+                </div>
+              </Card>
 
-You can use markdown formatting:
-# Heading 1
-## Heading 2
-**Bold text**
-*Italic text*
-- List item"
-            rows={15}
-            className="border-gray-200 focus:border-pink-300 focus:ring-pink-200 font-mono text-sm"
-          />
-        )}
-      </div>
+              {/* Thumbnail */}
+              <Card className="p-6">
+                <h3 className="text-lg font-medium text-gray-900 mb-4">Featured Image</h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Upload Image
+                    </label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileChange}
+                      className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100"
+                    />
+                  </div>
+                  
+                  {thumbnailUrl && (
+                    <div className="mt-4">
+                      <img
+                        src={thumbnailUrl}
+                        alt="Thumbnail preview"
+                        className="w-full max-w-md h-48 object-cover rounded-lg"
+                      />
+                    </div>
+                  )}
+                </div>
+              </Card>
+            </div>
 
-      {/* Save Button */}
-      <div className="flex items-center justify-end gap-4 pt-4 border-t border-gray-200">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => onSave()}
-          className="border-gray-200"
-        >
-          Cancel
-        </Button>
-        
-        <Button
-          onClick={handleSave}
-          disabled={isSaving || !formData.title.trim() || !formData.content.trim()}
-          className="bg-gradient-to-r from-pink-600 to-orange-500 hover:from-pink-700 hover:to-orange-600 text-white"
-        >
-          {isSaving ? (
-            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-          ) : (
-            <Save className="w-4 h-4 mr-2" />
+            {/* Sidebar */}
+            <div className="space-y-6">
+              {/* Publish Settings */}
+              <Card className="p-6">
+                <h3 className="text-lg font-medium text-gray-900 mb-4">Publish Settings</h3>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <label className="text-sm font-medium text-gray-700">
+                      Featured Post
+                    </label>
+                    <input
+                      type="checkbox"
+                      name="featured"
+                      checked={formData.featured}
+                      onChange={handleInputChange}
+                      className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded"
+                    />
+                  </div>
+                  
+                  <div className="flex items-center justify-between">
+                    <label className="text-sm font-medium text-gray-700">
+                      Published
+                    </label>
+                    <input
+                      type="checkbox"
+                      name="published"
+                      checked={formData.published}
+                      onChange={handleInputChange}
+                      className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded"
+                    />
+                  </div>
+                </div>
+              </Card>
+
+              {/* SEO Settings */}
+              <Card className="p-6">
+                <h3 className="text-lg font-medium text-gray-900 mb-4">SEO Settings</h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Meta Title
+                    </label>
+                    <Input
+                      name="meta_title"
+                      value={formData.meta_title}
+                      onChange={handleInputChange}
+                      placeholder="SEO title (optional)"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Meta Description
+                    </label>
+                    <Textarea
+                      name="meta_description"
+                      value={formData.meta_description}
+                      onChange={handleInputChange}
+                      placeholder="SEO description (optional)"
+                      rows={3}
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Keywords
+                    </label>
+                    <Input
+                      name="meta_keywords"
+                      value={formData.meta_keywords}
+                      onChange={handleInputChange}
+                      placeholder="parenting, memories, family (comma separated)"
+                    />
+                  </div>
+                </div>
+              </Card>
+
+              {/* Excerpt */}
+              <Card className="p-6">
+                <h3 className="text-lg font-medium text-gray-900 mb-4">Excerpt</h3>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Post Summary
+                  </label>
+                  <Textarea
+                    name="excerpt"
+                    value={formData.excerpt}
+                    onChange={handleInputChange}
+                    placeholder="Brief description of your post..."
+                    rows={4}
+                  />
+                  <p className="text-sm text-gray-500 mt-2">
+                    This will be shown in blog listings and social media previews.
+                  </p>
+                </div>
+              </Card>
+            </div>
+          </div>
+
+          {/* Error Message */}
+          {error && (
+            <div className="mt-6 bg-red-50 border border-red-200 rounded-md p-4">
+              <p className="text-sm text-red-600">{error}</p>
+            </div>
           )}
-          {editPost ? 'Update Post' : 'Create Post'}
-        </Button>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
-export default KideraCreatePost; 
+export default KideraCreatePost;

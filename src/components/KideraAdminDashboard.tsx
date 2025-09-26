@@ -1,83 +1,86 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
 import { 
   Plus, 
   Edit, 
   Trash2, 
   Eye, 
   EyeOff, 
-  Star, 
-  StarOff,
-  Calendar,
-  FileText,
-  TrendingUp,
-  Users
+  Calendar, 
+  Clock,
+  LogOut,
+  Settings
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
-import {
-  BlogPost,
-  fetchBlogPosts,
-  formatDate,
-  getReadingTime,
-  supabase
-} from '@/lib/blog-utils';
-import KideraCreatePost from './KideraCreatePost';
+import { Button } from './ui/button';
+import { Card } from './ui/card';
+import { Badge } from './ui/badge';
+import { fetchAllBlogPosts, deleteBlogPost } from '../lib/blog-utils';
+import { BlogPost } from '../lib/seo-utils';
 
-const KideraAdminDashboard = () => {
+const KideraAdminDashboard: React.FC = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState<'all' | 'published' | 'draft'>('all');
-  const [showCreateModal, setShowCreateModal] = useState(false);
-  const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
-  const [stats, setStats] = useState({
-    total: 0,
-    published: 0,
-    drafts: 0,
-    featured: 0
-  });
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(true);
+
+  const ADMIN_EMAIL = 'ecombair@gmail.com';
 
   useEffect(() => {
-    loadPosts();
+    checkAuth();
   }, []);
 
-  useEffect(() => {
-    filterPosts();
-  }, [posts, searchTerm, statusFilter]);
+  const checkAuth = async () => {
+    try {
+      // Check if user is already authenticated
+      const token = localStorage.getItem('supabase_auth_token');
+      const userEmail = localStorage.getItem('user_email');
+      
+      if (token && userEmail === ADMIN_EMAIL) {
+        setIsAuthenticated(true);
+        loadPosts();
+      }
+    } catch (error) {
+      console.error('Auth check failed:', error);
+    } finally {
+      setCheckingAuth(false);
+    }
+  };
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+
+    if (email !== ADMIN_EMAIL) {
+      setError('Access denied. Only authorized administrators can access this area.');
+      return;
+    }
+
+    // Simple password check (in production, use proper authentication)
+    if (password === 'kidera_admin_2024') {
+      localStorage.setItem('supabase_auth_token', 'authenticated');
+      localStorage.setItem('user_email', email);
+      setIsAuthenticated(true);
+      loadPosts();
+    } else {
+      setError('Invalid credentials.');
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('supabase_auth_token');
+    localStorage.removeItem('user_email');
+    setIsAuthenticated(false);
+    setPosts([]);
+  };
 
   const loadPosts = async () => {
-    setLoading(true);
     try {
-      // Load all posts (published and unpublished) for admin
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (error) {
-        console.error('Error fetching posts:', error);
-        return;
-      }
-
-      setPosts(data as BlogPost[]);
-      
-      // Calculate stats
-      const total = data.length;
-      const published = data.filter(p => p.published).length;
-      const drafts = total - published;
-      const featured = data.filter(p => p.featured).length;
-      
-      setStats({ total, published, drafts, featured });
+      const allPosts = await fetchAllBlogPosts();
+      setPosts(allPosts);
     } catch (error) {
       console.error('Error loading posts:', error);
     } finally {
@@ -85,328 +88,316 @@ const KideraAdminDashboard = () => {
     }
   };
 
-  const filterPosts = () => {
-    let filtered = posts;
-
-    if (searchTerm) {
-      filtered = filtered.filter(post =>
-        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.description?.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    if (statusFilter !== 'all') {
-      filtered = filtered.filter(post => 
-        statusFilter === 'published' ? post.published : !post.published
-      );
-    }
-
-    setFilteredPosts(filtered);
-  };
-
-  const togglePublished = async (post: BlogPost) => {
-    try {
-      const { error } = await supabase
-        .from('blog_posts')
-        .update({ published: !post.published })
-        .eq('id', post.id);
-
-      if (error) {
-        console.error('Error updating post:', error);
-        return;
-      }
-
-      loadPosts(); // Reload to get fresh data
-    } catch (error) {
-      console.error('Error toggling publish status:', error);
-    }
-  };
-
-  const toggleFeatured = async (post: BlogPost) => {
-    try {
-      const { error } = await supabase
-        .from('blog_posts')
-        .update({ featured: !post.featured })
-        .eq('id', post.id);
-
-      if (error) {
-        console.error('Error updating post:', error);
-        return;
-      }
-
-      loadPosts(); // Reload to get fresh data
-    } catch (error) {
-      console.error('Error toggling featured status:', error);
-    }
-  };
-
-  const deletePost = async (post: BlogPost) => {
-    if (!confirm(`Are you sure you want to delete "${post.title}"? This action cannot be undone.`)) {
-      return;
-    }
-
-    try {
-      const { error } = await supabase
-        .from('blog_posts')
-        .delete()
-        .eq('id', post.id);
-
-      if (error) {
+  const handleDelete = async (id: string) => {
+    if (window.confirm('Are you sure you want to delete this post?')) {
+      try {
+        const success = await deleteBlogPost(id);
+        if (success) {
+          setPosts(posts.filter(post => post.id !== id));
+        }
+      } catch (error) {
         console.error('Error deleting post:', error);
-        return;
       }
-
-      loadPosts(); // Reload to get fresh data
-    } catch (error) {
-      console.error('Error deleting post:', error);
     }
   };
 
-  const StatCard = ({ title, value, icon: Icon, color }: {
-    title: string;
-    value: number;
-    icon: any;
-    color: string;
-  }) => (
-    <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-sm font-medium text-gray-600">{title}</p>
-          <p className="text-3xl font-bold text-gray-900">{value}</p>
-        </div>
-        <div className={`p-3 rounded-xl ${color}`}>
-          <Icon className="w-6 h-6 text-white" />
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  };
+
+  if (checkingAuth) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500 mx-auto mb-4"></div>
+          <p className="text-gray-600">Checking authentication...</p>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 
-  const PostRow = ({ post }: { post: BlogPost }) => (
-    <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-      <div className="flex items-center justify-between">
-        <div className="flex-1">
-          <div className="flex items-center gap-3 mb-2">
-            <h3 className="font-semibold text-gray-900 text-lg">{post.title}</h3>
-            <Badge className="bg-gradient-to-r from-pink-100 to-rose-100 text-pink-700 border-0 text-xs">
-              <span className="mr-1">📝</span>
-              By Kidera
-            </Badge>
-            {post.featured && (
-              <Badge className="bg-gradient-to-r from-pink-500 to-rose-500 text-white border-0 text-xs">
-                <Star className="w-3 h-3 mr-1" />
-                Featured
-              </Badge>
-            )}
-            {post.published ? (
-              <Badge className="bg-green-100 text-green-700 border-0 text-xs">
-                <Eye className="w-3 h-3 mr-1" />
-                Published
-              </Badge>
-            ) : (
-              <Badge className="bg-gray-100 text-gray-600 border-0 text-xs">
-                <EyeOff className="w-3 h-3 mr-1" />
-                Draft
-              </Badge>
-            )}
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
+          <div>
+            <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
+              Admin Dashboard
+            </h2>
+            <p className="mt-2 text-center text-sm text-gray-600">
+              Sign in to manage blog posts
+            </p>
           </div>
-          
-          <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-            {post.description || 'No description provided'}
-          </p>
-          
-          <div className="flex items-center gap-4 text-xs text-gray-500">
-            <span className="flex items-center">
-              <Calendar className="w-3 h-3 mr-1" />
-              {formatDate(post.created_at)}
-            </span>
-            <span className="flex items-center">
-              <FileText className="w-3 h-3 mr-1" />
-              {getReadingTime(post.content)}
-            </span>
-            <span>By {post.author}</span>
-          </div>
-        </div>
+          <form className="mt-8 space-y-6" onSubmit={handleLogin}>
+            <div className="rounded-md shadow-sm -space-y-px">
+              <div>
+                <label htmlFor="email" className="sr-only">
+                  Email address
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-pink-500 focus:border-pink-500 focus:z-10 sm:text-sm"
+                  placeholder="Email address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div>
+                <label htmlFor="password" className="sr-only">
+                  Password
+                </label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  required
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-pink-500 focus:border-pink-500 focus:z-10 sm:text-sm"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+            </div>
 
-        <div className="flex items-center gap-2 ml-4">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => toggleFeatured(post)}
-            className={`border-gray-200 ${post.featured ? 'bg-pink-50 border-pink-200' : ''}`}
-          >
-            {post.featured ? <StarOff className="w-4 h-4" /> : <Star className="w-4 h-4" />}
-          </Button>
-          
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => togglePublished(post)}
-            className={`border-gray-200 ${post.published ? 'bg-green-50 border-green-200' : ''}`}
-          >
-            {post.published ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-          </Button>
-          
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setEditingPost(post)}
-            className="border-gray-200"
-          >
-            <Edit className="w-4 h-4" />
-          </Button>
-          
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => deletePost(post)}
-            className="border-red-200 text-red-600 hover:bg-red-50"
-          >
-            <Trash2 className="w-4 h-4" />
-          </Button>
+            {error && (
+              <div className="text-red-600 text-sm text-center">{error}</div>
+            )}
+
+            <div>
+              <Button
+                type="submit"
+                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-pink-600 hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
+              >
+                Sign in
+              </Button>
+            </div>
+          </form>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-orange-50 to-yellow-50 p-8">
-      <div className="max-w-7xl mx-auto">
+    <>
+      <Helmet>
+        <title>Admin Dashboard | Kidera Blog</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+
+      <div className="min-h-screen bg-gray-50">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            Kidera Blog Dashboard
-          </h1>
-          <p className="text-gray-600">
-            Manage your parenting content and connect with families around the world.
-          </p>
+        <div className="bg-white shadow">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center py-6">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900">Blog Admin</h1>
+                <p className="text-gray-600">Manage your blog posts</p>
+              </div>
+              <div className="flex items-center gap-4">
+                <Link
+                  to="/admin/blog/create"
+                  className="inline-flex items-center gap-2 bg-pink-600 text-white px-4 py-2 rounded-lg hover:bg-pink-700 transition-colors duration-200"
+                >
+                  <Plus className="w-5 h-5" />
+                  New Post
+                </Link>
+                <Button
+                  onClick={handleLogout}
+                  variant="outline"
+                  className="flex items-center gap-2"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Logout
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <StatCard
-            title="Total Posts"
-            value={stats.total}
-            icon={FileText}
-            color="bg-gradient-to-r from-blue-500 to-blue-600"
-          />
-          <StatCard
-            title="Published"
-            value={stats.published}
-            icon={Eye}
-            color="bg-gradient-to-r from-green-500 to-green-600"
-          />
-          <StatCard
-            title="Drafts"
-            value={stats.drafts}
-            icon={EyeOff}
-            color="bg-gradient-to-r from-gray-500 to-gray-600"
-          />
-          <StatCard
-            title="Featured"
-            value={stats.featured}
-            icon={Star}
-            color="bg-gradient-to-r from-pink-500 to-rose-500"
-          />
-        </div>
-
-        {/* Controls */}
-        <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm mb-8">
-          <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
-            <div className="flex flex-col lg:flex-row gap-4 flex-1">
-              <Input
-                placeholder="Search posts, categories, or tags..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="border-gray-200 focus:border-pink-300 focus:ring-pink-200"
-              />
-              
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value as any)}
-                className="px-4 py-2 border border-gray-200 rounded-lg focus:border-pink-300 focus:ring-pink-200 bg-white"
-              >
-                <option value="all">All Posts</option>
-                <option value="published">Published Only</option>
-                <option value="draft">Drafts Only</option>
-              </select>
-            </div>
-
-            <Dialog open={showCreateModal} onOpenChange={setShowCreateModal}>
-              <DialogTrigger asChild>
-                <Button className="bg-gradient-to-r from-pink-600 to-orange-500 hover:from-pink-700 hover:to-orange-600 text-white">
-                  <Plus className="w-4 h-4 mr-2" />
-                  New Post
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-                <DialogHeader>
-                  <DialogTitle>Create New Blog Post</DialogTitle>
-                </DialogHeader>
-                <KideraCreatePost onSave={() => {
-                  setShowCreateModal(false);
-                  loadPosts();
-                }} />
-              </DialogContent>
-            </Dialog>
-          </div>
-        </div>
-
-        {/* Posts List */}
-        <div className="space-y-4">
-          {loading ? (
-            <div className="text-center py-12">
-              <div className="animate-pulse">
-                <div className="h-32 bg-gray-200 rounded-2xl mb-4" />
-                <div className="h-32 bg-gray-200 rounded-2xl mb-4" />
-                <div className="h-32 bg-gray-200 rounded-2xl" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <Card className="p-6">
+              <div className="flex items-center">
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <Settings className="w-6 h-6 text-blue-600" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-600">Total Posts</p>
+                  <p className="text-2xl font-bold text-gray-900">{posts.length}</p>
+                </div>
               </div>
-            </div>
-          ) : filteredPosts.length > 0 ? (
-            filteredPosts.map(post => (
-              <PostRow key={post.id} post={post} />
-            ))
-          ) : (
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4">📝</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">No posts found</h3>
-              <p className="text-gray-600 mb-6">
-                {searchTerm || statusFilter !== 'all' 
-                  ? 'Try adjusting your search or filters'
-                  : 'Create your first blog post to get started'
-                }
-              </p>
-              {!searchTerm && statusFilter === 'all' && (
-                <Button 
-                  onClick={() => setShowCreateModal(true)}
-                  className="bg-pink-600 hover:bg-pink-700"
-                >
-                  Create First Post
-                </Button>
-              )}
-            </div>
-          )}
-        </div>
+            </Card>
+            <Card className="p-6">
+              <div className="flex items-center">
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <Eye className="w-6 h-6 text-green-600" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-600">Published</p>
+                  <p className="text-2xl font-bold text-gray-900">
+                    {posts.filter(p => p.published).length}
+                  </p>
+                </div>
+              </div>
+            </Card>
+            <Card className="p-6">
+              <div className="flex items-center">
+                <div className="p-2 bg-yellow-100 rounded-lg">
+                  <EyeOff className="w-6 h-6 text-yellow-600" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-600">Drafts</p>
+                  <p className="text-2xl font-bold text-gray-900">
+                    {posts.filter(p => !p.published).length}
+                  </p>
+                </div>
+              </div>
+            </Card>
+            <Card className="p-6">
+              <div className="flex items-center">
+                <div className="p-2 bg-purple-100 rounded-lg">
+                  <Calendar className="w-6 h-6 text-purple-600" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-600">Featured</p>
+                  <p className="text-2xl font-bold text-gray-900">
+                    {posts.filter(p => p.featured).length}
+                  </p>
+                </div>
+              </div>
+            </Card>
+          </div>
 
-        {/* Edit Modal */}
-        {editingPost && (
-          <Dialog open={!!editingPost} onOpenChange={() => setEditingPost(null)}>
-            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-              <DialogHeader>
-                <DialogTitle>Edit Blog Post</DialogTitle>
-              </DialogHeader>
-              <KideraCreatePost 
-                editPost={editingPost}
-                onSave={() => {
-                  setEditingPost(null);
-                  loadPosts();
-                }} 
-              />
-            </DialogContent>
-          </Dialog>
-        )}
+          {/* Posts Table */}
+          <Card>
+            <div className="px-6 py-4 border-b border-gray-200">
+              <h3 className="text-lg font-medium text-gray-900">All Posts</h3>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Post
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Status
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Date
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Reading Time
+                    </th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {loading ? (
+                    <tr>
+                      <td colSpan={5} className="px-6 py-12 text-center text-gray-500">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-pink-500 mx-auto mb-4"></div>
+                        Loading posts...
+                      </td>
+                    </tr>
+                  ) : posts.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} className="px-6 py-12 text-center text-gray-500">
+                        No posts found. Create your first post!
+                      </td>
+                    </tr>
+                  ) : (
+                    posts.map((post) => (
+                      <tr key={post.id} className="hover:bg-gray-50">
+                        <td className="px-6 py-4">
+                          <div className="flex items-center">
+                            {post.thumbnail_url && (
+                              <img
+                                className="h-12 w-12 rounded-lg object-cover mr-4"
+                                src={post.thumbnail_url}
+                                alt={post.title}
+                              />
+                            )}
+                            <div>
+                              <div className="text-sm font-medium text-gray-900 line-clamp-1">
+                                {post.title}
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                /{post.slug}
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-2">
+                            <Badge variant={post.published ? "default" : "secondary"}>
+                              {post.published ? "Published" : "Draft"}
+                            </Badge>
+                            {post.featured && (
+                              <Badge variant="outline" className="text-orange-600 border-orange-200">
+                                Featured
+                              </Badge>
+                            )}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 text-sm text-gray-500">
+                          {formatDate(post.published_at || post.created_at)}
+                        </td>
+                        <td className="px-6 py-4 text-sm text-gray-500">
+                          <div className="flex items-center gap-1">
+                            <Clock className="w-4 h-4" />
+                            {post.reading_time} min
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 text-right text-sm font-medium">
+                          <div className="flex items-center justify-end gap-2">
+                            <Link
+                              to={`/blog/${post.slug}`}
+                              target="_blank"
+                              className="text-pink-600 hover:text-pink-900 p-1"
+                              title="View post"
+                            >
+                              <Eye className="w-4 h-4" />
+                            </Link>
+                            <Link
+                              to={`/admin/blog/edit/${post.id}`}
+                              className="text-blue-600 hover:text-blue-900 p-1"
+                              title="Edit post"
+                            >
+                              <Edit className="w-4 h-4" />
+                            </Link>
+                            <button
+                              onClick={() => handleDelete(post.id)}
+                              className="text-red-600 hover:text-red-900 p-1"
+                              title="Delete post"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </Card>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
-export default KideraAdminDashboard; 
+export default KideraAdminDashboard;

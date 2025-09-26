@@ -72,7 +72,7 @@ const Index = () => {
       {/* <WhySection /> */}
       {/* <TestimonialsSection /> */}
       <PricingSection />
-      <KideraBlogGrid showHeader={true} maxPosts={4} showFilters={false} />
+      <KideraBlogGrid showHeader={true} limit={6} />
       <FaqSection />
       <CtaSection />
       <Footer />
