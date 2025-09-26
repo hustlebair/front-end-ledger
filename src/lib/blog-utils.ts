@@ -5,12 +5,21 @@ import { BlogPost, calculateReadingTime, generateSlug } from './seo-utils';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://qdcfcmqfinnnfdxexccv.supabase.co';
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.env.VITE_SUPABASE_ACCESS_TOKEN || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkY2ZjbXFmaW5ubmZkeGV4Y2N2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4NDMyNzAsImV4cCI6MjA3NDQxOTI3MH0.Kw57EqK7vVlGtm42YTHo1VFkwhOsscPqZIQOUckILvE';
 
+// Debug environment variables
+console.log('🔧 Environment Debug:');
+console.log('VITE_SUPABASE_URL:', import.meta.env.VITE_SUPABASE_URL);
+console.log('VITE_SUPABASE_ANON_KEY:', import.meta.env.VITE_SUPABASE_ANON_KEY);
+console.log('VITE_SUPABASE_ACCESS_TOKEN:', import.meta.env.VITE_SUPABASE_ACCESS_TOKEN);
+console.log('Final supabaseUrl:', supabaseUrl);
+console.log('Final supabaseAnonKey:', supabaseAnonKey ? 'Present' : 'Missing');
+
 // Initialize Supabase client
 let supabase: any = null;
 if (supabaseUrl && supabaseAnonKey) {
   supabase = createClient(supabaseUrl, supabaseAnonKey);
+  console.log('✅ Supabase client initialized with URL:', supabaseUrl);
 } else {
-  console.warn('Supabase environment variables not found');
+  console.error('❌ Supabase environment variables not found');
 }
 
 // Fetch all published blog posts
