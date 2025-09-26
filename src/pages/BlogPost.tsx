@@ -29,7 +29,7 @@ const BlogPost = () => {
   return (
     <div className="min-h-screen bg-white">
       <NavBar />
-      <KideraBlogPost slug={slug} />
+      <KideraBlogPost />
       <Footer />
       <ScrollToTop />
     </div>

@@ -60,7 +60,7 @@ const KideraBlogPost: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-16">
+      <div className="min-h-screen bg-gray-50 pt-24 pb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="animate-pulse">
             <div className="bg-gray-200 h-8 w-3/4 rounded mb-4"></div>
@@ -79,7 +79,7 @@ const KideraBlogPost: React.FC = () => {
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-gray-50 py-16">
+      <div className="min-h-screen bg-gray-50 pt-24 pb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Post Not Found</h1>
           <p className="text-gray-600 mb-8">The blog post you're looking for doesn't exist.</p>
@@ -125,7 +125,7 @@ const KideraBlogPost: React.FC = () => {
         </script>
       </Helmet>
 
-      <div className="min-h-screen bg-gray-50 py-16">
+      <div className="min-h-screen bg-gray-50 pt-24 pb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Back to Blog */}
           <Link

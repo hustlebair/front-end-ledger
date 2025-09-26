@@ -2,8 +2,8 @@ import { createClient } from '@supabase/supabase-js';
 import { BlogPost, calculateReadingTime, generateSlug } from './seo-utils';
 
 // Environment variables
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://qdcfcmqfinnnfdxexccv.supabase.co';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.env.VITE_SUPABASE_ACCESS_TOKEN || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkY2ZjbXFmaW5ubmZkeGV4Y2N2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4NDMyNzAsImV4cCI6MjA3NDQxOTI3MH0.Kw57EqK7vVlGtm42YTHo1VFkwhOsscPqZIQOUckILvE';
 
 // Initialize Supabase client
 let supabase: any = null;

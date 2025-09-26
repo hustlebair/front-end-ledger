@@ -128,7 +128,7 @@ const KideraBlogGrid: React.FC<KideraBlogGridProps> = ({
 
   if (loading) {
     return (
-      <section id="blog" className="py-16 bg-gray-50">
+      <section id="blog" className="pt-24 pb-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {showHeader && (
             <div className="text-center mb-12">
@@ -152,20 +152,30 @@ const KideraBlogGrid: React.FC<KideraBlogGridProps> = ({
 
   if (posts.length === 0) {
     return (
-      <section id="blog" className="py-16 bg-gray-50">
+      <section id="blog" className="pt-24 pb-16 bg-gradient-to-b from-pink-50 via-yellow-50 to-blue-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {showHeader && (
             <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                Parenting Wisdom
+              <h2 className="text-4xl font-bold mb-4">
+                <span className="text-gray-800">Parenting</span>{' '}
+                <span className="bg-gradient-to-r from-pink-500 to-orange-500 bg-clip-text text-transparent">
+                  Wisdom
+                </span>
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Discover tips, stories, and insights to help you capture and preserve your family's precious memories.
+                Tips, stories, and insights to support you on your parenting journey. From newborn care to toddler adventures, we're here to help.
               </p>
             </div>
           )}
           <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">No blog posts available yet.</p>
+            <div className="text-6xl mb-6">👶</div>
+            <h3 className="text-2xl font-bold text-gray-800 mb-4">No stories found</h3>
+            <p className="text-gray-600 mb-8">
+              We couldn't find any articles matching your search. Try different keywords!
+            </p>
+            <button className="bg-pink-500 text-white px-8 py-3 rounded-full font-semibold hover:bg-pink-600 transition-colors duration-200">
+              Show All Stories
+            </button>
           </div>
         </div>
       </section>
@@ -173,15 +183,18 @@ const KideraBlogGrid: React.FC<KideraBlogGridProps> = ({
   }
 
   return (
-    <section id="blog" className="py-16 bg-gray-50">
+    <section id="blog" className="pt-24 pb-16 bg-gradient-to-b from-pink-50 via-yellow-50 to-blue-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {showHeader && (
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Parenting Wisdom
+            <h2 className="text-4xl font-bold mb-4">
+              <span className="text-gray-800">Parenting</span>{' '}
+              <span className="bg-gradient-to-r from-pink-500 to-orange-500 bg-clip-text text-transparent">
+                Wisdom
+              </span>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Discover tips, stories, and insights to help you capture and preserve your family's precious memories.
+              Tips, stories, and insights to support you on your parenting journey. From newborn care to toddler adventures, we're here to help.
             </p>
           </div>
         )}

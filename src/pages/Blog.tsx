@@ -1,5 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import NavBar from '../components/NavBar';
+import Footer from '../components/Footer';
 import KideraBlogGrid from '../components/KideraBlogGrid';
 import { generateBlogListSEO } from '../lib/seo-utils';
 
@@ -34,8 +36,10 @@ const Blog: React.FC = () => {
         </script>
       </Helmet>
 
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-white">
+        <NavBar />
         <KideraBlogGrid showHeader={true} />
+        <Footer />
       </div>
     </>
   );
