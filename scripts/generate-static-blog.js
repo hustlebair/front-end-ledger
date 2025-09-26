@@ -1,14 +1,19 @@
 // Build-time static generation for blog SEO
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Get __dirname equivalent for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // This script generates static blog data at build time for better SEO
 async function generateStaticBlogData() {
   try {
     console.log('Generating static blog data...');
     
-    // Import the blog utilities (you'll need to adjust the path based on your build setup)
-    const { generateStaticBlogData } = require('../src/lib/blog-utils');
+    // Import the blog utilities
+    const { generateStaticBlogData } = await import('../src/lib/blog-utils.js');
     
     const { posts, sitemap } = await generateStaticBlogData();
     
@@ -140,8 +145,8 @@ async function generateStaticBlogData() {
 }
 
 // Run if called directly
-if (require.main === module) {
+if (import.meta.url === `file://${process.argv[1]}`) {
   generateStaticBlogData();
 }
 
-module.exports = { generateStaticBlogData };
+export { generateStaticBlogData };
