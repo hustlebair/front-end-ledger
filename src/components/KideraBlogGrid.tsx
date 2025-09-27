@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Calendar, Clock, ArrowRight } from 'lucide-react';
 import { fetchBlogPosts } from '../lib/blog-utils';
 import { BlogPost } from '../lib/seo-utils';
+import { Button } from '@/components/ui/button';
 
 interface KideraBlogGridProps {
   limit?: number;
@@ -216,6 +217,38 @@ const KideraBlogGrid: React.FC<KideraBlogGridProps> = ({
             </Link>
           </div>
         )}
+
+        {/* CTA Section */}
+        <div className="mt-16 mb-8">
+          <div className="bg-gradient-to-r from-pink-500 to-orange-500 rounded-2xl p-8 md:p-12 text-center text-white relative overflow-hidden">
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute top-0 left-0 w-32 h-32 bg-white rounded-full -translate-x-16 -translate-y-16"></div>
+              <div className="absolute bottom-0 right-0 w-24 h-24 bg-white rounded-full translate-x-12 translate-y-12"></div>
+              <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white rounded-full -translate-y-8"></div>
+            </div>
+            
+            <div className="relative z-10">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Start Your Child's Story Today
+              </h2>
+              <p className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+                Don't let another precious memory fade away. Begin your journal in just a minute and create lasting memories for your family.
+              </p>
+              <div className="relative inline-flex">
+                <div className="absolute -inset-0.5 rounded-lg bg-white opacity-75 blur transition-all duration-300 hover:opacity-100 hover:blur-sm" />
+                <a href="https://kidera.app/signup" target="_blank" rel="noopener noreferrer">
+                  <Button 
+                    size="lg" 
+                    className="relative z-10 bg-white text-pink-600 hover:bg-gray-50 transition-all duration-300 px-8 py-4 text-lg font-semibold shadow-lg"
+                  >
+                    Start Free
+                  </Button>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

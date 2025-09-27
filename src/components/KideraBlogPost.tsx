@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { Calendar, Clock, ArrowLeft, ArrowRight } from 'lucide-react';
+import { Calendar, ArrowLeft, ArrowRight } from 'lucide-react';
 import { fetchBlogPost, fetchBlogPosts } from '../lib/blog-utils';
 import { BlogPost, generateBlogSEO } from '../lib/seo-utils';
+import { Button } from '@/components/ui/button';
 
 const KideraBlogPost: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -12,6 +13,9 @@ const KideraBlogPost: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Scroll to top when component mounts or slug changes
+    window.scrollTo(0, 0);
+    
     const loadPost = async () => {
       if (!slug) return;
 
@@ -60,7 +64,7 @@ const KideraBlogPost: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 pt-24 pb-16">
+      <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-orange-50 pt-24 pb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="animate-pulse">
             <div className="bg-gray-200 h-8 w-3/4 rounded mb-4"></div>
@@ -79,7 +83,7 @@ const KideraBlogPost: React.FC = () => {
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-gray-50 pt-24 pb-16">
+      <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-orange-50 pt-24 pb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Post Not Found</h1>
           <p className="text-gray-600 mb-8">The blog post you're looking for doesn't exist.</p>
@@ -125,7 +129,7 @@ const KideraBlogPost: React.FC = () => {
         </script>
       </Helmet>
 
-      <div className="min-h-screen bg-gray-50 pt-24 pb-16">
+      <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-orange-50 pt-24 pb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Back to Blog */}
           <Link
@@ -178,10 +182,6 @@ const KideraBlogPost: React.FC = () => {
                 <div className="flex items-center gap-2">
                   <Calendar className="w-5 h-5" />
                   <span>{formatDate(post.published_at || post.created_at)}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="w-5 h-5" />
-                  <span>{post.reading_time} min read</span>
                 </div>
               </div>
 
@@ -244,10 +244,6 @@ const KideraBlogPost: React.FC = () => {
                             <Calendar className="w-4 h-4" />
                             <span>{formatDate(relatedPost.published_at || relatedPost.created_at)}</span>
                           </div>
-                          <div className="flex items-center gap-1">
-                            <Clock className="w-4 h-4" />
-                            <span>{relatedPost.reading_time} min</span>
-                          </div>
                         </div>
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
                       </div>
@@ -257,6 +253,38 @@ const KideraBlogPost: React.FC = () => {
               </div>
             </section>
           )}
+
+          {/* CTA Section */}
+          <section className="mt-16 mb-8">
+            <div className="bg-gradient-to-r from-pink-500 to-orange-500 rounded-2xl p-8 md:p-12 text-center text-white relative overflow-hidden">
+              {/* Background Pattern */}
+              <div className="absolute inset-0 opacity-10">
+                <div className="absolute top-0 left-0 w-32 h-32 bg-white rounded-full -translate-x-16 -translate-y-16"></div>
+                <div className="absolute bottom-0 right-0 w-24 h-24 bg-white rounded-full translate-x-12 translate-y-12"></div>
+                <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white rounded-full -translate-y-8"></div>
+              </div>
+              
+              <div className="relative z-10">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                  Start Your Child's Story Today
+                </h2>
+                <p className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+                  Don't let another precious memory fade away. Begin your journal in just a minute and create lasting memories for your family.
+                </p>
+                <div className="relative inline-flex">
+                  <div className="absolute -inset-0.5 rounded-lg bg-white opacity-75 blur transition-all duration-300 hover:opacity-100 hover:blur-sm" />
+                  <a href="https://kidera.app/signup" target="_blank" rel="noopener noreferrer">
+                    <Button 
+                      size="lg" 
+                      className="relative z-10 bg-white text-pink-600 hover:bg-gray-50 transition-all duration-300 px-8 py-4 text-lg font-semibold shadow-lg"
+                    >
+                      Start Free
+                    </Button>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     </>
