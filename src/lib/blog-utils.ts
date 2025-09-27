@@ -1,26 +1,5 @@
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from '../integrations/supabase/client';
 import { BlogPost, calculateReadingTime, generateSlug } from './seo-utils';
-
-// Environment variables
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://qdcfcmqfinnnfdxexccv.supabase.co';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.env.VITE_SUPABASE_ACCESS_TOKEN || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkY2ZjbXFmaW5ubmZkeGV4Y2N2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4NDMyNzAsImV4cCI6MjA3NDQxOTI3MH0.Kw57EqK7vVlGtm42YTHo1VFkwhOsscPqZIQOUckILvE';
-
-// Debug environment variables
-console.log('🔧 Environment Debug:');
-console.log('VITE_SUPABASE_URL:', import.meta.env.VITE_SUPABASE_URL);
-console.log('VITE_SUPABASE_ANON_KEY:', import.meta.env.VITE_SUPABASE_ANON_KEY);
-console.log('VITE_SUPABASE_ACCESS_TOKEN:', import.meta.env.VITE_SUPABASE_ACCESS_TOKEN);
-console.log('Final supabaseUrl:', supabaseUrl);
-console.log('Final supabaseAnonKey:', supabaseAnonKey ? 'Present' : 'Missing');
-
-// Initialize Supabase client
-let supabase: any = null;
-if (supabaseUrl && supabaseAnonKey) {
-  supabase = createClient(supabaseUrl, supabaseAnonKey);
-  console.log('✅ Supabase client initialized with URL:', supabaseUrl);
-} else {
-  console.error('❌ Supabase environment variables not found');
-}
 
 // Fetch all published blog posts
 export async function fetchBlogPosts(): Promise<BlogPost[]> {
@@ -84,6 +63,13 @@ export async function fetchAllBlogPosts(): Promise<BlogPost[]> {
   }
 
   try {
+    // Check if user is authenticated as admin
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user || user.email !== 'ecombair@gmail.com') {
+      console.warn('Unauthorized access to admin functions');
+      return [];
+    }
+
     const { data, error } = await supabase
       .from('blog_posts')
       .select('*')
@@ -109,6 +95,13 @@ export async function createBlogPost(postData: Partial<BlogPost>): Promise<BlogP
   }
 
   try {
+    // Check if user is authenticated as admin
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user || user.email !== 'ecombair@gmail.com') {
+      console.warn('Unauthorized access to admin functions');
+      return null;
+    }
+
     // Generate slug if not provided
     if (!postData.slug && postData.title) {
       postData.slug = generateSlug(postData.title);
@@ -155,6 +148,13 @@ export async function updateBlogPost(id: string, postData: Partial<BlogPost>): P
   }
 
   try {
+    // Check if user is authenticated as admin
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user || user.email !== 'ecombair@gmail.com') {
+      console.warn('Unauthorized access to admin functions');
+      return null;
+    }
+
     // Calculate reading time if content changed
     if (postData.content && !postData.reading_time) {
       postData.reading_time = calculateReadingTime(postData.content);
@@ -195,6 +195,13 @@ export async function deleteBlogPost(id: string): Promise<boolean> {
   }
 
   try {
+    // Check if user is authenticated as admin
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user || user.email !== 'ecombair@gmail.com') {
+      console.warn('Unauthorized access to admin functions');
+      return false;
+    }
+
     const { error } = await supabase
       .from('blog_posts')
       .delete()
@@ -220,6 +227,13 @@ export async function uploadBlogImage(file: File): Promise<string | null> {
   }
 
   try {
+    // Check if user is authenticated as admin
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user || user.email !== 'ecombair@gmail.com') {
+      console.warn('Unauthorized access to admin functions');
+      return null;
+    }
+
     const fileExt = file.name.split('.').pop();
     const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
     const filePath = `blog-images/${fileName}`;

@@ -16,6 +16,7 @@ import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { Badge } from './ui/badge';
 import { fetchAllBlogPosts, deleteBlogPost } from '../lib/blog-utils';
+import { checkAdminAuth, signInAdmin, signOutAdmin, onAuthStateChange, AuthUser } from '../lib/auth-utils';
 import { BlogPost } from '../lib/seo-utils';
 
 const KideraAdminDashboard: React.FC = () => {
@@ -26,21 +27,31 @@ const KideraAdminDashboard: React.FC = () => {
   const [error, setError] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [checkingAuth, setCheckingAuth] = useState(true);
-
-  const ADMIN_EMAIL = 'ecombair@gmail.com';
+  const [user, setUser] = useState<AuthUser | null>(null);
 
   useEffect(() => {
     checkAuth();
+    
+    // Listen for auth state changes
+    const { data: { subscription } } = onAuthStateChange((user) => {
+      setUser(user);
+      setIsAuthenticated(!!user?.isAdmin);
+      if (user?.isAdmin) {
+        loadPosts();
+      } else {
+        setPosts([]);
+      }
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   const checkAuth = async () => {
     try {
-      // Check if user is already authenticated
-      const token = localStorage.getItem('supabase_auth_token');
-      const userEmail = localStorage.getItem('user_email');
-      
-      if (token && userEmail === ADMIN_EMAIL) {
-        setIsAuthenticated(true);
+      const authUser = await checkAdminAuth();
+      setUser(authUser);
+      setIsAuthenticated(!!authUser?.isAdmin);
+      if (authUser?.isAdmin) {
         loadPosts();
       }
     } catch (error) {
@@ -54,25 +65,20 @@ const KideraAdminDashboard: React.FC = () => {
     e.preventDefault();
     setError('');
 
-    if (email !== ADMIN_EMAIL) {
-      setError('Access denied. Only authorized administrators can access this area.');
-      return;
-    }
-
-    // Simple password check (in production, use proper authentication)
-    if (password === 'kidera_admin_2024') {
-      localStorage.setItem('supabase_auth_token', 'authenticated');
-      localStorage.setItem('user_email', email);
+    const result = await signInAdmin(email, password);
+    
+    if (result.success && result.user) {
+      setUser(result.user);
       setIsAuthenticated(true);
       loadPosts();
     } else {
-      setError('Invalid credentials.');
+      setError(result.error || 'Login failed');
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('supabase_auth_token');
-    localStorage.removeItem('user_email');
+  const handleLogout = async () => {
+    await signOutAdmin();
+    setUser(null);
     setIsAuthenticated(false);
     setPosts([]);
   };
