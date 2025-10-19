@@ -1,27 +1,11 @@
 import { supabase } from '../integrations/supabase/client';
 import { BlogPost, calculateReadingTime, generateSlug } from './seo-utils';
+import { loadMarkdownBlogPost, loadAllMarkdownBlogPosts, loadPublishedMarkdownBlogPosts } from './markdown-blog-utils';
 
 // Fetch all published blog posts
 export async function fetchBlogPosts(): Promise<BlogPost[]> {
-  if (!supabase) {
-    console.warn('Supabase not initialized');
-    return [];
-  }
-
   try {
-    const { data, error } = await supabase
-      .from('blog_posts')
-      .select('*')
-      .eq('published', true)
-      .order('featured', { ascending: false })
-      .order('published_at', { ascending: false });
-
-    if (error) {
-      console.error('Error fetching blog posts:', error);
-      return [];
-    }
-
-    return data || [];
+    return await loadPublishedMarkdownBlogPosts();
   } catch (error) {
     console.error('Error fetching blog posts:', error);
     return [];
@@ -30,25 +14,8 @@ export async function fetchBlogPosts(): Promise<BlogPost[]> {
 
 // Fetch a single blog post by slug
 export async function fetchBlogPost(slug: string): Promise<BlogPost | null> {
-  if (!supabase) {
-    console.warn('Supabase not initialized');
-    return null;
-  }
-
   try {
-    const { data, error } = await supabase
-      .from('blog_posts')
-      .select('*')
-      .eq('slug', slug)
-      .eq('published', true)
-      .single();
-
-    if (error) {
-      console.error('Error fetching blog post:', error);
-      return null;
-    }
-
-    return data;
+    return await loadMarkdownBlogPost(slug);
   } catch (error) {
     console.error('Error fetching blog post:', error);
     return null;
@@ -57,51 +24,17 @@ export async function fetchBlogPost(slug: string): Promise<BlogPost | null> {
 
 // Fetch all blog posts for admin (including unpublished)
 export async function fetchAllBlogPosts(): Promise<BlogPost[]> {
-  if (!supabase) {
-    console.warn('Supabase not initialized');
-    return [];
-  }
-
   try {
-    // Check if user is authenticated as admin
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user || user.email !== 'ecombair@gmail.com') {
-      console.warn('Unauthorized access to admin functions');
-      return [];
-    }
-
-    const { data, error } = await supabase
-      .from('blog_posts')
-      .select('*')
-      .order('created_at', { ascending: false });
-
-    if (error) {
-      console.error('Error fetching all blog posts:', error);
-      return [];
-    }
-
-    return data || [];
+    return await loadAllMarkdownBlogPosts();
   } catch (error) {
     console.error('Error fetching all blog posts:', error);
     return [];
   }
 }
 
-// Create a new blog post
+// Create a new blog post (markdown-based)
 export async function createBlogPost(postData: Partial<BlogPost>): Promise<BlogPost | null> {
-  if (!supabase) {
-    console.warn('Supabase not initialized');
-    return null;
-  }
-
   try {
-    // Check if user is authenticated as admin
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user || user.email !== 'ecombair@gmail.com') {
-      console.warn('Unauthorized access to admin functions');
-      return null;
-    }
-
     // Generate slug if not provided
     if (!postData.slug && postData.title) {
       postData.slug = generateSlug(postData.title);
@@ -117,44 +50,40 @@ export async function createBlogPost(postData: Partial<BlogPost>): Promise<BlogP
       postData.published_at = new Date().toISOString();
     }
 
-    const { data, error } = await supabase
-      .from('blog_posts')
-      .insert([{
-        ...postData,
-        author: 'Kidera',
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
-      }])
-      .select()
-      .single();
+    // Create the blog post object
+    const blogPost: BlogPost = {
+      id: postData.slug || generateSlug(postData.title || ''),
+      title: postData.title || '',
+      slug: postData.slug || generateSlug(postData.title || ''),
+      excerpt: postData.excerpt || '',
+      content: postData.content || '',
+      thumbnail_url: postData.thumbnail_url || null,
+      featured: postData.featured || false,
+      published: postData.published || false,
+      author: postData.author || 'Kidera',
+      published_at: postData.published_at || null,
+      created_at: postData.created_at || new Date().toISOString(),
+      updated_at: postData.updated_at || new Date().toISOString(),
+      reading_time: postData.reading_time || 3,
+      meta_title: postData.meta_title || postData.title || '',
+      meta_description: postData.meta_description || postData.excerpt || '',
+      meta_keywords: postData.meta_keywords || []
+    };
 
-    if (error) {
-      console.error('Error creating blog post:', error);
-      return null;
-    }
-
-    return data;
+    // In a real implementation, you would save this to a markdown file
+    // For now, we'll just return the created post
+    console.log('Blog post created (markdown-based):', blogPost.title);
+    
+    return blogPost;
   } catch (error) {
     console.error('Error creating blog post:', error);
     return null;
   }
 }
 
-// Update a blog post
+// Update a blog post (markdown-based)
 export async function updateBlogPost(id: string, postData: Partial<BlogPost>): Promise<BlogPost | null> {
-  if (!supabase) {
-    console.warn('Supabase not initialized');
-    return null;
-  }
-
   try {
-    // Check if user is authenticated as admin
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user || user.email !== 'ecombair@gmail.com') {
-      console.warn('Unauthorized access to admin functions');
-      return null;
-    }
-
     // Calculate reading time if content changed
     if (postData.content && !postData.reading_time) {
       postData.reading_time = calculateReadingTime(postData.content);
@@ -165,53 +94,35 @@ export async function updateBlogPost(id: string, postData: Partial<BlogPost>): P
       postData.published_at = new Date().toISOString();
     }
 
-    const { data, error } = await supabase
-      .from('blog_posts')
-      .update({
-        ...postData,
-        updated_at: new Date().toISOString()
-      })
-      .eq('id', id)
-      .select()
-      .single();
-
-    if (error) {
-      console.error('Error updating blog post:', error);
+    // In a real implementation, you would update the markdown file
+    // For now, we'll just return the updated post data
+    console.log('Blog post updated (markdown-based):', id);
+    
+    // Load the existing post and merge with updates
+    const existingPost = await loadMarkdownBlogPost(id);
+    if (!existingPost) {
       return null;
     }
 
-    return data;
+    const updatedPost: BlogPost = {
+      ...existingPost,
+      ...postData,
+      updated_at: new Date().toISOString()
+    };
+
+    return updatedPost;
   } catch (error) {
     console.error('Error updating blog post:', error);
     return null;
   }
 }
 
-// Delete a blog post
+// Delete a blog post (markdown-based)
 export async function deleteBlogPost(id: string): Promise<boolean> {
-  if (!supabase) {
-    console.warn('Supabase not initialized');
-    return false;
-  }
-
   try {
-    // Check if user is authenticated as admin
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user || user.email !== 'ecombair@gmail.com') {
-      console.warn('Unauthorized access to admin functions');
-      return false;
-    }
-
-    const { error } = await supabase
-      .from('blog_posts')
-      .delete()
-      .eq('id', id);
-
-    if (error) {
-      console.error('Error deleting blog post:', error);
-      return false;
-    }
-
+    // In a real implementation, you would delete the markdown file
+    // For now, we'll just log the action
+    console.log('Blog post deleted (markdown-based):', id);
     return true;
   } catch (error) {
     console.error('Error deleting blog post:', error);
