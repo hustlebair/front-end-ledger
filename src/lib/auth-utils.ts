@@ -11,9 +11,21 @@ export interface AuthUser {
 // Check if current user is authenticated and is admin
 export async function checkAdminAuth(): Promise<AuthUser | null> {
   try {
-    const { data: { user }, error } = await supabase.auth.getUser();
+    // Add timeout to prevent hanging
+    const timeoutPromise = new Promise<never>((_, reject) => {
+      setTimeout(() => reject(new Error('Authentication check timeout')), 10000);
+    });
+
+    const authPromise = supabase.auth.getUser();
     
-    if (error || !user) {
+    const { data: { user }, error } = await Promise.race([authPromise, timeoutPromise]);
+    
+    if (error) {
+      console.error('Auth error:', error);
+      return null;
+    }
+
+    if (!user) {
       return null;
     }
 

@@ -32,10 +32,19 @@ const KideraAdminDashboard: React.FC = () => {
   useEffect(() => {
     checkAuth();
     
+    // Fallback timeout to prevent infinite loading
+    const fallbackTimeout = setTimeout(() => {
+      if (checkingAuth) {
+        console.warn('Authentication check timed out, showing login form');
+        setCheckingAuth(false);
+      }
+    }, 15000);
+    
     // Listen for auth state changes
     const { data: { subscription } } = onAuthStateChange((user) => {
       setUser(user);
       setIsAuthenticated(!!user?.isAdmin);
+      setCheckingAuth(false); // Ensure checking state is reset
       if (user?.isAdmin) {
         loadPosts();
       } else {
@@ -43,11 +52,15 @@ const KideraAdminDashboard: React.FC = () => {
       }
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      clearTimeout(fallbackTimeout);
+      subscription.unsubscribe();
+    };
   }, []);
 
   const checkAuth = async () => {
     try {
+      setCheckingAuth(true);
       const authUser = await checkAdminAuth();
       setUser(authUser);
       setIsAuthenticated(!!authUser?.isAdmin);
@@ -56,6 +69,8 @@ const KideraAdminDashboard: React.FC = () => {
       }
     } catch (error) {
       console.error('Auth check failed:', error);
+      setUser(null);
+      setIsAuthenticated(false);
     } finally {
       setCheckingAuth(false);
     }
